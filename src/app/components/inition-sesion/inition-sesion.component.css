@@ -1,0 +1,86 @@
+
+.logo-login{
+  width: 211.58px;
+  height: 135.75px;
+
+
+
+}
+.img-login{
+  width: 450.22px;
+  height: 370px;
+  margin-top: 10px;
+
+
+}
+input[type=text] {
+  width:100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  /* border-bottom: 2px solid red; */
+  border: 1px solid #6867E9;
+
+}
+.titulo-login{
+  width: 95px;
+  height: 44px;
+  top: 206px;
+  left: 935px;
+  font-family: Inter;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 44px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #6867E9;
+
+}
+.olvide-pass{
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+
+.button3 {
+  background-color: #FE9610;
+  color: white;
+  width: 358px;
+  height: 55px;
+  top: 677px;
+  left: 804px;
+  border-radius: 10px;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0em;
+
+
+
+}
+
+.button3:hover {
+  background-color: #f44336;
+  color: white;
+}
+.crear-cuenta{
+  width: 331px;
+  height: 19px;
+  top: 796px;
+  left: 817px;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+
+
