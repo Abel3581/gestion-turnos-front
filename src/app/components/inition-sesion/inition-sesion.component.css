@@ -1,39 +1,4 @@
 
-.logo-login{
-  width: 200.58px;
-  height: 130.75px;
-
-
-
-}
-
-.img-login{
-  width: 450.22px;
-  height: 370px;
-  margin-top: 10px;
-
-}
-
-input {
-  width:100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-
-  border-bottom:  1px solid #6867E9;
-  border-radius: 2px;
-}
-
-.titulo-login{
-  width: 100%;
-  height: 44px;
-  font-family: Inter;
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 44px;
-  text-align: center;
-  color: #6867E9;
-
-}
 
 .olvide-pass{
   font-family: Inter;
@@ -42,24 +7,6 @@ input {
   line-height: 19px;
   letter-spacing: 0em;
   text-align: center;
-}
-
-.button3 {
-  background-color: #FE9610;
-  color: white;
-  width: 348px;
-  height: 50px;
-  border-radius: 10px;
-  font-family: Inter;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 24px;
-  letter-spacing: 0em;
-}
-
-.button3:hover {
-  background-color: #6867E9;
-  color: white;
 }
 
 .crear-cuenta{
@@ -81,3 +28,103 @@ input {
   font-size: 14px;
 }
 
+/*  */
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+.form-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* form {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 900px;
+  max-width: 600px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+} */
+
+.input-container {
+  background-color: #f5f5f5;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  height: 56px;
+  transition: background-color 500ms;
+}
+
+.input-container:hover {
+  background-color: #ececec;
+}
+
+.input-container:focus-within {
+  background-color: #dcdcdc;
+}
+
+label {
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  transform-origin: left top;
+  user-select: none;
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1),color 150ms cubic-bezier(0.4, 0, 0.2, 1), top 500ms;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: white;
+  caret-color: var(--accent-color);
+  border: 1px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.42);
+  color: rgba(0, 0, 0, 0.87);
+  transition: border 500ms;
+  padding: 20px 16px 6px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--accent-color);
+}
+
+input:focus + label {
+  color: var(--accent-color);
+}
+
+input:focus + label,
+input.is-valid + label {
+  transform: translateY(-100%) scale(0.75);
+}
+
+footer {
+  text-align: center;
+  padding: 0.5rem 0;
+  background-color: #eaeaea90;
+}
+
+footer p {
+  font-size: 0.75rem;
+  margin: 0.25rem 0;
+  color: #221133;
+}
+
+footer a {
+  text-decoration: none;
+  color: inherit;
+}
