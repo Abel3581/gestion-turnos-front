@@ -1,92 +1,93 @@
-<section class="">
 
-  <div class="columns-2 h-screen">
-    <div class="columns-1   w-full h-full ">
-      <div class="mx-10  mt-5 ">
-        <img class="ml-10 logo-login" src="assets/img/logo-login.png" alt="Logo Login">
-      </div>
-      <div class="mx-10 my-3  ">
-        <img class="ml-10 img-login" src="assets/img/img-login.png" alt="Imagen Formulario">
-      </div>
+<div class="bg-white w-screen h-screen flex flex-row">
+  <div class=" w-1/2 h-10/12 flex flex-col ml-10 my-5">
+
+    <div class="w-full h-2/5">
+
+        <img
+                class=" w-20 h-20 md:w-32 md:h-32 ml-14 "
+                src="./../../../assets/img/logo.png"
+                alt=""
+              />
     </div>
-    <div class="place-items-stretch bg-blue-800  grid columns-1  w-full h-full">
-      <div class="  place-items-center grid bg-yellow-500 ">
-          <p>{{erroresComunes}}</p>
-          <form  [formGroup]="loginForm"  class="ml-1 mr-10 w-10/12 bg-green-600">
-            <p class="titulo-login my-10">Login</p>
-              <label for="username">Email</label>
-              <input type="email" id="username" name="username" formControlName="username">
-              <div *ngIf="erroresDeValidacion">
-                <div class="text-red-800">
+    <div class="w-full h-5/6 flex justify-start items-start">
 
-                  <ul>
-                    <li *ngFor="let error of erroresDeValidacion | keyvalue">
-                      {{error.key === 'username' ? error.value : ''}}
-                    </li>
-                  </ul>
+        <img
+                class=" w-20 h-20 md:w-9/12 md:h-full ml-16 "
+                src="./../../../assets/img/3905531 1.png"
+                alt=""
+              />
+    </div>
+  </div>
+  <div class="  w-1/2 flex justify-center items-center">
+    <div class="form-container w-9/12 bg-white mr-10 my-5">
+        <form [formGroup]="loginForm" class="p-12 flex flex-col gap-8 w-full max-w-2xl bg-white ">
+            <div class="flex justify-center items-center">
+                <h1 class="text-indigo-600 text-2xl font-inter font-medium break-words"> Login</h1>
+            </div>
+            <div class="flex flex-col">
+                <div class="input-container">
+                    <input formControlName="username" type="email" id="username" (input)="onUsernameInput()"  required />
+                    <label for="username" class="text-dark" [ngClass]="{'active': loginForm.get('username')!.value}">Email</label>
+                </div>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="text-red-600  text-sm">
+                <div *ngIf="email.errors?.['required']">
+                    <span>El email es requerido.</span>
+                </div>
+                <div *ngIf="email.errors?.['email']">
+                    El email debe tener un formato válido.
+                </div>
+            </div>
+                <!-- <div *ngIf="erroresDeValidacion">
+                  <div class="text-red-800">
+                   <ul class="error-message">
+                      <li *ngFor="let error of erroresDeValidacion | keyvalue">
+                        {{error.key === 'username' ? error.value : ''}}
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
+                <div class="input-container ">
+                    <input type="password" id="password" formControlName="password" #usernameInput
+                    (input)="onUsernameInput()" required/>
+                    <label for="password">Password</label>
+                </div>
+              <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="text-red-600 text-sm">
+                <div *ngIf="password.errors?.['required']">
+                    <span>El password es requerido.</span>
+                </div>
+                <div class="text-red-600 text-sm " *ngIf="password.invalid && password.hasError('minlength')">
+                  <span>La contraseña debe tener al menos 8 caracteres.</span>
                 </div>
               </div>
-                <label for="password">Password</label>
-                <input  type="password" id="password" name="password" formControlName="password">
-                <div class="" *ngIf="erroresDeValidacion">
+                <!-- <div class="" *ngIf="erroresDeValidacion">
                   <div class="text-red-800">
 
-                    <ul class="">
-                      <li class="" *ngFor="let error of erroresDeValidacion | keyvalue">
+                    <ul class="error-message">
+                      <li *ngFor="let error of erroresDeValidacion | keyvalue">
                         {{error.key === 'password' ? error.value : ''}}
                       </li>
                     </ul>
                   </div>
-                </div>
-
-              <p class=" my-8 olvide-pass">Olvide mi contraseña</p>
-              <div class="my-5 flex place-content-center">
-
-
-
-                <button type="submit"[disabled]="loginForm.invalid" (click)="onSubmit()" class="button button3">Iniciar sesion</button>
-
-              </div>
-              <div class="my-8 flex place-content-center">
-                <p class="craar-cuenta mr-2">¿Todavía no tienes una cuenta? </p> <a href=""><span style="color: #6867E9; font-weight: bold;">Crear ahora</span> </a>
-              </div>
+                </div> -->
+                <p class=" my-8 olvide-pass">Olvide mi contraseña</p>
+                  <div class="p-8 flex justify-center items-center">
+                    <button class="w-64 h-14 flex-shrink-0 rounded-lg bg-yellow-400" [disabled]="loginForm.invalid" (click)="onSubmit()">
+                        Ingresar
+                      </button>
+                  </div>
+                  <div class="my-8 flex place-content-center">
+                    <p class="craar-cuenta mr-2">¿Todavía no tienes una cuenta? </p> <a href=""><span style="color: #6867E9; font-weight: bold;">Crear ahora</span> </a>
+                  </div>
+            </div>
 
 
-          </form>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- <section class="bg-black h-screen">
-  <div class="grid grid-cols-1 lg:grid-cols-2 h-screen">
-    <div class="lg:bg-blue-600 w-full h-full">
-      <div class="mx-10 bg-red-700 mt-5">
-        <img class="mx-auto lg:ml-10 lg:logo-login" src="assets/img/logo-login.png" alt="Logo Login">
-      </div>
-      <div class="mx-10 my-3 bg-pink-600">
-        <img class="mx-auto lg:ml-10 lg:img-login" src="assets/img/img-login.png" alt="Imagen Formulario">
-      </div>
-    </div>
-    <div class="place-items-stretch grid lg:grid-cols-1 bg-red-700 w-full h-full">
-      <div class="lg:bg-lime-700 lg:mr-10 place-items-center grid">
-        <form class="mx-1 lg:mr-10">
-          <p class="text-center lg:text-left lg:ml-1 lg:mt-10 titulo-login my-10">Login</p>
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" name="fname">
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" name="lname">
-          <p class="text-center lg:text-left lg:ml-1 lg:my-8 olvide-pass">Olvidé mi contraseña</p>
-          <div class="my-5 flex justify-center lg:justify-start">
-            <button class="button button3">Iniciar sesión</button>
-          </div>
-          <div class="lg:ml-1 lg:my-8 flex justify-center lg:justify-start">
-            <p class="craar-cuenta mr-2">¿Todavía no tienes una cuenta?</p> <a>Crear ahora</a>
-          </div>
         </form>
-      </div>
     </div>
+
   </div>
-</section> -->
+
+</div>
+
