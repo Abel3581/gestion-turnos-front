@@ -27,32 +27,51 @@
             </div>
             <div class="flex flex-col">
                 <div class="input-container">
-                    <input type="email" id="username" formControlName="username"  required />
-                    <label for="username" class="text-dark">Email</label>
+                    <input formControlName="username" type="email" id="username" (input)="onUsernameInput()"  required />
+                    <label for="username" class="text-dark" [ngClass]="{'active': loginForm.get('username')!.value}">Email</label>
                 </div>
-                <div *ngIf="erroresDeValidacion">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="text-red-600  text-sm">
+                <div *ngIf="email.errors?.['required']">
+                    <span>El email es requerido.</span>
+                </div>
+                <div *ngIf="email.errors?.['email']">
+                    El email debe tener un formato válido.
+                </div>
+            </div>
+                <!-- <div *ngIf="erroresDeValidacion">
                   <div class="text-red-800">
-                   <ul>
+                   <ul class="error-message">
                       <li *ngFor="let error of erroresDeValidacion | keyvalue">
                         {{error.key === 'username' ? error.value : ''}}
                       </li>
                     </ul>
                   </div>
-                </div>
-                <div class="input-container mb-5">
-                    <input type="password" id="password" formControlName="password" required/>
+                </div> -->
+                <div class="input-container ">
+                    <input type="password" id="password" formControlName="password" #usernameInput
+                    (input)="onUsernameInput()" required/>
                     <label for="password">Password</label>
                 </div>
-                <div class="" *ngIf="erroresDeValidacion">
+              <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="text-red-600 text-sm">
+                <div *ngIf="password.errors?.['required']">
+                    <span>El password es requerido.</span>
+                </div>
+                <div class="text-red-600 text-sm " *ngIf="password.invalid && password.hasError('minlength')">
+                  <span>La contraseña debe tener al menos 8 caracteres.</span>
+                </div>
+              </div>
+                <!-- <div class="" *ngIf="erroresDeValidacion">
                   <div class="text-red-800">
 
-                    <ul class="">
+                    <ul class="error-message">
                       <li *ngFor="let error of erroresDeValidacion | keyvalue">
                         {{error.key === 'password' ? error.value : ''}}
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
                 <p class=" my-8 olvide-pass">Olvide mi contraseña</p>
                   <div class="p-8 flex justify-center items-center">
                     <button class="w-64 h-14 flex-shrink-0 rounded-lg bg-yellow-400" [disabled]="loginForm.invalid" (click)="onSubmit()">
@@ -62,7 +81,6 @@
                   <div class="my-8 flex place-content-center">
                     <p class="craar-cuenta mr-2">¿Todavía no tienes una cuenta? </p> <a href=""><span style="color: #6867E9; font-weight: bold;">Crear ahora</span> </a>
                   </div>
-                  <p>{{erroresComunes}}</p>
             </div>
 
 
