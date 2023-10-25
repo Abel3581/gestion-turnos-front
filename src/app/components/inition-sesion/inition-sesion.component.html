@@ -73,13 +73,15 @@
                   </div>
                 </div> -->
                 <p class=" my-8 olvide-pass">Olvide mi contraseña</p>
+
                   <div class="p-8 flex justify-center items-center">
                     <button class="w-64 h-14 flex-shrink-0 rounded-lg bg-yellow-400" [disabled]="loginForm.invalid" (click)="onSubmit()">
                         Ingresar
                       </button>
                   </div>
                   <div class="my-8 flex place-content-center">
-                    <p class="craar-cuenta mr-2">¿Todavía no tienes una cuenta? </p> <a href=""><span style="color: #6867E9; font-weight: bold;">Crear ahora</span> </a>
+                    <p class="craar-cuenta mr-2">¿Todavía no tienes una cuenta? </p> <a routerLink="/cuenta"   ><span style="color: #6867E9; font-weight: bold;">Crear ahora</span> </a>
+
                   </div>
             </div>
 

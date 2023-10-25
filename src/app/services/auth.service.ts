@@ -10,7 +10,7 @@ import { LoginResponse } from '../models/LoginResponse';
 export class AuthService {
 
   urlBack = "http://localhost:8080/auth";
-private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
+
   constructor(private http: HttpClient) { }
 
 
