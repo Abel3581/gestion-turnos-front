@@ -5,6 +5,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
+import { ComponentRoutingModule } from './component.routing';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
   imports: [
     CommonModule,
     FormsModule,
+    ComponentRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
@@ -23,7 +25,8 @@ import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right', // Posición del toast
       preventDuplicates: true, // Evitar duplicados
     }),
-    ToastNoAnimationModule
+    ToastNoAnimationModule,
+
   ]
 })
 export class PageModule { }

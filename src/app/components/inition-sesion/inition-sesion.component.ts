@@ -47,7 +47,12 @@ export class InitionSesionComponent {
           },
           error: (err) => {
             console.log(err.error)
-            this.toastr.error(  'Email y/o password incorrectos');
+            if(err.status == 0){
+              this.toastr.error('La solicitud CORS no resultó exitosa');
+            }else{
+              this.toastr.error(  'Email y/o password incorrectos');
+            }
+
            // this.errores = err.error;
             // if(err.status == 400){
             //   // this.erroresDeValidacion = err.error;
