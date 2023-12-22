@@ -20,10 +20,9 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.urlBack}/login`,request);
   }
 
-  publicregister(request: RegisterRequest): Observable<RegisterResponse>{
-    return this.http.post<RegisterResponse>(`${this.urlBack}/register`, request).pipe(
-      catchError(this.handleError)
-    );
+  public register(request: RegisterRequest): Observable<RegisterResponse>{
+    return this.http.post<RegisterResponse>(`${this.urlBack}/register`, request);
+
   }
 
   private handleError(error:HttpErrorResponse){
@@ -34,7 +33,7 @@ export class AuthService {
       console.error('El Usuario ya existe', error.error);
     }
     if(error.status === 400){
-      console.error('Error de validaciones', error.error);
+      console.error('Error de validaciones', error.message);
     }
     if(error.status === 404){
       console.error('El profesional ya esta registrado');

@@ -101,9 +101,9 @@ body {
   .select-container {
     height: 50px;
     width: 100px;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
+    margin-top: 15px;
+    /* background-color: aqua; */
+
 
   }
 
@@ -114,4 +114,8 @@ body {
 
   .styled-option {
     color: gray;
+  }
+
+  select {
+    padding: 10.5px;
   }
