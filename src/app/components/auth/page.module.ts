@@ -8,6 +8,7 @@ import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
 import { ComponentRoutingModule } from './component.routing';
 
 
+
 @NgModule({
   declarations: [
     InitionSesionComponent,
@@ -26,6 +27,7 @@ import { ComponentRoutingModule } from './component.routing';
       preventDuplicates: true, // Evitar duplicados
     }),
     ToastNoAnimationModule,
+
 
   ]
 })

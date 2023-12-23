@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PageModule } from './components/page.module';
+
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interceptor';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PageModule } from './components/auth/page.module';
 
 
 @NgModule({
@@ -18,7 +18,13 @@ import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interc
     BrowserModule,
     PageModule,
     AppRoutingModule,
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
+    BrowserAnimationsModule,
+
+
+
+
+
 
   ],
   providers: [{provide: HTTP_INTERCEPTORS,useClass: ApiInterceptorInterceptor,multi:true}],
