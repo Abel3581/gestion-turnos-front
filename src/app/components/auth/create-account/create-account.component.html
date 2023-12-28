@@ -16,25 +16,25 @@
         </div>
         <div class="flex flex-row space-x-4">
           <div class="select-container">
-            <select formControlName="title" class="bg-white text-sm block w-full border border-gray-300 border-t-0 border-r-0 border-l-0">
+            <select formControlName="title" class="bg-white text-sm block w-full border border-gray-300 border-t-0 border-r-0 border-l-0 focus:outline-none focus:border-b focus:ring-0">
               <option selected disabled value="TI">Selecciona un título</option>
               <option value="US">Dr.</option>
               <option value="CA">Dra.</option>
               <option value="FR">Lic.</option>
-
             </select>
             <div *ngIf="registerForm.get('title')?.hasError('required') && (registerForm.get('title')?.dirty || registerForm.get('title')?.touched)" class="text-red-500">
               <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
           </div>
-
           <div class="input-container">
-            <input formControlName="name" type="text" id="name" required class="border {{ registerForm.get('name')?.hasError('required') ? 'border-red-500 text-red-500' : 'border-gray-300' }} text-sm block w-full p-2.5" />
-            <label class="text-xs" for="name">Nombre</label>
+            <input formControlName="name" type="text" id="name" required class="border-none focus:outline-none border-b focus:border-none focus:ring-0 {{ registerForm.get('name')?.hasError('required') ? 'border-red-500 text-red-500' : 'border-gray-300' }} text-sm" />
+            <label class="text-xs absolute top-1/2 transform -translate-y-1/2 left-2 text-dark transition-transform">{{ registerForm.get('name')?.hasError('required') ? 'Nombre*' : 'Nombre' }}</label>
+            <div class="focus-border absolute bottom-0 left-0 right-0 h-2 bg-accent-color transform scale-x-0 origin-bottom transition-transform"></div>
             <div *ngIf="registerForm.get('name')?.hasError('required') && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)" class="text-red-500">
               <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
           </div>
+
           <div class="input-container">
             <input formControlName="lastname" type="text" id="lastname" required />
             <label class="text-xs" for="lastname">Apellido</label>

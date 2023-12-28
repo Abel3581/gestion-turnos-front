@@ -5,6 +5,7 @@ export interface LoginResponse{
   lastname: string;
   role: string;
   token: string;
+  profileId: number;
   message: string;
 
 }
