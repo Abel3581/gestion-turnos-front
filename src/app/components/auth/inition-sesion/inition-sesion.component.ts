@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { min } from 'rxjs';
 import { Login } from 'src/app/models/login';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalAuthService } from 'src/app/services/local-auth.service';
 
 @Component({
   selector: 'app-inition-sesion',
@@ -14,12 +15,10 @@ export class InitionSesionComponent {
 
     loginForm: FormGroup;
     //erroresDeValidacion : any;
-
-
     errores: string[] | undefined;
 
     constructor(private fb: FormBuilder, private authService: AuthService,
-      private toastr: ToastrService){
+      private toastr: ToastrService, private localAuth: LocalAuthService){
       this.loginForm = this.fb.group({
         username: ["",[Validators.required,Validators.email] ],
         password: ["", [Validators.required,Validators.minLength(8)]]
@@ -43,33 +42,26 @@ export class InitionSesionComponent {
           next: (response)=>{
             console.log(response);
             // this.erroresDeValidacion = '';
-
+            if(response.token != ""){
+              this.localAuth.setToken(response.token);
+              this.localAuth.setUserId(response.id);
+              this.localAuth.setProfileId(response.profileId);
+            }
+            this.toastr.success(response.message);
           },
           error: (err) => {
-            console.log(err.error)
-            if(err.status == 0){
-              this.toastr.error('La solicitud CORS no resultó exitosa');
-            }else{
-              this.toastr.error(  'Email y/o password incorrectos');
-            }
-
-           // this.errores = err.error;
-            // if(err.status == 400){
-            //   // this.erroresDeValidacion = err.error;
-            // }else if(err.status == 403){
-            //   //this.erroresComunes= 'Email o Password incorrectos';
-            //   this.toastr.error(  'Credenciales invalidas');
-            // }
+            console.log(err.message)
+              this.toastr.error(err.error.message);
             setTimeout(() =>{
               this.loginForm.reset();
             }, 1000);
           },
           complete: () => {
             console.log("Login completo con exito");
-
           }
-
         });
+      }else{
+        this.loginForm.markAllAsTouched();
       }
     }
 
