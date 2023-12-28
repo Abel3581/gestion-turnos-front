@@ -5,6 +5,7 @@ import { Observable, catchError, map, pipe, tap, throwError } from 'rxjs';
 import { LoginResponse } from '../models/LoginResponse';
 import { RegisterRequest } from '../models/request/register-request';
 import { RegisterResponse } from '../models/response/register-response';
+import { MessageResponse } from '../models/response/message-response';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
 
 
   public login(request: Login):Observable<LoginResponse>{
+    console.log("Entrando al metodo del servicio login()")
     return this.http.post<LoginResponse>(`${this.urlBack}/login`,request);
   }
 
@@ -24,6 +26,10 @@ export class AuthService {
     return this.http.post<RegisterResponse>(`${this.urlBack}/register`, request);
 
   }
+  public logOut(): Observable<MessageResponse> {
+    return this.http.get<MessageResponse>(`${this.urlBack}/logout`);
+  }
+
 
   private handleError(error:HttpErrorResponse){
     if(error.status === 0){

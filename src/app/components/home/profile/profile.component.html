@@ -1,30 +1,116 @@
-<div class="container mx-auto bg-blue-300 max-h-screen overflow-hidden">
+<div class="container mx-auto max-h-screen overflow-hidden">
   <h1 class=" text-red-500 text-center">Perfil</h1>
   <div class="container mx-auto px-4 h-12 flex items-center bg-blue-500 w-screen">
     Primera fila
   </div>
-  <div class="container mx-auto px-4 bg-blue-600 h-screen">
-    <div class="flex justify-between mx-32">
-     <h2>Acerca de mi...</h2>
-     <h2>Usuario conectado</h2>
+  <div class="container mx-auto px-4 h-screen">
+    <div class="flex justify-between mx-36">
+      <h2>Acerca de mi...</h2>
+      <h2>Usuario conectado</h2>
     </div>
-
-    <div class="gap-8 columns-3 flex bg-yellow-500 h-4/5">
+    <div class="gap-8 columns-3 flex h-4/5">
+      <!-- Columna 1 -->
       <div class="grid grid-rows-4 grid-flow-col gap-4 bg-red-400 w-40 text-center">
         <div class="bg-green-300 flex items-center justify-center">Fila 1</div>
         <div class="bg-green-500 flex items-center text-center justify-center">Fila 2</div>
         <div class="bg-green-800 flex items-center text-center justify-center">Fila 3</div>
         <div class="bg-green-700 flex items-center text-center justify-center">Fila 4</div>
       </div>
-      <!-- Acerca de mi -->
-      <div class="bg-red-700 columns-4xl">
-        Columna 2
+      <!-- Columna 2 -->
+      <div class="columns-4xl p-4">
+        <form [formGroup]="updateForm">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-1 justify-center">
+              <label for="title" class="block text-sm font-semibold leading-6 text-gray-900">Titulo<span class="ml-2 font-bold text-red-600">*</span></label>
+              <select name="title" formControlName="title"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option selected>Seleccione titulo</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Dra.">Dra.</option>
+                <option value="Lic.">Lic.</option>
+              </select>
+            </div>
+            <div class="col-span-1">
+              <label for="name" class="block text-sm font-semibold leading-6 text-gray-900">Nombre<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="name" type="text" name="nombre" autocomplete="Ingrese el nombre"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="col-span-1">
+              <label for="lastname" class="block text-sm font-semibold leading-6 text-gray-900">Apellido<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="lastname" type="text" name="lastname" autocomplete="Ingrese el apellido"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="col-span-1">
+              <label for="domicile" class="block text-sm font-semibold leading-6 text-gray-900">Domicilio<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="domicile" type="text" name="domicile"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="col-span-1">
+              <label for="province" class="block text-sm font-semibold leading-6 text-gray-900">Provincia<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="province" type="text" name="province"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="">
+              <label for="phone" class="block text-sm font-semibold leading-6 text-gray-900">Teléfono<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="phone" type="text" name="phone"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="">
+              <label for="city" class="block text-sm font-semibold leading-6 text-gray-900">Ciudad, Provincia<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="city" type="text" name="city"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="">
+              <label for="country" class="block text-sm font-semibold leading-6 text-gray-900">Pais<span class="ml-2 font-bold text-red-600">*</span></label>
+              <select formControlName="country" name="country"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <option selected>Pais</option>
+                <option>Argentina</option>
+                <option>Colombia</option>
+                <option>Brazil</option>
+                <option>Uruguay</option>
+                <option>Chile</option>
+                <option>Ecuador</option>
+              </select>
+            </div>
+            <div class="">
+              <label for="whatsapp" class="block text-sm font-semibold leading-6 text-gray-900">WhatsApp<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="whatsapp" type="text" name="whatsapp"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="">
+              <label for="specialty"
+                class="block text-sm font-semibold leading-6 text-gray-900">Especialidad<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="specialty" type="text" name="specialty"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="">
+              <label for="mat_nac" class="block text-sm font-semibold leading-6 text-gray-900">Mat.Nac<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="mat_nac" type="text" id="mat_nac" name="mat_nac"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="">
+              <label for="mat_prov" class="block text-sm font-semibold leading-6 text-gray-900">Mat.Prov<span class="ml-2 font-bold text-red-600">*</span></label>
+              <input formControlName="mat_prov" type="text" id="mat_prov" name="mat_prov"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+            <div class="col-span-3 ">
+              <label for="presentation"
+                class="block text-sm font-semibold leading-6 text-gray-900">Presentación<span class="ml-2 font-bold text-red-600">*</span></label>
+              <textarea formControlName="presentation" name="presentation"
+                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </textarea>
+            </div>
+            <div class="col-span-3">
+              <button type="button" (click)="updateProfileComponent()" class="bg-blue-500 text-white hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 text-sm rounded py-1">ACTUALIZAR</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="bg-red-950 columns-sm" >
+      <!-- Columna 3 -->
+      <div class="bg-red-950 columns-sm text-center">
         Columna 3
       </div>
     </div>
-
   </div>
-
 </div>
