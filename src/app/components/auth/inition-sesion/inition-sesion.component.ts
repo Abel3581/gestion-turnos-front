@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { min } from 'rxjs';
+import { min, timeout } from 'rxjs';
 import { Login } from 'src/app/models/login';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
@@ -18,7 +19,7 @@ export class InitionSesionComponent {
     errores: string[] | undefined;
 
     constructor(private fb: FormBuilder, private authService: AuthService,
-      private toastr: ToastrService, private localAuth: LocalAuthService){
+      private toastr: ToastrService, private localAuth: LocalAuthService, private router: Router){
       this.loginForm = this.fb.group({
         username: ["",[Validators.required,Validators.email] ],
         password: ["", [Validators.required,Validators.minLength(8)]]
@@ -48,6 +49,9 @@ export class InitionSesionComponent {
               this.localAuth.setProfileId(response.profileId);
             }
             this.toastr.success(response.message);
+            setTimeout(() => {
+              this.router.navigate(['home/profile']);
+            }, 3000);
           },
           error: (err) => {
             console.log(err.message)

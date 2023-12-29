@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     children:[
       {
-        path: 'perfil', component: ProfileComponent
+        path: 'profile', component: ProfileComponent
       }
     ]
   }

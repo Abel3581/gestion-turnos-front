@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
       children:[
         {
-          path: 'cuenta',
+          path: 'register',
           component: CreateAccountComponent
         },
         {

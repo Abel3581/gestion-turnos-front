@@ -5,6 +5,7 @@ import { ProfileRequest } from 'src/app/models/request/profile-request';
 import { ProfileResponse } from 'src/app/models/response/profile-response';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,11 +15,14 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class ProfileComponent implements OnInit {
 
   updateForm!: FormGroup;
-  titulo: string = '';
+  nameUser: string = '';
+  lastnameUser: string = '';
+  username: string = '';
   titulosDisponibles: string[] = ['Dr.', 'Dra.', 'Lic.']; // Lista de títulos disponibles
   profileResponse!: ProfileResponse;
+
   constructor(private fb: FormBuilder, private profileService: ProfileService, private local: LocalAuthService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService, private userService: UserService) {
     this.updateForm = fb.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
@@ -38,6 +42,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfileComponent();
+    this.getCurrentUser();
   }
 
   public getProfileComponent() {
@@ -89,6 +94,25 @@ export class ProfileComponent implements OnInit {
       );
     }
 
+  }
+
+  public getCurrentUser(){
+    this.userService.getCurrentUser().subscribe({
+      next: response => {
+        console.log(response);
+        this.nameUser = response.name;
+        this.lastnameUser = response.username;
+        this.username = response.username;
+      },
+      error: err => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log("Completo getCurrentUser()");
+      }
+
+
+    })
   }
 
 }
