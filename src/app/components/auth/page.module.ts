@@ -22,7 +22,7 @@ import { ComponentRoutingModule } from './component.routing';
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      timeOut: 4000, // Duración predeterminada del toast en milisegundos
+      timeOut: 3000, // Duración predeterminada del toast en milisegundos
       positionClass: 'toast-top-right', // Posición del toast
       preventDuplicates: true, // Evitar duplicados
     }),
