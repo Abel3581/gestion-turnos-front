@@ -1,5 +1,7 @@
-import { Component} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterRequest } from 'src/app/models/request/register-request';
 import { AuthService } from 'src/app/services/auth.service';
@@ -10,11 +12,13 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css']
 })
-export class CreateAccountComponent {
-
+export class CreateAccountComponent implements OnInit {
+  specialties!: any[];
+  countries!: any[];
   registerForm: FormGroup;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder, private toastr: ToastrService ){
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private toastr: ToastrService,
+    private router: Router, private http: HttpClient ){
     this.registerForm = formBuilder.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
@@ -26,6 +30,16 @@ export class CreateAccountComponent {
     })
   }
 
+  ngOnInit(): void {
+    this.http.get<any[]>('./assets/data/specialty.json').subscribe(data => {
+      this.specialties = data;
+      console.log(this.specialties.length);
+    });
+    this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
+      this.countries = data;
+    })
+  }
+
   register(){
     if(this.registerForm.valid){
       const request: RegisterRequest = this.registerForm.value;
@@ -34,6 +48,10 @@ export class CreateAccountComponent {
           console.log(data);
           this.toastr.success(data.message);
           this.registerForm.reset();
+          alert("Serás redireccionado al login del usuario para iniciar sesión. 🚀✨");
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 3000);
         }, error => {
           console.log(error);
           this.toastr.error(error.error);

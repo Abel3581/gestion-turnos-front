@@ -3,7 +3,6 @@ module.exports = {
     purge: {
         content: [
             './src/**/*.{html,ts}',
-            "./node_modules/flowbite/**/*.js"
         ]
     },
     darkMode: 'class', // or 'media' or 'class'
@@ -15,6 +14,5 @@ module.exports = {
     },
     plugins: [
       require('@tailwindcss/forms'),
-      require('flowbite/plugin')
     ],
   };
