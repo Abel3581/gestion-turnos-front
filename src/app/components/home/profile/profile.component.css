@@ -1,0 +1,7 @@
+
+.selected {
+  background-color: #6946c8;  /* Cambia el color de fondo según tus preferencias */
+  border-radius: 10px;        /* Añade bordes redondeados o cualquier otro estilo */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  /* Añade sombra si lo deseas */
+
+}

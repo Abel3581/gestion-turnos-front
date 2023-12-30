@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +15,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProfileComponent implements OnInit {
 
+  iconSeleccionado: string = '';
+  specialties!: any[];
+  countries!: any[];
   updateForm!: FormGroup;
   nameUser: string = '';
   lastnameUser: string = '';
@@ -22,7 +26,7 @@ export class ProfileComponent implements OnInit {
   profileResponse!: ProfileResponse;
 
   constructor(private fb: FormBuilder, private profileService: ProfileService, private local: LocalAuthService,
-    private toastr: ToastrService, private userService: UserService) {
+    private toastr: ToastrService, private userService: UserService, private http: HttpClient) {
     this.updateForm = fb.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
@@ -43,6 +47,17 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getProfileComponent();
     this.getCurrentUser();
+    this.http.get<any[]>('./assets/data/specialty.json').subscribe(data => {
+      this.specialties = data;
+      console.log(this.specialties.length);
+    });
+    this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
+      this.countries = data;
+    })
+  }
+
+  seleccionarIcono(icono: string): void {
+    this.iconSeleccionado = icono;
   }
 
   public getProfileComponent() {
@@ -92,6 +107,8 @@ export class ProfileComponent implements OnInit {
           }
         }
       );
+    }else{
+      this.updateForm.markAllAsTouched();
     }
 
   }

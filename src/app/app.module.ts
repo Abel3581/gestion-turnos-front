@@ -8,12 +8,14 @@ import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interc
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageModule } from './components/auth/page.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { HealthCenterComponent } from './components/health-center/health-center.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HealthCenterComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +23,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     AppRoutingModule,
     NgxUiLoaderModule,
     BrowserAnimationsModule,
+
 
 
   ],

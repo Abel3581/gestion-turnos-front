@@ -1,0 +1,23 @@
+[
+  { "value": "Argentina", "label": "Argentina" },
+  { "value": "Bolivia", "label": "Bolivia" },
+  { "value": "Brasil", "label": "Brasil" },
+  { "value": "Canada", "label": "Canada" },
+  { "value": "Chile", "label": "Chile" },
+  { "value": "Colombia", "label": "Colombia" },
+  { "value": "Costa Rica", "label": "Costa Rica" },
+  { "value": "Ecuador", "label": "Ecuador" },
+  { "value": "El Salvador", "label": "El Salvador" },
+  { "value": "España", "label": "España" },
+  { "value": "Estados Unidos", "label": "Estados Unidos" },
+  { "value": "Guatemala", "label": "Guatemala" },
+  { "value": "Honduras", "label": "Honduras" },
+  { "value": "Mexico", "label": "Mexico" },
+  { "value": "Nicaragua", "label": "Nicaragua" },
+  { "value": "Panama", "label": "Panama" },
+  { "value": "Paraguay", "label": "Paraguay" },
+  { "value": "Peru", "label": "Peru" },
+  { "value": "República Dominicana", "label": "República Dominicana" },
+  { "value": "Uruguay", "label": "Uruguay" },
+  { "value": "Venezuela", "label": "Venezuela" }
+]

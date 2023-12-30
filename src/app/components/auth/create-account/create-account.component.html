@@ -20,9 +20,9 @@
               <select name="title" autocomplete="title" formControlName="title"
               class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
                 <option value="">-</option>
-                <option value="dr">Dr.</option>
-                <option value="dra">Dra.</option>
-                <option value="lic">Lic</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Dra.">Dra.</option>
+                <option value="Lic.">Lic.</option>
               </select>
             </div>
             <div *ngIf="registerForm.get('title')?.hasError('required') && (registerForm.get('title')?.dirty || registerForm.get('title')?.touched)" class="">
@@ -33,7 +33,7 @@
             <label for="name" class="block text-sm font-medium leading-6 text-slate-100">Nombre</label>
               <div class="mt-1">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input formControlName="name" type="text" name="name" autocomplete="nombre"class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                  <input formControlName="name" type="text" name="name" autocomplete="nombre" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
                   placeholder="Nombre">
                 </div>
                 <div *ngIf="registerForm.get('name')?.hasError('required') && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)" class="">
@@ -45,7 +45,7 @@
             <label for="lastname" class="block text-sm font-medium leading-6 text-slate-100">Apellido</label>
               <div class="mt-1">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input formControlName="lastname" type="text" autocomplete="lastname" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Apellido">
+                  <input formControlName="lastname" type="text" autocomplete="Apellido" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Apellido">
                 </div>
               </div>
               <div *ngIf="registerForm.get('lastname')?.hasError('required') && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)" class="">
@@ -56,92 +56,10 @@
             <label for="specialty" class="block text-sm font-medium leading-6 text-slate-100">Especialidad</label>
             <div class="mt-1">
               <select formControlName="specialty" autocomplete="especialidad" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
-                <option value=""selected>-</option>
-                <option value="5">Angiologia</option>
-                <option value="2">Alergia e Inmunologia</option>
-                <option value="3">Andrologia</option>
-                <option value="4">Anestesiología</option>
-                <option value="184">Audiología</option>
-                <option value="6">Bioética</option>
-                <option value="7">Bioquímica</option>
-                <option value="8">Cardiología</option>
-                <option value="83">Cardiología Infantil</option>
-                <option value="9">Cirugia Abdominal</option>
-                <option value="10">Cirugia de Cabeza y Cuello</option>
-                <option value="11">Cirugia General</option>
-                <option value="12">Cirugia Infantil</option>
-                <option value="15">Cirugia Toracica</option>
-                <option value="13">Cirugía Laparoscópica</option>
-                <option value="14">Cirugía Plástica Estética y Reparadora</option>
-                <option value="16">Clínica</option>
-                <option value="77">Cosmetología</option>
-                <option value="17">Densitometría ósea</option>
-                <option value="18">Dermatología</option>
-                <option value="86">Dermopediatría</option>
-                <option value="79">Diabetología</option>
-                <option value="19">Diagnostico por Imagenes</option>
-                <option value="20">Emergentologia</option>
-                <option value="21">Endocrinologia</option>
-                <option value="74">Enfermería</option>
-                <option value="22">Epidemiologia</option>
-                <option value="23">Farmacologia/ Dolor y Analgesia</option>
-                <option value="24">Fisiatria</option>
-                <option value="66">Fonoaudiología</option>
-                <option value="25">Gastroenterología</option>
-                <option value="26">Genetica</option>
-                <option value="70">Geriatría</option>
-                <option value="27">Gerontologia</option>
-                <option value="84">Ginecología</option>
-                <option value="28">Ginecología y Obstetricia</option>
-                <option value="29">Hematología</option>
-                <option value="30">Hemodinamia</option>
-                <option value="31">Hepatologia</option>
-                <option value="32">Infectología</option>
-                <option value="33">Informática Médica</option>
-                <option value="34">Inmunologia</option>
-                <option value="68">Kinesiología</option>
-                <option value="35">Mastología</option>
-                <option value="36">Medicina del Deporte</option>
-                <option value="76">Medicina Estética</option>
-                <option value="37">Medicina Familiar</option>
-                <option value="81">Medicina General</option>
-                <option value="64">Medicina Interna</option>
-                <option value="38">Medicina Laboral</option>
-                <option value="39">Medicina Nuclear</option>
-                <option value="40">Medicina Vascular</option>
-                <option value="41">Metabolismo y Nutrición</option>
-                <option value="42">Microbiologia</option>
-                <option value="43">Microcirugia</option>
-                <option value="44">Nefrología</option>
-                <option value="45">Neonatologia</option>
-                <option value="46">Neumonología</option>
-                <option value="47">Neurocirugía</option>
-                <option value="48">Neurología</option>
-                <option value="82">Neurología Pediátrica</option>
-                <option value="67">Nutrición</option>
-                <option value="49">Odontologia</option>
-                <option value="50">Oftalmologia</option>
-                <option value="51">Oncologia</option>
-                <option value="80">Ortopedia</option>
-                <option value="52">Ortopedia y Traumatología</option>
-                <option value="53">Otorrinolaringología</option>
-                <option value="54">Patología</option>
-                <option value="55">Pediatría</option>
-                <option value="56">Perinatologia</option>
-                <option value="72">Podología</option>
-                <option value="85">Proctología</option>
-                <option value="57">Psicoanalisis</option>
-                <option value="65">Psicología</option>
-                <option value="58">Psiconeuroinmunoendocrinología</option>
-                <option value="71">Psicopedagogía</option>
-                <option value="59">Psiquiatria</option>
-                <option value="78">Radiología</option>
-                <option value="60">Reumatologia</option>
-                <option value="73">Terapia Alternativa</option>
-                <option value="61">Terapia Intensiva</option>
-                <option value="69">Terapia Ocupacional</option>
-                <option value="62">Toxicologia</option>
-                <option value="63">Urología</option>
+                <option value="" selected>-</option>
+                <option *ngFor="let specialty of specialties" [value]="specialty.label">
+                  {{specialty.label}}
+                </option>
               </select>
             </div>
             <div *ngIf="registerForm.get('specialty')?.hasError('required') && (registerForm.get('specialty')?.dirty || registerForm.get('specialty')?.touched)" class="">
@@ -181,31 +99,13 @@
             <div class="mt-1">
               <select formControlName="country" autocomplete="País" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
                 <option value="" selected>-</option>
-                <option value="6">Argentina</option>
-                <option value="12">Bolivia</option>
-                <option value="14">Brasil</option>
-                <option value="16">Canada</option>
-                <option value="18">Chile</option>
-                <option value="19">Colombia</option>
-                <option value="20">Costa Rica</option>
-                <option value="25">Ecuador</option>
-                <option value="27">El Salvador</option>
-                <option value="85">España</option>
-                <option value="95">Estados Unidos</option>
-                <option value="37">Guatemala</option>
-                <option value="39">Honduras</option>
-                <option value="60">Mexico</option>
-                <option value="68">Nicaragua</option>
-                <option value="73">Panama</option>
-                <option value="74">Paraguay</option>
-                <option value="75">Peru</option>
-                <option value="157">República Dominicana</option>
-                <option value="96">Uruguay</option>
-                <option value="97">Venezuela</option>
+                <option *ngFor="let country of countries" [value]="country.label">
+                  {{country.label}}
+                </option>
               </select>
             </div>
             <div *ngIf="registerForm.get('country')?.hasError('required') && (registerForm.get('country')?.dirty || registerForm.get('country')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">El password debe tener 8 o mas caracteres.</p>
+              <p class="text-red-500 text-xs italic ml-1">El país es requerido.</p>
             </div>
           </div>
           <div class="col-span-3 ">
