@@ -1,4 +1,4 @@
-<div class=" h-screen overflow-hidde bg-slate-200">
+<div class="h-screen overflow-hidden bg-slate-200">
 
   <!-- <div class="container mx-auto px-4 h-12 flex items-center bg-blue-500 w-screen">
     Primera fila
@@ -10,38 +10,30 @@
     </div> -->
     <div class="gap-8 columns-3 flex h-full">
       <!-- Columna 1 -->
-      <div class="flex justify-center items-center w-40 h-3/4 text-center mt-5">
-        <!-- <div class="flex items-center justify-center">
-          <a href=""><i class="fa-solid fa-circle-user fa-2xl"></i></a>
-        </div>
-        <div class=" flex items-center text-center justify-center">
-          <a href="#"><i class="fa-regular fa-hospital fa-2xl"></i></a>
-        </div>
-        <div class=" flex items-center text-center justify-center">
-          <a href=""><i class="fa-solid fa-users fa-2xl"></i></a>
-        </div>
-        <div class="flex items-center text-center justify-center">
-          <a href=""><i class=" fa-solid fa-reply-all fa-2xl"></i></a>
-        </div> -->
+      <div class=" justify-center items-center w-40 h-3/4 text-center mt-5">
         <div class="flex flex-col justify-around items-center h-full bg-blue-500 w-full">
-          <ul class="h-4/5 bg-green-300 w-full">
-            <li class="flex items-center mb-10 justify-center">
-              <a [routerLink]="" (click)="seleccionarIcono('circle-user')" [class.selected]="iconSeleccionado === 'circle-user'">
+          <ul class="h-4/5 bg-green-300 w-full inline-grid justify-center">
+            <li class="flex items-center mb-10 w-14 h-14 mt-5 bg-red-200 justify-center "
+              (click)="seleccionarIcono('circle-user')" [class.selected]="iconSeleccionado === 'circle-user'">
+              <a [routerLink]="">
                 <i class="fa-solid fa-circle-user fa-2xl"></i>
               </a>
             </li>
-            <li class="flex items-center mb-10 justify-center">
-              <a [routerLink]="" (click)="seleccionarIcono('hospital')" [class.selected]="iconSeleccionado === 'hospital'">
+            <li class="flex items-center mb-10  w-14 h-14 bg-red-200 justify-center "
+              (click)="seleccionarIcono('hospital')" [class.selected]="iconSeleccionado === 'hospital'">
+              <a [routerLink]="">
                 <i class="fa-regular fa-hospital fa-2xl"></i>
               </a>
             </li>
-            <li class="flex items-center mb-10 h-20 bg-red-700 justify-center">
-              <a [routerLink]="" (click)="seleccionarIcono('users')" [class.selected]="iconSeleccionado === 'users'">
+            <li class="flex items-center mb-10 w-14 h-14 bg-red-200 justify-center" (click)="seleccionarIcono('users')"
+              [class.selected]="iconSeleccionado === 'users'">
+              <a [routerLink]="">
                 <i class="fa-solid fa-users fa-2xl"></i>
               </a>
             </li>
-            <li class="flex items-center mb-10 justify-center">
-              <a class="" [routerLink]="" (click)="seleccionarIcono('reply-all')" [class.selected]="iconSeleccionado === 'reply-all'">
+            <li class="flex items-center mb-10 w-14 h-14 bg-red-200 justify-center"
+              (click)="seleccionarIcono('reply-all')" [class.selected]="iconSeleccionado === 'reply-all'">
+              <a class="" [routerLink]="">
                 <i class="fa-solid fa-reply-all fa-2xl"></i>
               </a>
             </li>
@@ -49,203 +41,13 @@
         </div>
       </div>
       <!-- Columna 2 -->
-      <div class="columns-4xl p-4">
-        <div class="py-2">
-          <h1 class="text-slate-400 font-bold">Acerca de mí...</h1>
-        </div>
-        <form [formGroup]="updateForm" class="bg-slate-800 p-4">
-          <div class="grid grid-cols-3 gap-4">
-            <div class="col-span-1 justify-center">
-              <label for="title" class="inline-block text-sm font-semibold leading-6 text-white">Titulo<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('title')?.hasError('required') && (updateForm.get('title')?.dirty || updateForm.get('title')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <select name="title" formControlName="title" autocomplete="title"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="">-</option>
-                <option value="Dr.">Dr.</option>
-                <option value="Dra.">Dra.</option>
-                <option value="Lic">Lic</option>
-              </select>
-            </div>
-            <div class="col-span-1">
-              <label for="name" class="inline-block text-sm font-semibold leading-6 text-white">Nombre<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('name')?.hasError('required') && (updateForm.get('name')?.dirty || updateForm.get('name')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="name" type="text" name="nombre" autocomplete="Ingrese el nombre"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="col-span-1">
-              <label for="lastname" class="inline-block text-sm font-semibold leading-6 text-white">Apellido<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('lastname')?.hasError('required') && (updateForm.get('lastname')?.dirty || updateForm.get('lastname')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="lastname" type="text" name="lastname" autocomplete="Ingrese el apellido"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="col-span-1">
-              <label for="domicile" class="inline-block text-sm font-semibold leading-6 text-white">Domicilio<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('domicile')?.hasError('required') && (updateForm.get('domicile')?.dirty || updateForm.get('domicile')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="domicile" type="text" name="domicile"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="col-span-1">
-              <label for="province" class="inline-block text-sm font-semibold leading-6 text-white">Provincia<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('province')?.hasError('required') && (updateForm.get('province')?.dirty || updateForm.get('province')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="province" type="text" name="province"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="">
-              <label for="phone" class="inline-block text-sm font-semibold leading-6 text-white">Teléfono<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('phone')?.hasError('required') && (updateForm.get('phone')?.dirty || updateForm.get('phone')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="phone" type="text" name="phone"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="">
-              <label for="city" class="inline-block text-sm font-semibold leading-6 text-white">Ciudad<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('city')?.hasError('required') && (updateForm.get('city')?.dirty || updateForm.get('city')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="city" type="text" name="city"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="">
-              <label for="country" class="inline-block text-sm font-semibold leading-6 text-white">Pais<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('country')?.hasError('required') && (updateForm.get('country')?.dirty || updateForm.get('country')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <select formControlName="country" name="country"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="" selected>-</option>
-                <option *ngFor="let country of countries" [value]="country.label">
-                  {{country.label}}
-                </option>
-              </select>
-            </div>
-            <div class="">
-              <label for="whatsapp" class="inline-block text-sm font-semibold leading-6 text-white">WhatsApp<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('whatsapp')?.hasError('required') && (updateForm.get('whatsapp')?.dirty || updateForm.get('whatsapp')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="whatsapp" type="text" name="whatsapp"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="">
-              <label for="specialty" class="inline-block text-sm font-semibold leading-6 text-white">Especialidad<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('specialty')?.hasError('required') && (updateForm.get('specialty')?.dirty || updateForm.get('specialty')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <select formControlName="specialty" name="specialty"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                <option value="" selected>-</option>
-                <option *ngFor="let specialty of specialties" [value]="specialty.label">
-                  {{specialty.label}}
-                </option>
-              </select>
-            </div>
-            <div class="">
-              <label for="mat_nac" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Nac<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('mat_nac')?.hasError('required') && (updateForm.get('mat-nac')?.dirty || updateForm.get('mat_nac')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="mat_nac" type="text" id="mat_nac" name="mat_nac"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="">
-              <label for="mat_prov" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Prov<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('mat_prov')?.hasError('required') && (updateForm.get('mat-prov')?.dirty || updateForm.get('mat_prov')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <input formControlName="mat_prov" type="text" id="mat_prov" name="mat_prov"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-            </div>
-            <div class="col-span-3 ">
-              <label for="presentation"
-                class="inline-block text-sm font-semibold leading-6 text-white">Presentación<span
-                  class="ml-2 font-bold text-red-600">*</span></label>
-              <div
-                *ngIf="updateForm.get('presentation')?.hasError('required') && (updateForm.get('presentation')?.dirty || updateForm.get('presentation')?.touched)"
-                class="inline-block ml-1">
-                <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-              </div>
-              <textarea formControlName="presentation" name="presentation"
-                class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                </textarea>
-            </div>
-            <div class="col-span-3 flex justify-end">
-              <button type="button" (click)="updateProfileComponent()"
-                class="bg-blue-500 text-white hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 text-sm rounded py-1">ACTUALIZAR</button>
-            </div>
-          </div>
-        </form>
+      <div *ngIf="iconSeleccionado === 'circle-user'" class="">
+        <app-profile-form></app-profile-form>
       </div>
-      <!-- Columna 3 -->
-      <div class="text-center h-3/4 mt-5 rounded flex justify-center ">
-        <div class="w-72 mt-9 ">
-          <div class="py-2">
-            <h1 class="text-slate-400 font-bold"> Acceso al Sistema</h1>
-          </div>
-          <div class="mx-2 border-2 border-violet-400 rounded mt-2">
-            <div class="flex justify-center my-2 mx-2 text-xs text-gray-500">
-              <p>Usuario</p>
-            </div>
-            <div class="flex justify-center my-2 mx-2 text-sm font-semibold">
-              <p>{{username}}</p>
-            </div>
-          </div>
-          <div class="flex -space-x-2 overflow-hidden mt-4 justify-center">
-            <img class="inline-block h-12 w-12 rounded-3xl ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-
-          </div>
-          <div class="mt-3">
-            <button type="button"
-              class="bg-orange-400 text-white border-2 ring-violet-400 border-violet-500 hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 text-sm rounded py-1">CAMBIAR</button>
-          </div>
-        </div>
+      <div class="columns-4xl p-4 " *ngIf="iconSeleccionado === 'hospital'">
+        <app-health-center></app-health-center>
       </div>
     </div>
   </div>
 </div>
+
