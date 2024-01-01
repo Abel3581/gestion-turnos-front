@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class HealthCenterComponent {
 
+  liSeleccionado: string = "";
+
+  public seleccionarLi(li: string): void{
+    this.liSeleccionado = li;
+  }
+
 }

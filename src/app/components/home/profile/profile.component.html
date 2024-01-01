@@ -1,13 +1,5 @@
 <div class="h-screen overflow-hidden bg-slate-200">
-
-  <!-- <div class="container mx-auto px-4 h-12 flex items-center bg-blue-500 w-screen">
-    Primera fila
-  </div> -->
-  <div class="container mx-auto px-4 h-screen">
-    <!-- <div class="flex justify-between mx-36">
-      <h2>Acerca de mi...</h2>
-      <h2>Usuario conectado</h2>
-    </div> -->
+  <div class="container mx-auto px-4 h-screen ">
     <div class="gap-8 columns-3 flex h-full">
       <!-- Columna 1 -->
       <div class=" justify-center items-center w-40 h-3/4 text-center mt-5">
@@ -44,7 +36,7 @@
       <div *ngIf="iconSeleccionado === 'circle-user'" class="">
         <app-profile-form></app-profile-form>
       </div>
-      <div class="columns-4xl p-4 " *ngIf="iconSeleccionado === 'hospital'">
+      <div class="columns-4xl p-4 " *ngIf="iconSeleccionado === 'hospital' || iconSeleccionado === ''">
         <app-health-center></app-health-center>
       </div>
     </div>

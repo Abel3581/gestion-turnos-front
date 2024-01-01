@@ -54,6 +54,7 @@ export class ProfileComponent implements OnInit {
     this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
       this.countries = data;
     })
+    this.iconSeleccionado = "";
   }
 
   seleccionarIcono(icono: string): void {
