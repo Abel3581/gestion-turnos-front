@@ -8,7 +8,7 @@ import { CurrentUserResponse } from '../models/response/current-user-response';
 })
 export class UserService {
 
-  private urlUser = "http://localhost:8080/user";
+  private urlUser = "http://localhost:8080/users";
   constructor(private http: HttpClient) { }
 
   public getCurrentUser(): Observable<CurrentUserResponse>{

@@ -1,0 +1,205 @@
+<div class="flex flex-row">
+  <div class="basis-9/12 bg-red-300 mt-5 flex">
+    <div class="columns-2xl p-4 h-full">
+      <div class="py-2">
+        <h1 class="text-slate-400 font-bold">Acerca de mí...</h1>
+      </div>
+      <form [formGroup]="updateForm" class="bg-slate-800 p-4 max-w-2xl">
+        <div class="grid grid-cols-3 gap-4">
+          <div class="col-span-1 justify-center">
+            <label for="title" class="inline-block text-sm font-semibold leading-6 text-white">Titulo<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('title')?.hasError('required') && (updateForm.get('title')?.dirty || updateForm.get('title')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <select name="title" formControlName="title" autocomplete="title"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <option value="">-</option>
+              <option value="Dr.">Dr.</option>
+              <option value="Dra.">Dra.</option>
+              <option value="Lic">Lic</option>
+            </select>
+          </div>
+          <div class="col-span-1">
+            <label for="name" class="inline-block text-sm font-semibold leading-6 text-white">Nombre<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('name')?.hasError('required') && (updateForm.get('name')?.dirty || updateForm.get('name')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="name" type="text" name="nombre" autocomplete="Ingrese el nombre"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="col-span-1">
+            <label for="lastname" class="inline-block text-sm font-semibold leading-6 text-white">Apellido<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('lastname')?.hasError('required') && (updateForm.get('lastname')?.dirty || updateForm.get('lastname')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="lastname" type="text" name="lastname" autocomplete="Ingrese el apellido"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="col-span-1">
+            <label for="domicile" class="inline-block text-sm font-semibold leading-6 text-white">Domicilio<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('domicile')?.hasError('required') && (updateForm.get('domicile')?.dirty || updateForm.get('domicile')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="domicile" type="text" name="domicile"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="col-span-1">
+            <label for="province" class="inline-block text-sm font-semibold leading-6 text-white">Provincia<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('province')?.hasError('required') && (updateForm.get('province')?.dirty || updateForm.get('province')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="province" type="text" name="province"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="">
+            <label for="phone" class="inline-block text-sm font-semibold leading-6 text-white">Teléfono<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('phone')?.hasError('required') && (updateForm.get('phone')?.dirty || updateForm.get('phone')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="phone" type="text" name="phone"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="">
+            <label for="city" class="inline-block text-sm font-semibold leading-6 text-white">Ciudad<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('city')?.hasError('required') && (updateForm.get('city')?.dirty || updateForm.get('city')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="city" type="text" name="city"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="">
+            <label for="country" class="inline-block text-sm font-semibold leading-6 text-white">Pais<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('country')?.hasError('required') && (updateForm.get('country')?.dirty || updateForm.get('country')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <select formControlName="country" name="country"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <option value="" selected>-</option>
+              <option *ngFor="let country of countries" [value]="country.label">
+                {{country.label}}
+              </option>
+            </select>
+          </div>
+          <div class="">
+            <label for="whatsapp" class="inline-block text-sm font-semibold leading-6 text-white">WhatsApp<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('whatsapp')?.hasError('required') && (updateForm.get('whatsapp')?.dirty || updateForm.get('whatsapp')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="whatsapp" type="text" name="whatsapp"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="">
+            <label for="specialty" class="inline-block text-sm font-semibold leading-6 text-white">Especialidad<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('specialty')?.hasError('required') && (updateForm.get('specialty')?.dirty || updateForm.get('specialty')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <select formControlName="specialty" name="specialty"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <option value="" selected>-</option>
+              <option *ngFor="let specialty of specialties" [value]="specialty.label">
+                {{specialty.label}}
+              </option>
+            </select>
+          </div>
+          <div class="">
+            <label for="mat_nac" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Nac<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('mat_nac')?.hasError('required') && (updateForm.get('mat-nac')?.dirty || updateForm.get('mat_nac')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="mat_nac" type="text" id="mat_nac" name="mat_nac"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="">
+            <label for="mat_prov" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Prov<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('mat_prov')?.hasError('required') && (updateForm.get('mat-prov')?.dirty || updateForm.get('mat_prov')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <input formControlName="mat_prov" type="text" id="mat_prov" name="mat_prov"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+          <div class="col-span-3 ">
+            <label for="presentation"
+              class="inline-block text-sm font-semibold leading-6 text-white">Presentación<span
+                class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+              *ngIf="updateForm.get('presentation')?.hasError('required') && (updateForm.get('presentation')?.dirty || updateForm.get('presentation')?.touched)"
+              class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+            <textarea formControlName="presentation" name="presentation"
+              class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </textarea>
+          </div>
+          <div class="col-span-3 flex justify-end">
+            <button type="button" (click)="updateProfileComponent()"
+              class="bg-blue-500 text-white hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 text-sm rounded py-1">ACTUALIZAR</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="basis-1/4 bg-red-400 mt-5 flex">
+    <div class="text-center columns-xs rounded justify-center bg-yellow-300 ">
+      <div class=" ">
+        <div class="py-2">
+          <h1 class="text-slate-400 font-bold"> Acceso al Sistema</h1>
+        </div>
+        <div class="mx-2 border-2 border-violet-400 rounded mt-2">
+          <div class="flex justify-center my-2 mx-2 text-xs text-gray-500">
+            <p>Usuario</p>
+          </div>
+          <div class="flex justify-center my-2 mx-2 text-sm font-semibold">
+            <p>{{username}}</p>
+          </div>
+        </div>
+        <div class=" mt-4 flex justify-center">
+          <img class=" h-12 w-12 rounded-3xl ring-2 ring-white"
+            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="">
+        </div>
+
+        <div class="mt-3">
+          <button type="button"
+            class="bg-orange-400 text-white border-2 ring-violet-400 border-violet-500 hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 text-sm rounded py-1">CAMBIAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
