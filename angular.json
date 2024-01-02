@@ -27,7 +27,23 @@
             "styles": [
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              {
+                "input": "primeng/resources/themes/saga-blue/theme.css",
+                "bundleName": "saga-blue",
+                "inject": false
+              },
+              {
+                "input": "primeng/resources/primeng.min.css",
+                "bundleName": "primeng",
+                "inject": false
+              },
+              {
+                "input": "primeicons/primeicons.css",
+                "bundleName": "primeicons",
+                "inject": false
+              }
+
             ],
             "scripts": [
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
@@ -65,10 +81,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "gestion-front:build:production"
+              "buildTarget": "gestion-front:build:production"
             },
             "development": {
-              "browserTarget": "gestion-front:build:development"
+              "buildTarget": "gestion-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gestion-front:build"
+            "buildTarget": "gestion-front:build"
           }
         },
         "test": {

@@ -8,13 +8,12 @@ import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interc
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageModule } from './components/auth/page.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
 
   ],
   imports: [
@@ -22,7 +21,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     PageModule,
     AppRoutingModule,
     NgxUiLoaderModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule,ButtonModule
 
 
 
