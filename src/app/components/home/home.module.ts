@@ -1,30 +1,29 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
-import { ProfileComponent } from './profile/profile.component';
+import { DialogModule } from 'primeng/dialog';
+import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 import { HealthCenterComponent } from './health-center/health-center.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
-import { DialogModule } from 'primeng/dialog';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
+import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
+
 @NgModule({
   declarations: [
     ProfileComponent,
     HealthCenterComponent,
-    ProfileFormComponent
+    ProfileFormComponent,
+    ScheduleFormComponent
 
   ],
   imports: [
+    FormsModule,
     CommonModule,
     HomeRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
-    DialogModule,InputGroupModule,InputGroupAddonModule,
-    InputTextModule,
-    ButtonModule
+    DialogModule,
+    TooltipModule
 
   ]
 })

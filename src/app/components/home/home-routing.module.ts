@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { HealthCenterComponent } from './health-center/health-center.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
+import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
     children:[
       { path: 'profile', component: ProfileComponent },
       { path: 'center', component: HealthCenterComponent},
-      { path: 'form', component: ProfileFormComponent}
+      { path: 'form', component: ProfileFormComponent},
+      { path: 'schedule', component: ScheduleFormComponent}
     ]
   }
 ];

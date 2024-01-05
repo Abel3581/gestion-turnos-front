@@ -1,7 +1,8 @@
 
 .selected {
-  background-color: #6946c8;  /* Cambia el color de fondo según tus preferencias */
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));  /* Cambia el color de fondo según tus preferencias */
   border-radius: 100%;        /* Añade bordes redondeados o cualquier otro estilo */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  /* Añade sombra si lo deseas */
+
 
 }

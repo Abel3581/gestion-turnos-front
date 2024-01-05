@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CurrentUserResponse } from '../models/response/current-user-response';
+import { HealthCenterResponse } from '../models/response/health-center-response';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +16,11 @@ export class UserService {
     const url = `${this.urlUser}/me`;
     return this.http.get<CurrentUserResponse>(url);
   }
+
+  public getAllCenterForUser(id: number): Observable<HealthCenterResponse[]>{
+    const url = `${this.urlUser}/centers/${id}`;
+    return this.http.get<HealthCenterResponse[]>(url);
+  }
+
 
 }
