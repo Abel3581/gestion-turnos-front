@@ -1,41 +1,59 @@
 <div class="h-screen overflow-hidden bg-slate-200">
-
-  <!-- <div class="container mx-auto px-4 h-12 flex items-center bg-blue-500 w-screen">
-    Primera fila
-  </div> -->
-  <div class="container mx-auto px-4 h-screen">
-    <!-- <div class="flex justify-between mx-36">
-      <h2>Acerca de mi...</h2>
-      <h2>Usuario conectado</h2>
-    </div> -->
+  <div class="container mx-auto px-4 h-screen ">
     <div class="gap-8 columns-3 flex h-full">
       <!-- Columna 1 -->
       <div class=" justify-center items-center w-40 h-3/4 text-center mt-5">
-        <div class="flex flex-col justify-around items-center h-full bg-blue-500 w-full">
-          <ul class="h-4/5 bg-green-300 w-full inline-grid justify-center">
-            <li class="flex items-center mb-10 w-14 h-14 mt-5 bg-red-200 justify-center "
+        <div class="flex flex-col justify-around items-center h-full  w-full">
+          <ul class="h-4/5  w-full inline-grid justify-center">
+            <li class="flex items-center mb-5 w-14 h-14 mt-5 justify-center hover:bg-violet-600 hover:rounded-full "
               (click)="seleccionarIcono('circle-user')" [class.selected]="iconSeleccionado === 'circle-user'">
-              <a [routerLink]="">
-                <i class="fa-solid fa-circle-user fa-2xl"></i>
+              <a data-tooltip-target="tooltip-right-1" data-tooltip-placement="right" class="cursor-pointer hover:cursor-pointer">
+                <i class="fa-solid fa-circle-user fa-2xl "></i>
               </a>
+              <div id="tooltip-right-1" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                General
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             </li>
-            <li class="flex items-center mb-10  w-14 h-14 bg-red-200 justify-center "
+            <li class="flex items-center mb-5  w-14 h-14  justify-center hover:bg-violet-600 hover:rounded-full"
               (click)="seleccionarIcono('hospital')" [class.selected]="iconSeleccionado === 'hospital'">
-              <a [routerLink]="">
+              <a data-tooltip-target="tooltip-right-2" data-tooltip-placement="right" class="cursor-pointer hover:cursor-pointer">
                 <i class="fa-regular fa-hospital fa-2xl"></i>
               </a>
+              <div id="tooltip-right-2" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Centros
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             </li>
-            <li class="flex items-center mb-10 w-14 h-14 bg-red-200 justify-center" (click)="seleccionarIcono('users')"
+            <li class="flex items-center mb-5 w-14 h-14 justify-center hover:bg-violet-600 hover:rounded-full" (click)="seleccionarIcono('users')"
               [class.selected]="iconSeleccionado === 'users'">
-              <a [routerLink]="">
+              <a data-tooltip-target="tooltip-right-3" data-tooltip-placement="right" class="cursor-pointer hover:cursor-pointer">
                 <i class="fa-solid fa-users fa-2xl"></i>
               </a>
+              <div id="tooltip-right-3" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Pacientes
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             </li>
-            <li class="flex items-center mb-10 w-14 h-14 bg-red-200 justify-center"
+            <li class="flex items-center mb-5 w-14 h-14 justify-center hover:bg-violet-600 hover:rounded-full"
+              (click)="seleccionarIcono('calendar')" [class.selected]="iconSeleccionado === 'calendar'">
+              <a data-tooltip-target="tooltip-right-4" data-tooltip-placement="right" class="cursor-pointer hover:cursor-pointer">
+                <i class="fa-regular fa-calendar-days fa-2xl"></i>
+              </a>
+              <div id="tooltip-right-4" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Agenda
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
+            </li>
+            <li class="flex items-center mb-5 w-14 h-14 justify-center hover:bg-violet-600 hover:rounded-full"
               (click)="seleccionarIcono('reply-all')" [class.selected]="iconSeleccionado === 'reply-all'">
-              <a class="" [routerLink]="">
+              <a data-tooltip-target="tooltip-right-5" data-tooltip-placement="right" class="cursor-pointer hover:cursor-pointer">
                 <i class="fa-solid fa-reply-all fa-2xl"></i>
               </a>
+              <div id="tooltip-right-5" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                Inicio
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
             </li>
           </ul>
         </div>
@@ -44,8 +62,11 @@
       <div *ngIf="iconSeleccionado === 'circle-user'" class="">
         <app-profile-form></app-profile-form>
       </div>
-      <div class="columns-4xl p-4 " *ngIf="iconSeleccionado === 'hospital'">
+      <div class="columns-4xl p-4 " *ngIf="iconSeleccionado === 'hospital' || iconSeleccionado === ''">
         <app-health-center></app-health-center>
+      </div>
+      <div *ngIf="iconSeleccionado === 'calendar'">
+        <app-schedule-form></app-schedule-form>
       </div>
     </div>
   </div>

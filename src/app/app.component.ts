@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { initFlowbite } from 'flowbite';
+import { PrimeNGConfig } from 'primeng/api';
 
 
 @Component({
@@ -9,8 +11,10 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit{
 
   title = 'gestion-front';
-  ngOnInit(): void {
+  constructor() {}
 
+  ngOnInit(): void {
+    initFlowbite();
   }
 
 }

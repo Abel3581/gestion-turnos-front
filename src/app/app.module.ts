@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,23 +8,22 @@ import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interc
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageModule } from './components/auth/page.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
-
 
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     PageModule,
     AppRoutingModule,
     NgxUiLoaderModule,
-    BrowserAnimationsModule,
-
-
+    BrowserAnimationsModule
 
   ],
   providers: [
