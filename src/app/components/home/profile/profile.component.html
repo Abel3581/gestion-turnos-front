@@ -65,6 +65,9 @@
       <div class="columns-4xl p-4 " *ngIf="iconSeleccionado === 'hospital' || iconSeleccionado === ''">
         <app-health-center></app-health-center>
       </div>
+      <div *ngIf="iconSeleccionado === 'calendar'">
+        <app-schedule-form></app-schedule-form>
+      </div>
     </div>
   </div>
 </div>
