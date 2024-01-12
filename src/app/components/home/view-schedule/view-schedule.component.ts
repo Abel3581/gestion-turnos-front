@@ -40,15 +40,15 @@ export class ViewScheduleComponent implements OnInit {
     });
     this.getAllCentersName();
 
-
-
   }
 
   // Calculos paginacion fecha //
+  obtenerDosUltimosDigitos(): string {
+    return this.fechaActual.getFullYear().toString().slice(-2);
+  }
   calcularFechasSemana(fecha: Date) {
     const primerDiaSemana = fecha.getDate() - fecha.getDay() + (fecha.getDay() === 0 ? -6 : 1);
     const fechaInicioSemana = new Date(fecha.setDate(primerDiaSemana));
-
     this.fechasSemana = [];
     for (let i = 0; i < 7; i++) {
       const fecha = new Date(fechaInicioSemana);
@@ -98,6 +98,7 @@ export class ViewScheduleComponent implements OnInit {
 
   selectCenter(center: any): void {
     this.selectedCenter = center;
+    console.log("Centro seleccionado:", this.selectedCenter.name)
     this.getAllBusinessHours();
   }
 
