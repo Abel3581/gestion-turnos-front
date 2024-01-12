@@ -1,5 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { HealthCenterResponse } from 'src/app/models/response/health-center-response';
 import { HealthCenterService } from 'src/app/services/health-center.service';
@@ -13,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HealthCenterComponent implements OnInit{
 
+  iconSeleccionado: string = '';
   formGroup!: FormGroup;
   liSeleccionado: string = "";
   display: boolean = false;
@@ -21,7 +24,7 @@ export class HealthCenterComponent implements OnInit{
 
   constructor(private fb: FormBuilder, private centerService: HealthCenterService,
     private local: LocalAuthService, private tostr: ToastrService, private userService: UserService,
-    private zone: NgZone){
+    private zone: NgZone, private router: Router){
     this.formGroup = fb.group({
       name : ['', Validators.required],
       address: ['', Validators.required],
@@ -35,6 +38,22 @@ export class HealthCenterComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllCenters();
+    initFlowbite();
+    this.iconSeleccionado = "";
+
+  }
+
+  seleccionarIcono(icono: string): void {
+    this.iconSeleccionado = icono;
+    if(this.iconSeleccionado === 'profile'){
+      this.router.navigate(['/home/profile']);
+    }
+    if(this.iconSeleccionado === 'center'){
+      this.router.navigate(['/home/center']);
+    }
+    if(this.iconSeleccionado === 'calendar'){
+      this.router.navigate(['/home/schedule']);
+    }
 
   }
 

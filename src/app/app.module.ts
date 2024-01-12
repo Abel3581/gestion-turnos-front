@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PageModule } from './components/auth/page.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     PageModule,
     AppRoutingModule,
     NgxUiLoaderModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule
 
   ],
   providers: [

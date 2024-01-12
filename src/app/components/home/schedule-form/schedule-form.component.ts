@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Route, Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { BusinessHoursRequest } from 'src/app/models/request/business-hours-request';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
@@ -14,11 +16,13 @@ import { LocalAuthService } from 'src/app/services/local-auth.service';
 })
 export class ScheduleFormComponent implements OnInit {
 
+  iconSeleccionado: string = "";
   timeForm: FormGroup;
   centersNames!: HealthCenterNamesResponse[];
 
   constructor(private healthService: HealthCenterService, private fb: FormBuilder,
-    private local: LocalAuthService, private daysService: DaysService, private tostr: ToastrService) {
+    private local: LocalAuthService, private daysService: DaysService, private tostr: ToastrService,
+    private router: Router) {
     this.timeForm = fb.group({
       centerName: ['', Validators.required],
       startTime: ['08:00', Validators.required],
@@ -31,6 +35,22 @@ export class ScheduleFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCentersName();
+    initFlowbite();
+    this.iconSeleccionado = "";
+  }
+
+  seleccionarIcono(icono: string): void {
+    this.iconSeleccionado = icono;
+    if(this.iconSeleccionado === 'profile'){
+      this.router.navigate(['/home/profile']);
+    }
+    if(this.iconSeleccionado === 'center'){
+      this.router.navigate(['/home/center']);
+    }
+    if(this.iconSeleccionado === 'calendar'){
+      this.router.navigate(['/home/schedule']);
+    }
+
   }
 
   public createAttentionDays(){

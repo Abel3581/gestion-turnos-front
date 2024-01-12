@@ -9,3 +9,9 @@
 .button-style:hover {
   background-color: #f0f0f0;
 }
+
+.active-link{
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+  border-radius: 100%;
+}

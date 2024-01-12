@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
 import { ComponentRoutingModule } from './component.routing';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -27,6 +28,7 @@ import { ComponentRoutingModule } from './component.routing';
       preventDuplicates: true, // Evitar duplicados
     }),
     ToastNoAnimationModule,
+    RouterModule
 
 
   ]

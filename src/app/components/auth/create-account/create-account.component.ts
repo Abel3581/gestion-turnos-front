@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterRequest } from 'src/app/models/request/register-request';
 import { AuthService } from 'src/app/services/auth.service';
@@ -31,6 +32,7 @@ export class CreateAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    initFlowbite();
     this.http.get<any[]>('./assets/data/specialty.json').subscribe(data => {
       this.specialties = data;
       console.log(this.specialties.length);
