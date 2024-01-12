@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileRequest } from 'src/app/models/request/profile-request';
 import { ProfileResponse } from 'src/app/models/response/profile-response';
@@ -49,6 +50,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getProfileComponent();
     this.getCurrentUser();
+    initFlowbite();
     this.http.get<any[]>('./assets/data/specialty.json').subscribe(data => {
       this.specialties = data;
       console.log(this.specialties.length);
@@ -61,7 +63,15 @@ export class ProfileComponent implements OnInit {
 
   seleccionarIcono(icono: string): void {
     this.iconSeleccionado = icono;
-
+    if(this.iconSeleccionado === 'profile'){
+      this.router.navigate(['/home/profile']);
+    }
+    if(this.iconSeleccionado === 'center'){
+      this.router.navigate(['/home/center']);
+    }
+    if(this.iconSeleccionado === 'calendar'){
+      this.router.navigate(['/home/schedule']);
+    }
 
   }
 

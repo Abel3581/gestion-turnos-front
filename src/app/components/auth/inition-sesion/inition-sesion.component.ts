@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { min, timeout } from 'rxjs';
 import { Login } from 'src/app/models/login';
@@ -12,7 +13,7 @@ import { LocalAuthService } from 'src/app/services/local-auth.service';
   templateUrl: './inition-sesion.component.html',
   styleUrls: ['./inition-sesion.component.css']
 })
-export class InitionSesionComponent {
+export class InitionSesionComponent implements OnInit{
 
     loginForm: FormGroup;
     //erroresDeValidacion : any;
@@ -26,6 +27,10 @@ export class InitionSesionComponent {
       });
 
     }
+
+  ngOnInit(): void {
+    initFlowbite();
+  }
 
     get email(){
       return this.loginForm.controls['username'];
@@ -50,7 +55,7 @@ export class InitionSesionComponent {
             }
             this.toastr.success(response.message);
             setTimeout(() => {
-              this.router.navigate(['home/profile']);
+              this.router.navigateByUrl('home/view-schedule');
             }, 3000);
           },
           error: (err) => {

@@ -25,7 +25,6 @@
               "src/assets"
             ],
             "styles": [
-
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
@@ -36,7 +35,6 @@
             ],
             "scripts": [
               "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
-
             ]
           },
           "configurations": {
