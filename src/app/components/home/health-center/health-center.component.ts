@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
@@ -24,7 +24,7 @@ export class HealthCenterComponent implements OnInit{
 
   constructor(private fb: FormBuilder, private centerService: HealthCenterService,
     private local: LocalAuthService, private tostr: ToastrService, private userService: UserService,
-    private zone: NgZone, private router: Router){
+    private zone: NgZone, private router: Router, private cdr: ChangeDetectorRef){
     this.formGroup = fb.group({
       name : ['', Validators.required],
       address: ['', Validators.required],
@@ -41,18 +41,33 @@ export class HealthCenterComponent implements OnInit{
     initFlowbite();
     this.iconSeleccionado = "";
 
-  }
 
+  }
+  private reinicializarFlowBite() {
+    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
+    setTimeout(() => {
+      initFlowbite();
+      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
+    });
+  }
   seleccionarIcono(icono: string): void {
     this.iconSeleccionado = icono;
     if(this.iconSeleccionado === 'profile'){
-      this.router.navigate(['/home/profile']);
+      this.reinicializarFlowBite();
+      this.router.navigate(['/home/user-profile']);
     }
     if(this.iconSeleccionado === 'center'){
+
       this.router.navigate(['/home/center']);
+      this.reinicializarFlowBite();
     }
     if(this.iconSeleccionado === 'calendar'){
       this.router.navigate(['/home/schedule']);
+    }
+    if (this.iconSeleccionado === 'users'){
+      console.log('Navegando a /home/create-patients');
+      this.router.navigate(['/home/create-patiens']);
+      this.reinicializarFlowBite();
     }
 
   }

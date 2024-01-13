@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container"> -->
   <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
@@ -202,8 +202,8 @@
               </li>
               <li>
                 <a
-                  class="z-10 flex items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
-
+                  class="z-10 flex text-xs items-center justify-center px-4 h-10 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+                  Hoy
                 </a>
               </li>
               <li>
@@ -225,33 +225,31 @@
       <div class="flex items-start justify-center h-screen mb-4 rounded bg-gray-100">
         <div class="relative flex w-full">
           <div class="relative w-full overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto table-fixed">
+              <thead class="text-xs w-16 text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 w-16">
                     Hora
                   </th>
-                  <th *ngFor="let fecha of fechasSemana" scope="col" class="px-6 py-3">
-                    <span>{{ diasSemana[fecha.getDay()] }} {{ fecha.getDate() }}/{{ fecha.getMonth() + 1 }}/{{
-                      obtenerDosUltimosDigitos() }}</span>
-                    <!-- <button (click)="guardarTurno(fecha)">Guardar Turno</button> -->
+                  <th *ngFor="let fecha of fechasSemana" scope="col" class="px-6 py-3 w-20">
+                    <abbr title="{{ diasSemana[fecha.getDay()] }}">{{ diasSemana[fecha.getDay()] }}</abbr><br>
+                    <span>{{ fecha.getDate() }}/{{ fecha.getMonth() + 1 }}/{{ obtenerDosUltimosDigitos() }}</span>
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="text-center">
                 <ng-container *ngFor="let hora of hours; let i = index">
-                  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <tr class="w-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 w-16 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       <span>{{ hora }}</span>
                     </th>
-
                     <ng-container *ngFor="let fecha of fechasSemana; let j = index">
-                      <td>
-                        <button [disabled]="!selectedCenter || selectedCenter.name === ''"
+                      <td class="w-20 justify-center">
+                        <button  [disabled]="!selectedCenter || selectedCenter.name === ''"
                           [id]="'dropdownUsersButton' + i + '_' + j" [attr.data-dropdown-toggle]="'dropdownUsers' + i + '_' + j"
                           data-dropdown-placement="bottom"
                           class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                          type="button">Turnos <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                          type="button">Turnos <svg class="w-2 h-2 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                           </svg>
@@ -284,50 +282,14 @@
                     </ng-container>
                   </tr>
                 </ng-container>
-
               </tbody>
             </table>
-            <!-- <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4"
-              aria-label="Table navigation">
-              <span
-                class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing
-                <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span
-                  class="font-semibold text-gray-900 dark:text-white">1000</span></span>
-              <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                <li>
-                  <a href="#"
-                    class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                </li>
-                <li>
-                  <a href="#" aria-current="page"
-                    class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                </li>
-              </ul>
-            </nav> -->
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 
-</div>
+<!-- </div> -->
