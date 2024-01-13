@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { LazyLoadEvent } from 'primeng/api';
 import { BusinessHoursResponse } from 'src/app/models/response/business-hours-response';
@@ -26,29 +26,32 @@ export class ViewScheduleComponent implements OnInit {
   fechaActual: Date = new Date();
 
   constructor(private dateService: DataService, private http: HttpClient, private centers: HealthCenterService,
-    private local: LocalAuthService, private daysService: DaysService, private scheduleService: ScheduleService) {
+    private local: LocalAuthService, private daysService: DaysService, private scheduleService: ScheduleService,
+    private cdr: ChangeDetectorRef) {
 
 
   }
 
   ngOnInit(): void {
+
     this.calcularFechasSemana(this.fechaActual);
-    initFlowbite();
+
     this.http.get<number[]>('./assets/data/hours.json').subscribe((data) => {
       this.hours = data;
 
     });
     this.getAllCentersName();
-
-
-
+    initFlowbite();
   }
 
   // Calculos paginacion fecha //
+
+  obtenerDosUltimosDigitos(): string {
+    return this.fechaActual.getFullYear().toString().slice(-2);
+  }
   calcularFechasSemana(fecha: Date) {
     const primerDiaSemana = fecha.getDate() - fecha.getDay() + (fecha.getDay() === 0 ? -6 : 1);
     const fechaInicioSemana = new Date(fecha.setDate(primerDiaSemana));
-
     this.fechasSemana = [];
     for (let i = 0; i < 7; i++) {
       const fecha = new Date(fechaInicioSemana);
@@ -60,11 +63,21 @@ export class ViewScheduleComponent implements OnInit {
   retrocederSemana() {
     this.fechaActual.setDate(this.fechaActual.getDate() - 7);
     this.calcularFechasSemana(this.fechaActual);
+    this.reinicializarFlowBite();
   }
 
   avanzarSemana() {
     this.fechaActual.setDate(this.fechaActual.getDate() + 7);
     this.calcularFechasSemana(this.fechaActual);
+    this.reinicializarFlowBite();
+  }
+
+  private reinicializarFlowBite() {
+    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
+    setTimeout(() => {
+      initFlowbite();
+      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
+    });
   }
 
   compararFechas(fecha1: Date, fecha2: Date): boolean {
@@ -98,6 +111,7 @@ export class ViewScheduleComponent implements OnInit {
 
   selectCenter(center: any): void {
     this.selectedCenter = center;
+    console.log("Centro seleccionado:", this.selectedCenter.name)
     this.getAllBusinessHours();
   }
 

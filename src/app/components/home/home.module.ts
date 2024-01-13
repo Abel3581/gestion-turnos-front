@@ -10,9 +10,14 @@ import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
 import { RouterModule } from '@angular/router';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import localeEs from '@angular/common/locales/es';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CreatePatientsComponent } from './create-patients/create-patients.component';
+
+
+
+
 
 // Registra los datos de localización para español
 registerLocaleData(localeEs);
@@ -22,7 +27,11 @@ registerLocaleData(localeEs);
     ProfileComponent,
     HealthCenterComponent,
     ScheduleFormComponent,
-    ViewScheduleComponent
+    ViewScheduleComponent,
+    UserProfileComponent,
+    CreatePatientsComponent
+
+
 
   ],
   imports: [
@@ -33,7 +42,6 @@ registerLocaleData(localeEs);
     DialogModule,
     TooltipModule,
     RouterModule,
-    NgxPaginationModule,
     TableModule,
     ButtonModule
 
