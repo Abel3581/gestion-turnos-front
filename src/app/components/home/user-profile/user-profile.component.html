@@ -103,7 +103,7 @@
         </a>
       </li>
       <li>
-        <a routerLink="/home/create-patiens" routerLinkActive="active-link" (click)="seleccionarIcono('users')"
+        <a routerLink="/home/create-patients" routerLinkActive="active-link" (click)="seleccionarIcono('users')"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="fa-solid fa-hospital-user fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
@@ -126,13 +126,12 @@
 <div class="p-4 sm:ml-64">
   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
     <ng-container *ngIf="iconSeleccionado === 'profile' || iconSeleccionado === ''">
-
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid md:grid-cols-3  gap-4">
         <!-- Columna 2 profile -->
         <div class="col-span-2">
           <form [formGroup]="updateForm" class="bg-slate-800 p-3  rounded">
-            <div class="grid grid-cols-3 gap-4">
-              <div class="col-span-1 justify-center">
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="md:col-span-1 sm:col-span-3 justify-center">
                 <label for="title" class="inline-block text-sm font-semibold leading-6 text-white">Titulo<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -148,7 +147,7 @@
                   <option value="Lic">Lic</option>
                 </select>
               </div>
-              <div class="col-span-1">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="name" class="inline-block text-sm font-semibold leading-6 text-white">Nombre<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -159,7 +158,7 @@
                 <input formControlName="name" type="text" name="nombre" autocomplete="Ingrese el nombre"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="col-span-1">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="lastname" class="inline-block text-sm font-semibold leading-6 text-white">Apellido<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -170,7 +169,7 @@
                 <input formControlName="lastname" type="text" name="lastname" autocomplete="Ingrese el apellido"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="col-span-1">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="domicile" class="inline-block text-sm font-semibold leading-6 text-white">Domicilio<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -181,7 +180,7 @@
                 <input formControlName="domicile" type="text" name="domicile"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="col-span-1">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="province" class="inline-block text-sm font-semibold leading-6 text-white">Provincia<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -192,7 +191,7 @@
                 <input formControlName="province" type="text" name="province"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="phone" class="inline-block text-sm font-semibold leading-6 text-white">Teléfono<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -203,7 +202,7 @@
                 <input formControlName="phone" type="text" name="phone"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="city" class="inline-block text-sm font-semibold leading-6 text-white">Ciudad<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -214,7 +213,7 @@
                 <input formControlName="city" type="text" name="city"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="country" class="inline-block text-sm font-semibold leading-6 text-white">Pais<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -230,7 +229,7 @@
                   </option>
                 </select>
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="whatsapp" class="inline-block text-sm font-semibold leading-6 text-white">WhatsApp<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -241,7 +240,7 @@
                 <input formControlName="whatsapp" type="text" name="whatsapp"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="specialty" class="inline-block text-sm font-semibold leading-6 text-white">Especialidad<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -257,7 +256,7 @@
                   </option>
                 </select>
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="mat_nac" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Nac<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -268,7 +267,7 @@
                 <input formControlName="mat_nac" type="text" id="mat_nac" name="mat_nac"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="">
+              <div class="md:col-span-1 sm:col-span-3">
                 <label for="mat_prov" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Prov<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -279,7 +278,7 @@
                 <input formControlName="mat_prov" type="text" id="mat_prov" name="mat_prov"
                   class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
               </div>
-              <div class="col-span-3 ">
+              <div class="col-span-3  ">
                 <label for="presentation" class="inline-block text-sm font-semibold leading-6 text-white">Presentación<span
                     class="ml-2 font-bold text-red-600">*</span></label>
                 <div
@@ -328,7 +327,6 @@
 
 
       </div>
-
     </ng-container>
     <!-- <div class="grid grid-cols-3 gap-4 mb-4">
          <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
