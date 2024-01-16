@@ -43,18 +43,12 @@ export class HealthCenterComponent implements OnInit{
 
 
   }
-  private reinicializarFlowBite() {
-    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
-    setTimeout(() => {
-      initFlowbite();
-      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
-    });
-  }
+
   seleccionarIcono(icono: string): void {
     this.iconSeleccionado = icono;
     if(this.iconSeleccionado === 'profile'){
-      this.reinicializarFlowBite();
       this.router.navigate(['/home/user-profile']);
+      this.reinicializarFlowBite();
     }
     if(this.iconSeleccionado === 'center'){
 
@@ -63,13 +57,22 @@ export class HealthCenterComponent implements OnInit{
     }
     if(this.iconSeleccionado === 'calendar'){
       this.router.navigate(['/home/schedule']);
+      this.reinicializarFlowBite();
     }
-    if (this.iconSeleccionado === 'users'){
+    if (this.iconSeleccionado === 'user'){
       console.log('Navegando a /home/create-patients');
-      this.router.navigate(['/home/create-patiens']);
+      this.router.navigate(['/home/create-patients']);
       this.reinicializarFlowBite();
     }
 
+  }
+
+  private reinicializarFlowBite() {
+    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
+    setTimeout(() => {
+      initFlowbite();
+      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
+    });
   }
 
   public showDialog() {

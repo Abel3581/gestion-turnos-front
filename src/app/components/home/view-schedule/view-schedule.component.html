@@ -42,9 +42,9 @@
               </div>
               <ul class="py-1" role="none">
                 <li>
-                  <a href="#"
+                  <a routerLink="/home/user-profile"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Dashboard</a>
+                    role="menuitem"><i class="fa-solid fa-user-doctor fa-sm"></i> Mi Perfil</a>
                 </li>
                 <li>
                   <a href="#"
@@ -150,7 +150,7 @@
             Agenda de turnos
           </p>
         </div>
-        <div class="flex items-center justify-center h-20 rounded bg-gray-50 ">
+        <div class="flex items-center relative justify-center h-20 rounded bg-gray-50 ">
           <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button"><i class="fa-solid fa-house-medical me-2"></i>Centros
@@ -173,7 +173,7 @@
                         [checked]="selectedCenter === center" (change)="selectCenter(center)"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                     </div>
-                    <div class="ms-2 text-sm">
+                    <div class="ms-2 text-sm ">
                       <label for="helper-radio-{{i}}" class="font-medium text-gray-900 dark:text-gray-300">
                         <p id="helper-radio-text-{{i}}" class="text-xs font-normal text-gray-500 dark:text-gray-300">
                           {{center.name}}</p>

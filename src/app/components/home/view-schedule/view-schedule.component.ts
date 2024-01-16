@@ -34,14 +34,17 @@ export class ViewScheduleComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getAllCentersName();
     this.calcularFechasSemana(this.fechaActual);
 
     this.http.get<number[]>('./assets/data/hours.json').subscribe((data) => {
       this.hours = data;
 
     });
-    this.getAllCentersName();
-    initFlowbite();
+
+    this.reinicializarFlowBite();
+
+
   }
 
   // Calculos paginacion fecha //
@@ -108,11 +111,11 @@ export class ViewScheduleComponent implements OnInit {
     )
   }
 
-
   selectCenter(center: any): void {
     this.selectedCenter = center;
     console.log("Centro seleccionado:", this.selectedCenter.name)
-    this.getAllBusinessHours();
+    //this.getAllBusinessHours();
+    this.reinicializarFlowBite();
   }
 
   getAllBusinessHours() {
