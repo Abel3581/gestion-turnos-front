@@ -64,6 +64,11 @@ export class HealthCenterComponent implements OnInit{
       this.router.navigate(['/home/create-patients']);
       this.reinicializarFlowBite();
     }
+    if (this.iconSeleccionado === 'hours'){
+      console.log('Navegando a /home/schedule');
+      this.router.navigate(['/home/schedule']);
+      this.reinicializarFlowBite();
+    }
 
   }
 

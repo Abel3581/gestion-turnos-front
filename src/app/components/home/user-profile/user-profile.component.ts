@@ -51,7 +51,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.getProfileComponent();
     this.getCurrentUser();
-    initFlowbite();
+
     this.http.get<any[]>('./assets/data/specialty.json').subscribe(data => {
       this.specialties = data;
       console.log(this.specialties.length);
@@ -59,6 +59,7 @@ export class UserProfileComponent implements OnInit {
     this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
       this.countries = data;
     })
+    initFlowbite();
     this.iconSeleccionado = "";
   }
 

@@ -152,8 +152,14 @@
         <div>
           <label for="dni" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dni<span
             class="ml-2 font-bold text-red-600">*</span></label>
-          <div *ngIf="formAltaPatient.get('dni')?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
+          <!-- <div *ngIf="formAltaPatient.get('dni')?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
             <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div> -->
+          <div *ngIf="dniControl?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div>
+          <div *ngIf="dniControl?.hasError('pattern')" class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Números y 8 o mas dijitos.</p>
           </div>
           <input formControlName="dni" type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -262,9 +268,15 @@
         <div class="mb-2 ">
           <label for="email" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email<span
             class="ml-2 font-bold text-red-600">*</span></label>
-            <div *ngIf="formAltaPatient.get('email')?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            <div *ngIf="emailControl?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">El email es obligatorio.</p>
             </div>
+            <div *ngIf="emailControl?.hasError('email')" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Ingresa un email válido.</p>
+            </div>
+            <!-- <div *ngIf="formAltaPatient.get('email')?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div> -->
           <input formControlName="email" type="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="paciente@gmail.com">
