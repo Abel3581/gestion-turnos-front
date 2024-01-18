@@ -2,3 +2,12 @@
   position: absolute;
   right: 0; /* Ajusta según sea necesario */
 }
+/* Agrega estilos para las celdas deshabilitadas */
+.disabled-cell {
+  background-color: gray; /* O el color que desees para las celdas deshabilitadas */
+
+}
+
+.button-bg {
+  background-color: #31C7B2;
+}

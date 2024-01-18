@@ -1,7 +1,8 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
-import { DialogModule } from 'primeng/dialog';
+
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
@@ -10,12 +11,12 @@ import { ScheduleFormComponent } from './schedule-form/schedule-form.component';
 import { RouterModule } from '@angular/router';
 import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import localeEs from '@angular/common/locales/es';
-import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CreatePatientsComponent } from './create-patients/create-patients.component';
-
-
+import { ModalTurnsComponent } from './modal-turns/modal-turns.component';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -23,17 +24,18 @@ import { CreatePatientsComponent } from './create-patients/create-patients.compo
 registerLocaleData(localeEs);
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     ProfileComponent,
     HealthCenterComponent,
     ScheduleFormComponent,
     ViewScheduleComponent,
     UserProfileComponent,
-    CreatePatientsComponent
-
-
+    CreatePatientsComponent,
+    ModalTurnsComponent
 
   ],
+
   imports: [
     FormsModule,
     CommonModule,
@@ -43,7 +45,10 @@ registerLocaleData(localeEs);
     TooltipModule,
     RouterModule,
     TableModule,
-    ButtonModule
+    ButtonModule,
+    DialogModule,
+
+
 
   ],
   providers: [

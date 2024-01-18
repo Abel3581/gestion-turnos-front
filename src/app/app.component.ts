@@ -3,6 +3,7 @@ import { initFlowbite } from 'flowbite';
 import { PrimeNGConfig } from 'primeng/api';
 
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,10 +12,11 @@ import { PrimeNGConfig } from 'primeng/api';
 export class AppComponent implements OnInit{
 
   title = 'gestion-front';
-  constructor() {}
+  constructor(private primengConfig: PrimeNGConfig) {}
 
   ngOnInit(): void {
     initFlowbite();
+    this.primengConfig.ripple = true;
   }
 
 }

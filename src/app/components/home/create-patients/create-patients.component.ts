@@ -16,12 +16,13 @@ export class CreatePatientsComponent implements OnInit {
 
   formAltaPatient!: FormGroup;
   iconSeleccionado: string = '';
+
   constructor(private router: Router, private cdr: ChangeDetectorRef, private fb: FormBuilder,
     private patientService: PatientService, private tostr: ToastrService, private local: LocalAuthService) {
     this.formAltaPatient = fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      dni: ['', Validators.required],
+      dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8,}$/)]],
       cellphone: ['', Validators.required],
       genre: [''],
       dateOfBirth: [''],
@@ -30,7 +31,7 @@ export class CreatePatientsComponent implements OnInit {
       healthInsurance: [''],
       plan: [''],
       affiliateNumber: [''],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       profession: [''],
       province: [''],
       landline: ['']
@@ -38,10 +39,16 @@ export class CreatePatientsComponent implements OnInit {
     })
   }
 
+  get dniControl() {
+    return this.formAltaPatient.get('dni');
+  }
+  get emailControl(){
+    return this .formAltaPatient.get('email');
+  }
+
   ngOnInit(): void {
     this.iconSeleccionado = '';
     initFlowbite();
-
 
   }
 
@@ -99,9 +106,11 @@ export class CreatePatientsComponent implements OnInit {
             this.tostr.success(response.message);
           },
           err => {
-            console.log("Error");
-            console.log(err);
+             this.tostr.error(err.error.error);
+             console.log(err);
+
           }
+
         )
       }else {
         this.formAltaPatient.markAllAsTouched();
