@@ -1,0 +1,11 @@
+
+/* .selected {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));  /* Cambia el color de fondo según tus preferencias */
+  /* border-radius: 100%;        Añade bordes redondeados o cualquier otro estilo */
+/* } */
+.active-link{
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+  border-radius: 100%;
+}

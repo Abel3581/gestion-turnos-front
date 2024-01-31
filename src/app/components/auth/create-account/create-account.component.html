@@ -1,98 +1,125 @@
-<div class="bg-white w-screen h-screen flex flex-row ">
+<div class="bg-slate-800 w-screen h-screen flex flex-row ">
+  <!-- Columna 1 -->
   <div class=" w-1/2 h-10/12 flex flex-col ml-10 my-5">
-    <div class="w-full h-2/5">
-      <img class=" w-20 h-20 md:w-32 md:h-32 ml-14 " src="./../../../assets/img/logo.png" alt="" />
-    </div>
-    <div class="w-full h-5/6 flex justify-start items-start">
-      <img class=" w-20 h-20 md:w-9/12 md:h-full ml-16 " src="./../../../assets/img/3905531 1.png" alt="" />
+    <!-- <div class="w-full h-2/5">
+      <img class=" w-16 h-16 md:w-28 md:h-28 ml-28 " src="./../../../assets/img/logo.png" alt="" />
+    </div> -->
+    <div class="w-full h-screen flex justify-start items-start ">
+      <img class=" w-20 h-20 md:w-9/12 md:h-full ml-16 pb-14 pt-0 mt-0 " src="./../../../assets/img/medicos_remove.png" alt="" />
     </div>
   </div>
-  <div class=" bg-white w-1/2 flex justify-center items-center">
-    <div class="form-container w-9/12 bg-white mr-10 my-5">
-      <form [formGroup]="registerForm" (ngSubmit)="register()"
-        class="p-12 flex flex-col gap-8 w-full max-w-2xl bg-white ">
-        <div class="flex justify-center items-center">
-          <h1 class="text-indigo-600 text-2xl font-inter font-medium break-words"> Crea tu cuenta</h1>
-        </div>
-        <div class="flex flex-row space-x-4">
-          <div class="select-container">
-            <select formControlName="title" class="bg-white text-sm block w-full border border-gray-300 border-t-0 border-r-0 border-l-0 focus:outline-none focus:border-b focus:ring-0">
-              <option selected disabled value="TI">Selecciona un título</option>
-              <option value="US">Dr.</option>
-              <option value="CA">Dra.</option>
-              <option value="FR">Lic.</option>
-            </select>
-            <div *ngIf="registerForm.get('title')?.hasError('required') && (registerForm.get('title')?.dirty || registerForm.get('title')?.touched)" class="text-red-500">
-              <i class="fa-solid fa-triangle-exclamation"></i>
+  <!-- Fin colimna 1 -->
+  <!-- columna 2 -->
+  <div class="w-1/2 flex justify-center h-screen items-center border-2 border-l-violet-400 bg-slate-100">
+    <div class="w-full mr-10 h-3/4 my-5 flex items-center">
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="flex flex-col gap-8 w-full ml-10 max-w-2xl bg-slate-800 shadow-md rounded ">
+        <div class="grid grid-cols-3 gap-4 w-full p-5 ">
+          <div class="">
+            <label for="title" class="block text-sm font-medium leading-6 text-slate-100">Título</label>
+            <div class="mt-1">
+              <select name="title" autocomplete="title" formControlName="title"
+              class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
+                <option value="">-</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Dra.">Dra.</option>
+                <option value="Lic.">Lic.</option>
+              </select>
+            </div>
+            <div *ngIf="registerForm.get('title')?.hasError('required') && (registerForm.get('title')?.dirty || registerForm.get('title')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">El titulo es requerido.</p>
             </div>
           </div>
-          <div class="input-container">
-            <input formControlName="name" type="text" id="name" required class="border-none focus:outline-none border-b focus:border-none focus:ring-0 {{ registerForm.get('name')?.hasError('required') ? 'border-red-500 text-red-500' : 'border-gray-300' }} text-sm" />
-            <label class="text-xs absolute top-1/2 transform -translate-y-1/2 left-2 text-dark transition-transform">{{ registerForm.get('name')?.hasError('required') ? 'Nombre*' : 'Nombre' }}</label>
-            <div class="focus-border absolute bottom-0 left-0 right-0 h-2 bg-accent-color transform scale-x-0 origin-bottom transition-transform"></div>
-            <div *ngIf="registerForm.get('name')?.hasError('required') && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)" class="text-red-500">
-              <i class="fa-solid fa-triangle-exclamation"></i>
+          <div class="">
+            <label for="name" class="block text-sm font-medium leading-6 text-slate-100">Nombre</label>
+              <div class="mt-1">
+                <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input formControlName="name" type="text" name="name" autocomplete="nombre" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                  placeholder="Nombre">
+                </div>
+                <div *ngIf="registerForm.get('name')?.hasError('required') && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)" class="">
+                  <p class="text-red-500 text-xs italic ml-1">El nombre es requerido.</p>
+                </div>
+              </div>
+          </div>
+          <div class="">
+            <label for="lastname" class="block text-sm font-medium leading-6 text-slate-100">Apellido</label>
+              <div class="mt-1">
+                <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input formControlName="lastname" type="text" autocomplete="Apellido" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Apellido">
+                </div>
+              </div>
+              <div *ngIf="registerForm.get('lastname')?.hasError('required') && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)" class="">
+                <p class="text-red-500 text-xs italic ml-1">El apellido es requerido.</p>
+              </div>
+          </div>
+          <div class="col-span-3 ">
+            <label for="specialty" class="block text-sm font-medium leading-6 text-slate-100">Especialidad</label>
+            <div class="mt-1">
+              <select formControlName="specialty" autocomplete="especialidad" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
+                <option value="" selected>-</option>
+                <option *ngFor="let specialty of specialties" [value]="specialty.label">
+                  {{specialty.label}}
+                </option>
+              </select>
+            </div>
+            <div *ngIf="registerForm.get('specialty')?.hasError('required') && (registerForm.get('specialty')?.dirty || registerForm.get('specialty')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">La especialidad es requerida.</p>
             </div>
           </div>
+          <div class="col-span-3 ">
+            <label for="username" class="block text-sm font-medium leading-6 text-slate-100">Email</label>
+            <div class="mt-1">
+              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input formControlName="username" type="text" autocomplete="username" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Email">
+              </div>
+            </div>
+            <div *ngIf="registerForm.get('username')?.hasError('required') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">El email es requerido.</p>
+            </div>
+            <div *ngIf="registerForm.get('username')?.hasError('email') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">Ingrese un email valido.</p>
+            </div>
+          </div>
+          <div class="col-span-3 ">
+            <label for="password" class="block text-sm font-medium leading-6 text-slate-100">Password</label>
+            <div class="mt-1">
+              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input formControlName="password" type="password" autocomplete="password" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Password">
+              </div>
+            </div>
+            <div *ngIf="registerForm.get('password')?.hasError('required') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">El password es requerido.</p>
+            </div>
+            <div *ngIf="registerForm.get('password')?.hasError('minlength') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">El password debe tener 8 o mas caracteres.</p>
+            </div>
+          </div>
+          <div class="col-span-3 ">
+            <label for="country" class="block text-sm font-medium leading-6 text-slate-100">País</label>
+            <div class="mt-1">
+              <select formControlName="country" autocomplete="País" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
+                <option value="" selected>-</option>
+                <option *ngFor="let country of countries" [value]="country.label">
+                  {{country.label}}
+                </option>
+              </select>
+            </div>
+            <div *ngIf="registerForm.get('country')?.hasError('required') && (registerForm.get('country')?.dirty || registerForm.get('country')?.touched)" class="">
+              <p class="text-red-500 text-xs italic ml-1">El país es requerido.</p>
+            </div>
+          </div>
+          <div class="col-span-3 ">
+            <div class="flex items-center justify-end">
+              <button type="submit" class="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
+                Empezar ahora
+              </button>
 
-          <div class="input-container">
-            <input formControlName="lastname" type="text" id="lastname" required />
-            <label class="text-xs" for="lastname">Apellido</label>
-            <div *ngIf="registerForm.get('lastname')?.hasError('required') && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)" class="text-red-500">
-              <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <div class="input-container">
-            <input formControlName="specialty" type="text" id="specialty" required />
-            <label class="text-xs" for="specialty">Especialidad</label>
-          </div>
-          <div *ngIf="registerForm.get('specialty')?.hasError('required') && (registerForm.get('specialty')?.dirty || registerForm.get('specialty')?.touched)" class="text-red-500">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-          </div>
-          <div class="input-container">
-            <input formControlName="username" type="email" id="username" required />
-            <label class="text-xs" for="username">Email</label>
-          </div>
-          <div *ngIf="registerForm.get('username')?.hasError('required') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="text-red-500">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-          </div>
-          <div *ngIf="registerForm.get('username')?.hasError('email') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="text-red-500">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-          </div>
-          <div class="input-container">
-            <input formControlName="password" type="text" id="password" required />
-            <label class="text-xs" for="password">Contraseña</label>
-            <div *ngIf="registerForm.get('password')?.hasError('required') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="text-red-500">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div *ngIf="registerForm.get('password')?.hasError('minlength') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="text-red-500">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-          </div>
-          <div class="select-container-country mt-2">
-            <!-- <label for="pais">País</label> -->
-            <!-- <label for="default" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default select</label> -->
-            <select formControlName="country" id="select-country"
-              class="bg-white text-sm block w-full p-2.5 border border-gray-300 border-t-0 border-r-0 border-l-0">
-              <option class="styled-option">Seleccionar Pais</option>
-              <option value="Argentina" class="styled-option">Argentina</option>
-              <option value="Colombia" class="styled-option">Colombia</option>
-              <option value="Brazil" class="styled-option">Brazil</option>
-              <option value="Uruguay" class="styled-option">Uruguay</option>
-            </select>
-            <div *ngIf="registerForm.get('country')?.hasError('required') && (registerForm.get('country')?.dirty || registerForm.get('country')?.touched)" class="text-red-500">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-          </div>
-          <div class="p-8 flex justify-center items-center">
-            <button class="w-64 h-14 flex-shrink-0 rounded-lg bg-yellow-400">
-              Crear cuenta
-            </button>
           </div>
         </div>
       </form>
+
     </div>
   </div>
+  <!-- fin Columna 2 -->
 </div>

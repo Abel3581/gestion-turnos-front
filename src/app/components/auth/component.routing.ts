@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
       children:[
         {
-          path: 'cuenta',
+          path: 'register',
           component: CreateAccountComponent
         },
         {
@@ -31,7 +31,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[RouterModule],
 })
 
 export class ComponentRoutingModule {}

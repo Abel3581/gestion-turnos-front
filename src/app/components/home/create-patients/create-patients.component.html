@@ -1,0 +1,319 @@
+<!-- NavBar -->
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+          </svg>
+        </button>
+        <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
+          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+        </a>
+      </div>
+      <div class="flex items-center">
+        <div class="flex items-center ms-3">
+          <div>
+            <button type="button"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <span class="sr-only">Open user menu</span>
+              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                alt="user photo">
+            </button>
+          </div>
+          <div
+            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                Neil Sims
+              </p>
+              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                neil.sims"&#64;"flowbite.com
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Dashboard</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Settings</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Earnings</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Sign out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Dashboard -->
+<aside id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+  aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a routerLink="/home/user-profile" routerLinkActive="active-link"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+          (click)="seleccionarIcono('profile')">
+          <i class="fa-solid fa-user-doctor fa-lg"></i>
+          <span class="ms-3">Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a href="#"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-calendar-days fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Agenda</span>
+          <span
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/center" routerLinkActive="active-link" (click)="seleccionarIcono('center')"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-hospital fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Centros</span>
+          <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/create-patients" routerLinkActive="active-link" (click)="seleccionarIcono('user')"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-hospital-user fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
+          <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/home/view-schedule" routerLinkActive="active-link" (click)="seleccionarIcono('volver')"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-reply-all fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Volver</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+<!-- Body -->
+<div class="p-4 sm:ml-64 ">
+  <div class=" text-gray-900 dark:text-white p-4 border-2 bg-slate-800 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    <form class="" [formGroup]="formAltaPatient">
+      <div class="bg-blue-700 mb-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Alta Paciente</div>
+      <div class="grid gap-4 mb-2 md:grid-cols-4">
+        <div>
+          <label for="name" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Nombre<span class="ml-2 font-bold text-red-600">*</span></label>
+            <div
+            *ngIf="formAltaPatient.get('name')?.hasError('required') && (formAltaPatient.get('name')?.dirty || formAltaPatient.get('name')?.touched)"
+            class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div>
+          <input formControlName="name" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ingresar nombre">
+        </div>
+        <div>
+          <label for="surname" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido<span
+              class="ml-2 font-bold text-red-600">*</span></label>
+            <div *ngIf="formAltaPatient.get('surname')?.hasError('required') && (formAltaPatient.get('surname')?.dirty || formAltaPatient.get('surname')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+          <input formControlName="surname" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ingrasar apellido">
+        </div>
+        <div>
+          <label for="dni" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dni<span
+            class="ml-2 font-bold text-red-600">*</span></label>
+          <!-- <div *ngIf="formAltaPatient.get('dni')?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div> -->
+          <div *ngIf="dniControl?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div>
+          <div *ngIf="dniControl?.hasError('pattern')" class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Números y 8 o mas dijitos.</p>
+          </div>
+          <input formControlName="dni" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ingrsar dni">
+        </div>
+        <div class="">
+          <label for="cellphone" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono -
+            WhatsApp <span class="ml-2 font-bold text-red-600">*</span></label>
+            <div *ngIf="formAltaPatient.get('cellphone')?.hasError('required') && (formAltaPatient.get('cellphone')?.dirty || formAltaPatient.get('cellphone')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
+                <path
+                  d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
+              </svg>
+            </div>
+            <input formControlName="cellphone" type="text" aria-describedby="helper-text-explanation"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              pattern="" placeholder="Cod. Area + Nro. Teléfono">
+          </div>
+        </div>
+
+        <div class="relative">
+          <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Genero</label>
+          <select formControlName="genre"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected>Selecciona el género</option>
+            <option value="MC">Masculino</option>
+            <option value="FE">Femenino</option>
+            <option value="TR">Transgénero</option>
+
+          </select>
+        </div>
+        <div>
+          <label for="dateOfBirth" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha
+            Nacimiento</label>
+          <input formControlName="dateOfBirth" type="date"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="">
+        </div>
+        <div>
+          <label for="nationality"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nacionalidad</label>
+            <!-- <div *ngIf="formAltaPatient.get('nationality')?.hasError('required') && (formAltaPatient.get('nationality')?.dirty || formAltaPatient.get('nationality')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div> -->
+          <select formControlName="nationality"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="12">Bolivia</option>
+            <option value="6" selected="selected">Argentina</option>
+            <option value="14">Brasil</option>
+            <option value="16">Canada</option>
+            <option value="18">Chile</option>
+            <option value="19">Colombia</option>
+            <option value="20">Costa Rica</option>
+            <option value="25">Ecuador</option>
+            <option value="27">El Salvador</option>
+            <option value="85">España</option>
+            <option value="95">Estados Unidos</option>
+            <option value="37">Guatemala</option>
+            <option value="39">Honduras</option>
+            <option value="60">Mexico</option>
+            <option value="68">Nicaragua</option>
+            <option value="73">Panama</option>
+            <option value="74">Paraguay</option>
+            <option value="75">Peru</option>
+            <option value="157">República Dominicana</option>
+            <option value="96">Uruguay</option>
+            <option value="97">Venezuela</option>
+
+          </select>
+        </div>
+        <div>
+          <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
+          <input formControlName="address" type="text"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ej: Barrio 24 de febrero">
+        </div>
+      </div>
+      <div class="grid gap-4 mb-2 md:grid-cols-3 ">
+        <div class="mb-2 ">
+          <label for="healthInsurance" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Obra
+            Social</label>
+          <input formControlName="healthInsurance" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ej: Pami">
+        </div>
+        <div class="mb-2 ">
+          <label for="plan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plan</label>
+          <input formControlName="plan" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="">
+        </div>
+        <div class="mb-2 ">
+          <label for="affiliateNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nro.
+            afiliado</label>
+          <input formControlName="affiliateNumber" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="">
+        </div>
+      </div>
+      <div class="grid gap-4 mb-2 md:grid-cols-4 ">
+        <div class="mb-2 ">
+          <label for="email" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email<span
+            class="ml-2 font-bold text-red-600">*</span></label>
+            <div *ngIf="emailControl?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">El email es obligatorio.</p>
+            </div>
+            <div *ngIf="emailControl?.hasError('email')" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Ingresa un email válido.</p>
+            </div>
+            <!-- <div *ngIf="formAltaPatient.get('email')?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
+              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+            </div> -->
+          <input formControlName="email" type="email"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="paciente@gmail.com">
+        </div>
+        <div class="mb-2 ">
+          <label for="province" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Provincia</label>
+          <input formControlName="province" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ej: Buenos Aires">
+        </div>
+        <div class="mb-2 ">
+          <label for="profession" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profesión</label>
+          <input formControlName="profession" type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Ej: operario">
+        </div>
+        <div class="mb-2">
+          <label for="landline" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono de linea
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
+                <path
+                  d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z" />
+              </svg>
+            </div>
+            <input formControlName="landline" type="text" aria-describedby="helper-text-explanation"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              pattern="" placeholder="02320-449835 ">
+          </div>
+        </div>
+      </div>
+
+
+      <button type="button" (click)="createPatient()"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Alta</button>
+    </form>
+  </div>
+</div>

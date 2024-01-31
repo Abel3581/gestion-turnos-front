@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
 import { ComponentRoutingModule } from './component.routing';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -22,11 +23,12 @@ import { ComponentRoutingModule } from './component.routing';
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      timeOut: 4000, // Duración predeterminada del toast en milisegundos
+      timeOut: 3000, // Duración predeterminada del toast en milisegundos
       positionClass: 'toast-top-right', // Posición del toast
       preventDuplicates: true, // Evitar duplicados
     }),
     ToastNoAnimationModule,
+    RouterModule
 
 
   ]

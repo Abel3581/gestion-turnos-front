@@ -1,0 +1,17 @@
+.button-style {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 3px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.button-style:hover {
+  background-color: #f0f0f0;
+}
+
+.active-link{
+  background-color: aqua;
+
+ }
+

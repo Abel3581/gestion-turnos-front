@@ -1,0 +1,297 @@
+<!-- NavBar -->
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+          </svg>
+        </button>
+        <a href="https://flowbite.com" class="flex ms-2 md:me-24">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" />
+          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+        </a>
+      </div>
+      <div class="flex items-center">
+        <div class="flex items-center ms-3">
+          <div>
+            <button type="button"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <span class="sr-only">Open user menu</span>
+              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                alt="user photo">
+            </button>
+          </div>
+          <div
+            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                Neil Sims
+              </p>
+              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                neil.sims"&#64;"flowbite.com
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Dashboard</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Settings</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Earnings</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Sign out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Dashboard -->
+<aside id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+  aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a routerLink="/home/user-profile" routerLinkActive="active-link"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+          (click)="seleccionarIcono('profile')">
+          <i class="fa-solid fa-user-doctor fa-lg"></i>
+          <span class="ms-3">Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a href="#"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-calendar-days fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Agenda</span>
+          <span
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/center" routerLinkActive="active-link" (click)="seleccionarIcono('center')"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-hospital fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Centros</span>
+          <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/create-patients" routerLinkActive="active-link" (click)="seleccionarIcono('user')"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-hospital-user fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
+          <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/schedule" routerLinkActive="active-link" (click)="seleccionarIcono('hours')"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-clock fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Horarios</span>
+          <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+        </a>
+      </li>
+      <!-- <i class="fa-regular fa-clock fa-lg"></i> -->
+      <li>
+        <a routerLink="/home/view-schedule"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-reply-all fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Volver</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+<!-- Body -->
+<div class="p-4 sm:ml-64">
+  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    <div class="grid grid-rows-2 grid-flow-col gap-2 ">
+      <div class=" flex items-center">
+        <div class="w-full">
+          <img class="w-64 h-32" src="./../../../assets/img/centro_remove1.png" alt="Centro medico" />
+        </div>
+        <div class="w-full">
+          <h1 class="font-serif ml-3">CENTROS DE SALUD</h1>
+          <div class="mt-2">
+            <button type="button" (click)="showDialog()" icon="pi pi-external-link" label="Show"
+              class=" bg-blue-500 flex text-xs text-white hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 rounded py-1 shadow-lg shadow-cyan-500/50">
+              <i class="pi pi-plus mr-1"></i> CREAR CENTRO DE SALUD
+            </button>
+            <p-dialog class="flex justify-center content-center" header="Header" [(visible)]="visible"
+              [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw',height:'50vw' }" [draggable]="false"
+              [resizable]="false">
+              <ng-template pTemplate="header">
+                <div class="flex w-full h-full items-center justify-center gap-2 bg-violet-400 rounded">
+                  <span class="font-bold white-space-nowrap">Alta centro de salud</span>
+                </div>
+              </ng-template>
+              <form [formGroup]="formGroup" class="flex-grow h-full bg-slate-800 p-4 rounded">
+                <div class="grid items-center content-center grid-cols-2 gap-4 h-full">
+                  <div class="col-span-3 mb-2">
+                    <label for="name" class=" ml-1 text-sm font-semibold leading-6 text-white">Nombre<span
+                        class="ml-2 font-bold text-red-600">*</span></label>
+                    <div
+                      *ngIf="formGroup.get('name')?.hasError('required') && (formGroup.get('name')?.dirty || formGroup.get('name')?.touched)"
+                      class="inline-block">
+                      <p class="text-red-500 text-xs italic ml-1">El nombre es requerido.</p>
+                    </div>
+                    <div class="flex-grow w-full mt-1">
+                      <div
+                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <input formControlName="name" type="text" autocomplete="name"
+                          class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                          placeholder="Nombre del centro de salud">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-3 mb-2">
+                    <label for="address" class="ml-1 text-sm font-semibold leading-6 text-white">Dirección<span
+                        class="ml-2 font-bold text-red-600">*</span></label>
+                    <div
+                      *ngIf="formGroup.get('address')?.hasError('required') && (formGroup.get('address')?.dirty || formGroup.get('address')?.touched)"
+                      class="inline-block">
+                      <p class="text-red-500 text-xs italic ml-1">La dirección es requerido.</p>
+                    </div>
+                    <div class="flex-grow w-full mt-1">
+                      <div
+                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <input formControlName="address" type="text" autocomplete="address"
+                          class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                          placeholder="Introduce una Dirección">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-1 mb-2 ml-4">
+                    <label for="phone" class="ml-1 text-sm font-semibold leading-6 text-white">Teléfono<span
+                        class="ml-2 font-bold text-red-600">*</span></label>
+                    <div
+                      *ngIf="formGroup.get('phone')?.hasError('required') && (formGroup.get('phone')?.dirty || formGroup.get('phone')?.touched)"
+                      class="inline-block">
+                      <p class="text-red-500 text-xs italic ml-1">El teléfono es requerido.</p>
+                    </div>
+                    <div class="flex-grow w-full mt-1">
+                      <div
+                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <input formControlName="phone" type="text" autocomplete="phone"
+                          class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                          placeholder="1170197183">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-1 mb-2">
+                    <label for="email" class="ml-1 text-sm font-semibold leading-6 text-white">Email<span
+                        class="ml-2 font-bold text-red-600">*</span></label>
+                    <div
+                      *ngIf="formGroup.get('email')?.hasError('required') && (formGroup.get('email')?.dirty || formGroup.get('email')?.touched)"
+                      class="inline-block">
+                      <p class="text-red-500 text-xs italic ml-1">El email es requerido.</p>
+                    </div>
+                    <div
+                      *ngIf="formGroup.get('email')?.hasError('email') && (formGroup.get('email')?.dirty || formGroup.get('email')?.touched)"
+                      class="inline-block">
+                      <p class="text-red-500 text-xs italic ml-1">El email debe tener un formato válido.</p>
+                    </div>
+                    <div class="flex-grow w-full mt-1">
+                      <div
+                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <input formControlName="email" type="email" autocomplete="email"
+                          class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                          placeholder="centro@gmail.com">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-3 mb-2">
+                    <label for="specialty" class="ml-1 text-sm font-semibold leading-6 text-white">Especialidad<span
+                        class="ml-2 font-bold text-red-600">*</span></label>
+                    <div
+                      *ngIf="formGroup.get('specialty')?.hasError('required') && (formGroup.get('specialty')?.dirty || formGroup.get('specialty')?.touched)"
+                      class="inline-block">
+                      <p class="text-red-500 text-xs italic ml-1">La especialidad es requerida.</p>
+                    </div>
+                    <div class="flex-grow w-full mt-1">
+                      <div
+                        class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <input formControlName="specialty" type="text" autocomplete="specialty"
+                          class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                          placeholder="Especialidad, tipo de procedimiento...">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-span-3 flex justify-end mb-1">
+                    <button type="button"
+                      class="bg-red-500 text-white hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2  text-sm rounded py-1 mr-2"
+                      (click)="modalClose()">CERRAR</button>
+                    <button type="button" (click)="createCenter()"
+                      class="bg-blue-500 text-white hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2  text-sm rounded py-1">GUARDAR</button>
+
+                  </div>
+                </div>
+              </form>
+            </p-dialog>
+          </div>
+        </div>
+      </div>
+      <div class=" h-52 mb-5 shadow-2xl bg-white overflow-auto rounded ">
+        <ng-container *ngIf="centers && centers.length >= 0">
+          <div class=" mx-2 p-4 ">
+            <ul *ngFor="let center of centers">
+              <li class="flex justify-between items-center mb-2 px-2 bg-slate-200 rounded">
+                <div>
+                  <span class="font-semibold text-sm">{{center.name}}</span><br>
+                  <span class="text-xs text-slate-500">1 profesional - pacientes 236</span>
+                </div>
+                <div>
+                  <button
+                    class="rounded-full bg-blue-500 w-7 h-7 text-white hover:bg-blue-600 flex-col items-center justify-center mr-2"><i
+                      class="fa-regular fa-pen-to-square fa-xs "></i></button>
+                  <button
+                    class="rounded-full text-white bg-red-500 w-7 h-7 hover:bg-red-600 flex-col items-center justify-center"><i
+                      class="fa-regular fa-trash-can fa-xs "></i></button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- <div class=" mt-4 ">
+  <div class="  h-3/4 w-full flex items-center">
+
+  </div>
+</div> -->

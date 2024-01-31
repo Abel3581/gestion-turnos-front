@@ -1,10 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileRequest } from 'src/app/models/request/profile-request';
 import { ProfileResponse } from 'src/app/models/response/profile-response';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,12 +17,19 @@ import { ProfileService } from 'src/app/services/profile.service';
 })
 export class ProfileComponent implements OnInit {
 
+  iconSeleccionado: string = '';
+  specialties!: any[];
+  countries!: any[];
   updateForm!: FormGroup;
-  titulo: string = '';
+  nameUser: string = '';
+  lastnameUser: string = '';
+  username: string = '';
   titulosDisponibles: string[] = ['Dr.', 'Dra.', 'Lic.']; // Lista de títulos disponibles
   profileResponse!: ProfileResponse;
+
   constructor(private fb: FormBuilder, private profileService: ProfileService, private local: LocalAuthService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService, private userService: UserService, private http: HttpClient, private router: Router
+    ) {
     this.updateForm = fb.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
@@ -38,6 +49,30 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfileComponent();
+    this.getCurrentUser();
+    initFlowbite();
+    this.http.get<any[]>('./assets/data/specialty.json').subscribe(data => {
+      this.specialties = data;
+      console.log(this.specialties.length);
+    });
+    this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
+      this.countries = data;
+    })
+    this.iconSeleccionado = "";
+  }
+
+  seleccionarIcono(icono: string): void {
+    this.iconSeleccionado = icono;
+    if(this.iconSeleccionado === 'profile'){
+      this.router.navigate(['/home/profile']);
+    }
+    if(this.iconSeleccionado === 'center'){
+      this.router.navigate(['/home/center']);
+    }
+    if(this.iconSeleccionado === 'calendar'){
+      this.router.navigate(['/home/schedule']);
+    }
+
   }
 
   public getProfileComponent() {
@@ -87,8 +122,31 @@ export class ProfileComponent implements OnInit {
           }
         }
       );
+    }else{
+      this.updateForm.markAllAsTouched();
     }
 
   }
+
+  public getCurrentUser(){
+    this.userService.getCurrentUser().subscribe({
+      next: response => {
+        console.log(response);
+        this.nameUser = response.name;
+        this.lastnameUser = response.username;
+        this.username = response.username;
+      },
+      error: err => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log("Completo getCurrentUser()");
+      }
+
+
+    })
+  }
+
+
 
 }
