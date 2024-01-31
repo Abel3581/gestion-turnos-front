@@ -2,7 +2,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
-
 import { TooltipModule } from 'primeng/tooltip';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
@@ -13,12 +12,10 @@ import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import localeEs from '@angular/common/locales/es';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CreatePatientsComponent } from './create-patients/create-patients.component';
-import { ModalTurnsComponent } from './modal-turns/modal-turns.component';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-
-
+import { ModalAltaTurnComponent } from './modal-alta-turn/modal-alta-turn.component';
 
 // Registra los datos de localización para español
 registerLocaleData(localeEs);
@@ -32,7 +29,7 @@ registerLocaleData(localeEs);
     ViewScheduleComponent,
     UserProfileComponent,
     CreatePatientsComponent,
-    ModalTurnsComponent
+    ModalAltaTurnComponent
 
   ],
 
@@ -47,8 +44,6 @@ registerLocaleData(localeEs);
     TableModule,
     ButtonModule,
     DialogModule,
-
-
 
   ],
   providers: [

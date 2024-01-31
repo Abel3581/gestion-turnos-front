@@ -1,15 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { format } from 'date-fns';
 
 import { initFlowbite } from 'flowbite';
+import { Subscription } from 'rxjs';
 
 import { BusinessHoursResponse } from 'src/app/models/response/business-hours-response';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
+import { LocalDate } from 'src/app/models/response/local-date';
+import { TurnResponse } from 'src/app/models/response/turn-response';
 import { DataService } from 'src/app/services/data.service';
 import { DaysService } from 'src/app/services/days.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
+import { TurnService } from 'src/app/services/turn.service';
+import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
+import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
 
 
 
@@ -23,36 +30,32 @@ export class ViewScheduleComponent implements OnInit {
   selectedCenter!: HealthCenterNamesResponse;
   centersName!: HealthCenterNamesResponse[];
   attentionDays: BusinessHoursResponse[] = [];
+  turns: TurnResponse[] = [];
   hours: string[] = [];
-  diasSemana: string[] = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+  diasSemana: string[] = ['DOMINGO', 'LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
   fechasSemana: Date[] = [];
   fechaActual: Date = new Date();
-
-  public modalVisible: boolean = false;
-
-  public openModal(): void {
-    this.modalVisible = true;
-  }
+  visible: boolean = false;
 
   constructor(private dateService: DataService, private http: HttpClient, private centers: HealthCenterService,
     private local: LocalAuthService, private daysService: DaysService, private scheduleService: ScheduleService,
-    private cdr: ChangeDetectorRef) {
-
+    private cdr: ChangeDetectorRef, private modalService: ModalServiceService,
+    private turnService: TurnService, private turnUpdateService: TurnUpdateService) {
 
   }
 
   ngOnInit(): void {
-
     this.getAllCentersName();
     this.calcularFechasSemana(this.fechaActual);
-
     this.http.get<string[]>('./assets/data/hours.json').subscribe((data) => {
       this.hours = data;
 
     });
-
+    this.turnUpdateService.turnAdded$.subscribe(() => {
+      this.getAllTurnsByCenterName();
+    });
     this.reinicializarFlowBite();
-
+    console.log("Fecha actual: ", this.fechaActual);
   }
 
   // Calculos paginacion fecha //
@@ -62,25 +65,35 @@ export class ViewScheduleComponent implements OnInit {
   }
 
   calcularFechasSemana(fecha: Date) {
-    const primerDiaSemana = fecha.getDate() - fecha.getDay() + (fecha.getDay() === 0 ? -6 : 1);
+    // Obtener el primer día de la semana (lunes)
+    const primerDiaSemana = fecha.getDate() - fecha.getDay() + (fecha.getDay() === 0 ? 0 : (fecha.getDay() === 0 ? -6 : 0));
+
+    // Crear una nueva fecha con el primer día de la semana
     const fechaInicioSemana = new Date(fecha.setDate(primerDiaSemana));
+
     this.fechasSemana = [];
+
+    // Iterar para obtener las fechas de lunes a domingo
     for (let i = 0; i < 7; i++) {
       const fecha = new Date(fechaInicioSemana);
       fecha.setDate(fechaInicioSemana.getDate() + i);
       this.fechasSemana.push(fecha);
+      //console.log("Índice: " + i + ", Fecha de la semana: " + fecha);
     }
   }
 
   retrocederSemana() {
     this.fechaActual.setDate(this.fechaActual.getDate() - 7);
     this.calcularFechasSemana(this.fechaActual);
+    this.getAllTurnsByCenterName();
     this.reinicializarFlowBite();
+
   }
 
   avanzarSemana() {
     this.fechaActual.setDate(this.fechaActual.getDate() + 7);
     this.calcularFechasSemana(this.fechaActual);
+    this.getAllTurnsByCenterName();
     this.reinicializarFlowBite();
   }
 
@@ -105,7 +118,6 @@ export class ViewScheduleComponent implements OnInit {
     // );
   }
 
-
   public getAllCentersName() {
     const userId = this.local.getUserId();
     this.centers.getAllCentersName(userId!).subscribe(
@@ -124,12 +136,13 @@ export class ViewScheduleComponent implements OnInit {
     this.selectedCenter = center;
     console.log("Centro seleccionado:", this.selectedCenter.name)
     this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
+    this.getAllTurnsByCenterName();
     this.reinicializarFlowBite();
   }
 
   getAllBusinessHours() {
     console.log("Entrando al metodo getAllBusinessHours()")
-    if(this.selectedCenter && this.selectedCenter.name){
+    if (this.selectedCenter && this.selectedCenter.name) {
       this.daysService.getAllBusinessHours(this.selectedCenter.name).subscribe(
         response => {
 
@@ -150,25 +163,107 @@ export class ViewScheduleComponent implements OnInit {
 
   isCellEnabled(day: string, hora: string): boolean {
     // Lógica para determinar si la celda debería estar habilitada
-    return this.attentionDays.some((attentionDay) =>
-        attentionDay.day.toLowerCase() === day.toLowerCase() &&
-        this.compareTimes(hora, attentionDay.startTime) >= 0 &&
-        this.compareTimes(hora, attentionDay.endTime) <= 0
-    );
-}
+    if (!day) {
+      return false;
+    }
+    const normalizedDay = day.toLowerCase();  // Normaliza a minúsculas
 
-// Función para comparar horas en formato HH:mm
-compareTimes(time1: string, time2: string): number {
+    // console.log('Normalized Day:', normalizedDay);
+
+    return this.attentionDays.some((attentionDay) => {
+      // console.log('Attention Day:', attentionDay.day.toLowerCase());
+      return attentionDay.day.toLowerCase() === normalizedDay &&
+        this.compareTimes(hora, attentionDay.startTime) >= 0 &&
+        this.compareTimes(hora, attentionDay.endTime) <= 0;
+    });
+
+  }
+
+  // Función para comparar horas en formato HH:mm
+  compareTimes(time1: string, time2: string): number {
     const [hours1, minutes1] = time1.split(':').map(Number);
     const [hours2, minutes2] = time2.split(':').map(Number);
 
     if (hours1 !== hours2) {
-        return hours1 - hours2;
+      return hours1 - hours2;
     }
 
     // Si las horas son iguales, comparar los minutos
     return minutes1 - minutes2;
-}
+  }
+
+  public showDialog() {
+    this.visible = true;
+  }
+
+  public modalClose() {
+    this.visible = false;
+  }
+
+  // Llama a showModal() con los datos necesarios
+  public openModal(fecha: Date, hora: string): void {
+
+    const dateFormat = this.dateFormat(fecha);
+    // Convierte la cadena formateada nuevamente a un objeto Date
+    const fechaFormateada = new Date(dateFormat);
+    console.log("OpenMOdal: Fecha: " + dateFormat + " Hora" + hora + " Centro: " + this.selectedCenter.name);
+    this.modalService.showModal(fecha, hora, this.selectedCenter.name);
+  }
+
+  // Función para formatear la fecha en "YYYY-MM-DD"
+  private dateFormat(fecha: Date): string {
+    const year = fecha.getFullYear();
+    const month = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses son de 0 a 11
+    const day = String(fecha.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  getAllTurnsByCenterName() {
+    const centerName: string = this.selectedCenter.name;
+    this.turnService.getAllTurnsByCenterName(centerName).subscribe(
+      response => {
+        console.log(response);
+        this.turns = response;
+      },
+      error => {
+        console.error(error);
+      }
+    )
+  }
+
+  // Método para comparar la hora y fecha
+  compareHourAndDate(hora: string, fecha: Date, turn: TurnResponse): boolean {
+    const formattedDate = this.formatDate(turn.date);
+    return hora === turn.hour && formattedDate === this.formatDate(fecha);
+  }
+
+  // Método para formatear la fecha (puede ser cadena o Date)
+  formatDate(date: string | Date): string {
+    // Si es una cadena, simplemente devolverla
+    if (typeof date === 'string') {
+      return date;
+    }
+
+    // Si es un objeto Date, formatearlo
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  // En tu componente
+  isTurnAssigned(hora: string, fecha: Date): boolean {
+    return this.turns.some(turn => this.compareHourAndDate(hora, fecha, turn));
+  }
+  // En tu componente
+  hasAssignedTurn(hora: string, fecha: Date): boolean {
+    return this.turns.some(turn => this.compareHourAndDate(hora, fecha, turn));
+  }
+
+  getPatientInfo(hora: string, fecha: Date): TurnResponse | undefined {
+    return this.turns.find(turn => this.compareHourAndDate(hora, fecha, turn));
+  }
+
 
 
 
