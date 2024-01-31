@@ -42,8 +42,8 @@ export class CreatePatientsComponent implements OnInit {
   get dniControl() {
     return this.formAltaPatient.get('dni');
   }
-  get emailControl(){
-    return this .formAltaPatient.get('email');
+  get emailControl() {
+    return this.formAltaPatient.get('email');
   }
 
   ngOnInit(): void {
@@ -97,25 +97,31 @@ export class CreatePatientsComponent implements OnInit {
     const request: PatientRequest = this.formAltaPatient.value;
     console.log("Entrando al createPatient() en el TS");
     console.log("UserId = ", userId, "Request = ", request);
-      if(this.formAltaPatient.valid && userId != null){
-        console.log("Formulario validado")
-        this.patientService.createPatient(userId!, request).subscribe(
-          response => {
-            console.log("Paciente creado")
-            console.log(response);
-            this.tostr.success(response.message);
-          },
-          err => {
-             this.tostr.error(err.error.error);
-             console.log(err);
+    if (this.formAltaPatient.valid && userId != null) {
+      console.log("Formulario validado")
+      this.patientService.createPatient(userId!, request).subscribe(
+        response => {
+          console.log("Paciente creado")
+          console.log(response);
+          this.tostr.success(response.message);
+        },
+        err => {
+          this.tostr.error(err.error);
+          console.error('Error en el componente:', err);
 
+          // Puedes acceder a la propiedad 'error' para obtener detalles específicos del error
+          if (err.error && err.error.dni) {
+            this.tostr.error(err.error.dni);
+            console.error('Detalles específicos del error:', err.error.dni);
           }
+        }
 
-        )
-      }else {
-        this.formAltaPatient.markAllAsTouched();
+      )
+    } else {
+      this.formAltaPatient.markAllAsTouched();
 
-      }
     }
+  }
+
 
 }

@@ -7,7 +7,8 @@ import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import { ViewPatientsComponent } from './view-patients/view-patients.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CreatePatientsComponent } from './create-patients/create-patients.component';
-import { ModalTurnsComponent } from './modal-turns/modal-turns.component';
+import { ModalAltaTurnComponent } from './modal-alta-turn/modal-alta-turn.component';
+
 
 
 
@@ -21,8 +22,8 @@ const routes: Routes = [
       { path: 'view-schedule', component: ViewScheduleComponent},
       { path: 'view-patients', component: ViewPatientsComponent},
       { path: 'user-profile', component: UserProfileComponent},
-      { path: 'create-patients', component: CreatePatientsComponent},
-      { path: 'modal', component: ModalTurnsComponent}
+      { path: 'create-patients', component: CreatePatientsComponent}
+
     ]
   }
 ];
