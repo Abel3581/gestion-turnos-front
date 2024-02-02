@@ -61,7 +61,7 @@ export class ModalAltaTurnComponent implements OnInit {
 
   public searchPatient() {
     console.log("Se apreto el boton searchPatient")
-    console.log("ModalComponente Fecha: " + this.fecha + " hora: " + this.hora + " Centro: " + this.centro);
+    // console.log("ModalComponente Fecha: " + this.fecha + " hora: " + this.hora + " Centro: " + this.centro);
     if (this.searchTerm.length >= 3) {
       this.patientService.searchPatient(this.searchTerm).subscribe(
         response => {
@@ -95,7 +95,7 @@ export class ModalAltaTurnComponent implements OnInit {
 
     const formattedDate = `${year}-${month}-${day}`;
     const centro = this.centro;
-    console.log("Fecha dentro del metodo agregar turno: " + formattedDate);
+    //console.log("Fecha dentro del metodo agregar turno: " + formattedDate);
     //const date = this.fecha;
     const hour = this.hora;
     this.turnService.createPatientTurn(centro, formattedDate, hour, dni).subscribe(response => {
@@ -112,8 +112,8 @@ export class ModalAltaTurnComponent implements OnInit {
       }
     )
 
-    console.log("Fecha: " + this.fecha + " Hora: " + this.hora + "Centro: " + this.centro);
-    console.log('DNI Paciente seleccionado:', dni);
+    // console.log("Fecha: " + this.fecha + " Hora: " + this.hora + "Centro: " + this.centro);
+    // console.log('DNI Paciente seleccionado:', dni);
   }
   // Función para formatear la fecha en "YYYY-MM-DD"
   private formatDate(fecha: Date): Date {

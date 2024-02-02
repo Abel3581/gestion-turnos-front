@@ -28,6 +28,7 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
 export class ViewScheduleComponent implements OnInit {
 
   selectedCenter!: HealthCenterNamesResponse;
+  turnInfo!: TurnResponse;
   centersName!: HealthCenterNamesResponse[];
   attentionDays: BusinessHoursResponse[] = [];
   turns: TurnResponse[] = [];
@@ -36,6 +37,7 @@ export class ViewScheduleComponent implements OnInit {
   fechasSemana: Date[] = [];
   fechaActual: Date = new Date();
   visible: boolean = false;
+
 
   constructor(private dateService: DataService, private http: HttpClient, private centers: HealthCenterService,
     private local: LocalAuthService, private daysService: DaysService, private scheduleService: ScheduleService,
@@ -54,8 +56,8 @@ export class ViewScheduleComponent implements OnInit {
     this.turnUpdateService.turnAdded$.subscribe(() => {
       this.getAllTurnsByCenterName();
     });
-    this.reinicializarFlowBite();
-    console.log("Fecha actual: ", this.fechaActual);
+    //this.reinicializarFlowBite();
+    //console.log("Fecha actual: ", this.fechaActual);
   }
 
   // Calculos paginacion fecha //
@@ -65,36 +67,34 @@ export class ViewScheduleComponent implements OnInit {
   }
 
   calcularFechasSemana(fecha: Date) {
-    // Obtener el primer día de la semana (lunes)
-    const primerDiaSemana = fecha.getDate() - fecha.getDay() + (fecha.getDay() === 0 ? 0 : (fecha.getDay() === 0 ? -6 : 0));
-
-    // Crear una nueva fecha con el primer día de la semana
-    const fechaInicioSemana = new Date(fecha.setDate(primerDiaSemana));
-
-    this.fechasSemana = [];
-
-    // Iterar para obtener las fechas de lunes a domingo
-    for (let i = 0; i < 7; i++) {
-      const fecha = new Date(fechaInicioSemana);
-      fecha.setDate(fechaInicioSemana.getDate() + i);
-      this.fechasSemana.push(fecha);
-      //console.log("Índice: " + i + ", Fecha de la semana: " + fecha);
-    }
+  // Obtener el primer día de la semana (lunes)
+  const primerDiaSemana = fecha.getDate() - fecha.getDay();
+  // Crear una nueva fecha con el primer día de la semana (clonando la fecha original)
+  const fechaInicioSemana = new Date(fecha.getTime());
+  this.fechasSemana = [];
+  // Usar un bucle más simple para construir la lista de fechas
+  for (let i = 0; i < 7; i++) {
+    const fecha = new Date(fechaInicioSemana);
+    fecha.setDate(primerDiaSemana + i);
+    this.fechasSemana.push(fecha);
+  }
   }
 
   retrocederSemana() {
-    this.fechaActual.setDate(this.fechaActual.getDate() - 7);
-    this.calcularFechasSemana(this.fechaActual);
-    this.getAllTurnsByCenterName();
-    this.reinicializarFlowBite();
+    this.actualizarFechaSemana(-7);
 
   }
 
   avanzarSemana() {
-    this.fechaActual.setDate(this.fechaActual.getDate() + 7);
+    this.actualizarFechaSemana(7);
+  }
+  private actualizarFechaSemana(dias: number) {
+    this.fechaActual.setDate(this.fechaActual.getDate() + dias);
     this.calcularFechasSemana(this.fechaActual);
-    this.getAllTurnsByCenterName();
-    this.reinicializarFlowBite();
+    // if (this.centersName && this.selectedCenter) {
+    //   this.getAllTurnsByCenterName();
+    // }
+     this.reinicializarFlowBite();
   }
 
   private reinicializarFlowBite() {
@@ -109,14 +109,6 @@ export class ViewScheduleComponent implements OnInit {
     return fecha1.toDateString() === fecha2.toDateString();
   }
   // Fin Calculo fecha paginacion //
-
-  guardarTurno(fecha: Date) {
-    // Aquí puedes llamar a tu servicio para guardar el turno en la fecha seleccionada
-    // Asegúrate de tener un servicio que se comunique con tu backend Java
-    // this.turnoService.guardarTurno({ fecha: fecha.toISOString() }).subscribe(
-    // Manejar la respuesta del servidor si es necesario
-    // );
-  }
 
   public getAllCentersName() {
     const userId = this.local.getUserId();
@@ -137,7 +129,7 @@ export class ViewScheduleComponent implements OnInit {
     console.log("Centro seleccionado:", this.selectedCenter.name)
     this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
     this.getAllTurnsByCenterName();
-    this.reinicializarFlowBite();
+    //this.reinicializarFlowBite();
   }
 
   getAllBusinessHours() {
@@ -147,9 +139,9 @@ export class ViewScheduleComponent implements OnInit {
         response => {
 
           this.attentionDays = response;
-          console.log("Horas y dias:", response);
-          this.cdr.detectChanges();
-          console.log("Horas de la agenda: " + this.selectedCenter.name, response);
+          //console.log("Horas y dias:", response);
+          //this.cdr.detectChanges();
+          //console.log("Horas de la agenda: " + this.selectedCenter.name, response);
           this.reinicializarFlowBite();
 
         },
@@ -166,10 +158,8 @@ export class ViewScheduleComponent implements OnInit {
     if (!day) {
       return false;
     }
-    const normalizedDay = day.toLowerCase();  // Normaliza a minúsculas
-
+    const normalizedDay = day.toLowerCase(); // Normaliza a minúsculas
     // console.log('Normalized Day:', normalizedDay);
-
     return this.attentionDays.some((attentionDay) => {
       // console.log('Attention Day:', attentionDay.day.toLowerCase());
       return attentionDay.day.toLowerCase() === normalizedDay &&
@@ -203,10 +193,10 @@ export class ViewScheduleComponent implements OnInit {
   // Llama a showModal() con los datos necesarios
   public openModal(fecha: Date, hora: string): void {
 
-    const dateFormat = this.dateFormat(fecha);
+    // const dateFormat = this.dateFormat(fecha);
     // Convierte la cadena formateada nuevamente a un objeto Date
-    const fechaFormateada = new Date(dateFormat);
-    console.log("OpenMOdal: Fecha: " + dateFormat + " Hora" + hora + " Centro: " + this.selectedCenter.name);
+    // const fechaFormateada = new Date(dateFormat);
+    // console.log("OpenMOdal: Fecha: " + dateFormat + " Hora" + hora + " Centro: " + this.selectedCenter.name);
     this.modalService.showModal(fecha, hora, this.selectedCenter.name);
   }
 
@@ -221,15 +211,18 @@ export class ViewScheduleComponent implements OnInit {
 
   getAllTurnsByCenterName() {
     const centerName: string = this.selectedCenter.name;
-    this.turnService.getAllTurnsByCenterName(centerName).subscribe(
-      response => {
-        console.log(response);
-        this.turns = response;
-      },
-      error => {
-        console.error(error);
-      }
-    )
+    if (centerName && this.selectedCenter) {
+      this.turnService.getAllTurnsByCenterName(centerName).subscribe(
+        response => {
+          //console.log(response);
+          this.turns = response;
+        },
+        error => {
+          console.error(error);
+        }
+      )
+    }
+
   }
 
   // Método para comparar la hora y fecha
@@ -260,9 +253,51 @@ export class ViewScheduleComponent implements OnInit {
     return this.turns.some(turn => this.compareHourAndDate(hora, fecha, turn));
   }
 
+  getTurnByCenterNameAndDateAndHour(hora: string, fecha: Date) {
+    console.log("Se apreto el buscar turno por hora, fecha y centro");
+    const centerName: string = this.selectedCenter.name;
+    const date: string = format(fecha, 'yyyy-MM-dd');
+    if (centerName && hora && fecha) {
+      this.turnService.getTurnByCenterNameAndDateAndHour(centerName, date, hora).subscribe(
+        response => {
+          console.log(response);
+          this.turnInfo = response;
+        },
+        error => {
+          console.error(error);
+        }
+      )
+    }
+  }
+
   getPatientInfo(hora: string, fecha: Date): TurnResponse | undefined {
     return this.turns.find(turn => this.compareHourAndDate(hora, fecha, turn));
   }
+  getDropdownId(i: number, j: number): string {
+    return `dropdown${i}_${j}`;
+  }
+
+  getDropdownButtonId(i: number, j: number): string {
+    return `dropdownDefaultButton${i}_${j}`;
+  }
+
+  getDropdownToggleId(i: number, j: number): string {
+    return `dropdown${i}_${j}`;
+  }
+
+  getUserDropdownId(i: number, j: number): string {
+    return `dropdownUsers${i}_${j}`;
+  }
+
+  getUserButtonId(i: number, j: number): string {
+    return `dropdownUsersButton${i}_${j}`;
+  }
+
+  getUserToggleId(i: number, j: number): string {
+    return `dropdownUsers${i}_${j}`;
+  }
+
+
 
 
 

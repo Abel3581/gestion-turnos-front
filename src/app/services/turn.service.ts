@@ -24,6 +24,15 @@ export class TurnService {
 
   }
 
+  public getTurnByCenterNameAndDateAndHour(centerName: string, date: string, hour: string): Observable<TurnResponse>{
+    const url = `${this.urlTurn}/turn-by-cdh`;
+    let params = new HttpParams();
+    params = params.append('centerName', centerName);
+    params = params.append('date', date);
+    params = params.append('hour', hour);
+    return this.http.get<TurnResponse>(url, { params: params});
+  }
+
   getAllTurnsByCenterName(centerName: string): Observable<TurnResponse[]>{
     const url = `${this.urlTurn}/center-name`;
     let param = new HttpParams();

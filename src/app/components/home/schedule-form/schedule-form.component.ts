@@ -43,7 +43,7 @@ export class ScheduleFormComponent implements OnInit {
   seleccionarIcono(icono: string): void {
     this.iconSeleccionado = icono;
     if(this.iconSeleccionado === 'profile'){
-      this.router.navigate(['/home/profile']);
+      this.router.navigate(['/home/user-profile']);
     }
     if(this.iconSeleccionado === 'center'){
       this.router.navigate(['/home/center']);

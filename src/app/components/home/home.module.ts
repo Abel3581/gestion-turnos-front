@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ModalAltaTurnComponent } from './modal-alta-turn/modal-alta-turn.component';
 
+
 // Registra los datos de localización para español
 registerLocaleData(localeEs);
 
@@ -29,7 +30,8 @@ registerLocaleData(localeEs);
     ViewScheduleComponent,
     UserProfileComponent,
     CreatePatientsComponent,
-    ModalAltaTurnComponent
+    ModalAltaTurnComponent,
+
 
   ],
 

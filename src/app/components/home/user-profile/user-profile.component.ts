@@ -59,8 +59,9 @@ export class UserProfileComponent implements OnInit {
     this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
       this.countries = data;
     })
-    initFlowbite();
+    // initFlowbite();
     this.iconSeleccionado = "";
+    this.reinicializarFlowBite();
   }
 
   seleccionarIcono(icono: string): void {
@@ -81,7 +82,7 @@ export class UserProfileComponent implements OnInit {
       this.router.navigate(['/home/schedule']);
       this.reinicializarFlowBite();
     }
-    if (this.iconSeleccionado === 'users'){
+    if (this.iconSeleccionado === 'users') {
       console.log('Navegando a /home/create-patients');
       this.router.navigate(['/home/create-patiens']);
       this.reinicializarFlowBite();
@@ -163,12 +164,12 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
-  private reinicializarFlowBite(){
-  // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
-  setTimeout(() => {
-    initFlowbite();
-    this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
-  });
+  private reinicializarFlowBite() {
+    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
+    setTimeout(() => {
+      initFlowbite();
+      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
+    });
   }
 
 }
