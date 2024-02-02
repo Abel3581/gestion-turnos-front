@@ -60,12 +60,8 @@ export class CreatePatientsComponent implements OnInit {
       this.router.navigate(['/home/user-profile']);
       this.reinicializarFlowBite();
     }
-    if (this.iconSeleccionado === 'center') {
-      console.log('Navegando a /home/center');
-      this.router.navigate(['/home/center']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'calendar') {
+
+    if (this.iconSeleccionado === 'hours') {
       console.log('Navegando a /home/schedule');
       this.router.navigate(['/home/schedule']);
       this.reinicializarFlowBite();

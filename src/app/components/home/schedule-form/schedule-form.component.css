@@ -10,8 +10,12 @@
   background-color: #f0f0f0;
 }
 
-.active-link{
+.active-link {
   background-color: aqua;
 
- }
+}
 
+.active {
+  background-color: #3490dc;
+  color: #ffffff;
+}
