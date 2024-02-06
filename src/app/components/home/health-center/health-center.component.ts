@@ -38,37 +38,7 @@ export class HealthCenterComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllCenters();
-    initFlowbite();
-    this.iconSeleccionado = "";
-
-
-  }
-
-  seleccionarIcono(icono: string): void {
-    this.iconSeleccionado = icono;
-    if(this.iconSeleccionado === 'profile'){
-      this.router.navigate(['/home/user-profile']);
-      this.reinicializarFlowBite();
-    }
-    if(this.iconSeleccionado === 'center'){
-
-      this.router.navigate(['/home/center']);
-      this.reinicializarFlowBite();
-    }
-    if(this.iconSeleccionado === 'calendar'){
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'user'){
-      console.log('Navegando a /home/create-patients');
-      this.router.navigate(['/home/create-patients']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'hours'){
-      console.log('Navegando a /home/schedule');
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
+    this.reinicializarFlowBite();
 
   }
 

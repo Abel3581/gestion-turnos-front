@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interceptor';
-
 import { PageModule } from './components/auth/page.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +17,7 @@ import { RouterModule } from '@angular/router';
   declarations: [
     AppComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -27,6 +27,7 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     NgxUiLoaderModule,
     RouterModule,
+
 
 
 

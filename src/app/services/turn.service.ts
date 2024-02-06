@@ -40,5 +40,10 @@ export class TurnService {
     return this.http.get<TurnResponse[]>(url, { params: param });
   }
 
+  deleteTurnById(turnId: number): Observable<MessageResponse>{
+    const url = `${this.urlTurn}/delete/${turnId}`;
+    return this.http.delete<MessageResponse>(url);
+  }
+
 
 }

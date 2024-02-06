@@ -1,0 +1,67 @@
+<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+  <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+    <li class="me-2" role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab-example" data-tabs-target="#profile-example" type="button" role="tab" aria-controls="profile" aria-selected="false">Lunes</button>
+    </li>
+    <li class="me-2" role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab-example" data-tabs-target="#dashboard-example" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Martes</button>
+    </li>
+    <li class="me-2" role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab-example" data-tabs-target="#settings-example" type="button" role="tab" aria-controls="settings" aria-selected="false">Miércoles</button>
+    </li>
+    <li role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-tab-example" data-tabs-target="#contacts-example" type="button" role="tab" aria-controls="contacts" aria-selected="false">Jueves</button>
+    </li>
+    <li role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="friday-tab-example" data-tabs-target="#friday-example" type="button" role="tab" aria-controls="friday" aria-selected="false">Viernes</button>
+    </li>
+    <li role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="saturday-tab-example" data-tabs-target="#saturday-example" type="button" role="tab" aria-controls="saturday" aria-selected="false">Sábado</button>
+    </li>
+    <li role="presentation">
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="sunday-tab-example" data-tabs-target="#sunday-example" type="button" role="tab" aria-controls="sunday" aria-selected="false">Domingo</button>
+    </li>
+  </ul>
+</div>
+
+<div id="default-tab-content" *ngIf="horasLunes && horasLunes.length > 0">
+  <div  class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile-example" role="tabpanel" aria-labelledby="profile-tab-example">
+    <button *ngFor="let hora of horasLunes" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+      <div class="relative flex items-center"> <!-- Contenedor para centrar verticalmente -->
+        <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+          {{hora.startTime}} A {{hora.endTime}}
+            <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i> <!-- Icono de la hora -->
+            <i class="fa-solid fa-trash-alt bg-red-600 transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-3 right-2"></i> <!-- Icono de eliminar -->
+        </span>
+      </div>
+    </button>
+  </div>
+  <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard-example" role="tabpanel" aria-labelledby="dashboard-tab-example">
+    <p class="text-sm text-gray-500 dark:text-gray-400">Contenido del tab Martes</p>
+  </div>
+  <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings-example" role="tabpanel" aria-labelledby="settings-tab-example">
+    <p class="text-sm text-gray-500 dark:text-gray-400">Contenido del tab Miércoles</p>
+  </div>
+  <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts-example" role="tabpanel" aria-labelledby="contacts-tab-example">
+    <p class="text-sm text-gray-500 dark:text-gray-400">Contenido del tab Jueves</p>
+  </div>
+  <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="friday-example" role="tabpanel" aria-labelledby="friday-tab-example">
+    <button *ngFor="let hora of horasViernes" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs  font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+      <div class="relative flex items-center"> <!-- Contenedor para centrar verticalmente -->
+        <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+          {{hora.startTime}} A {{hora.endTime}}
+            <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i> <!-- Icono de la hora -->
+            <i class="fa-solid fa-trash-alt bg-red-600 transition-opacity duration-300 opacity-0 group-hover:opacity-100 absolute top-3 right-2"></i> <!-- Icono de eliminar -->
+        </span>
+      </div>
+    </button>
+  </div>
+  <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="saturday-example" role="tabpanel" aria-labelledby="saturday-tab-example">
+    <p class="text-sm text-gray-500 dark:text-gray-400">Contenido del tab Sábado</p>
+  </div>
+  <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="sunday-example" role="tabpanel" aria-labelledby="sunday-tab-example">
+    <p class="text-sm text-gray-500 dark:text-gray-400">Contenido del tab Domingo</p>
+  </div>
+</div>
+
+

@@ -64,34 +64,6 @@ export class UserProfileComponent implements OnInit {
     this.reinicializarFlowBite();
   }
 
-  seleccionarIcono(icono: string): void {
-    this.iconSeleccionado = icono;
-    console.log('Icono seleccionado:', icono);
-    if (this.iconSeleccionado === 'profile') {
-      console.log('Navegando a /home/user-profile');
-      this.router.navigate(['/home/user-profile']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'center') {
-      console.log('Navegando a /home/center');
-      this.router.navigate(['/home/center']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'calendar') {
-      console.log('Navegando a /home/schedule');
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'users') {
-      console.log('Navegando a /home/create-patients');
-      this.router.navigate(['/home/create-patiens']);
-      this.reinicializarFlowBite();
-    }
-
-  }
-
-
-
   public getProfileComponent() {
     const userId = this.local.getUserId();
     this.profileService.getProfile(userId!).subscribe(
