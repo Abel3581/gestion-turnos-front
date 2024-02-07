@@ -11,7 +11,7 @@ import { LocalAuthService } from 'src/app/services/local-auth.service';
   templateUrl: './days.component.html',
   styleUrl: './days.component.css'
 })
-export class DaysComponent implements OnInit, AfterViewInit {
+export class DaysComponent implements OnInit {
 
   horasLunes: BusinessHoursResponse[] = [];
   horasMartes: BusinessHoursResponse[] = [];
@@ -30,9 +30,9 @@ export class DaysComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef,
     private zone: NgZone) {}
 
-  ngAfterViewInit(): void {
+  // ngAfterViewInit(): void {
 
-  }
+  // }
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
@@ -66,7 +66,6 @@ export class DaysComponent implements OnInit, AfterViewInit {
             switch (day) {
               case 'Lunes':
                 this.horasLunes = response;
-
                 break;
               case 'Martes':
                 this.horasMartes = response;

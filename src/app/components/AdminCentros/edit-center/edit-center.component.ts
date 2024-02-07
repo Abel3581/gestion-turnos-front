@@ -12,8 +12,8 @@ import { LocalAuthService } from 'src/app/services/local-auth.service';
 export class EditCenterComponent implements OnInit{
   @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) dynamicComponentContainer: ViewContainerRef | undefined;
   centerName: string = '';
-  name: string = '';
-  surname: string = '';
+  name: string | null = '';
+  surname: string | null = '';
   constructor(private cdr: ChangeDetectorRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
@@ -23,7 +23,7 @@ export class EditCenterComponent implements OnInit{
     }
 
     ngOnInit(): void {
-   //this.loadComponent('ComponenteDias');
+
      // Suscríbete a los cambios en los parámetros del enrutador
      this.route.params.subscribe(params => {
       // Extrae el valor del parámetro centerName
@@ -32,24 +32,33 @@ export class EditCenterComponent implements OnInit{
       //this.loadComponent(centerName);
       // Asigna el valor a la propiedad de la clase si lo necesitas para otras partes del componente
       this.centerName = centerName;
+      this.name = this.localService.getName();
+      this.surname = this.localService.getSurname();
+      console.log("Nombre centro " + this.centerName);
+      setTimeout(() => {
+      this.loadComponent('ComponenteDias');
+      }, 0)
+
 
     });
+
+
 
   }
 
   ngAfterViewInit(): void {
-   this.loadComponent('ComponenteDias');
-   this.name = this.localService.getName()!;
-   this.surname = this.localService.getSurname()!;
+
+  this.reinicializarFlowBite()
+
   }
 
-  // private reinicializarFlowBite() {
-  //   // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
-  //   setTimeout(() => {
-  //     initFlowbite();
-  //     this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
-  //   });
-  // }
+  private reinicializarFlowBite() {
+    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
+    setTimeout(() => {
+      initFlowbite();
+      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
+    });
+  }
 
   loadComponent(componentName: string) {
 

@@ -20,14 +20,24 @@
         </div>
       </div>
       <div class="flex items-center  ">
-        <div class="items-center ms-3 mr-5">
+        <div class="items-center ms-3 mr-3">
           <div class="">
             <button type="button"
               class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="user photo">
+              <!-- <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                alt="user photo"> -->
+
+              <div
+                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
+                </svg>
+              </div>
+
             </button>
           </div>
           <div
@@ -35,10 +45,10 @@
             id="dropdown-user">
             <div class="px-4 py-3" role="none">
               <p class="text-sm text-gray-900 dark:text-white" role="none">
-                {{name}} {{surname}}
+                {{ name }} {{ surname }}
               </p>
               <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-
+                {{ emailUser }}
               </p>
             </div>
             <ul class="py-1" role="none">
@@ -50,12 +60,7 @@
               <li>
                 <a href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Sign out</a>
+                  role="menuitem"><i class="fa-solid fa-power-off fa-sm"></i> Apagar sistema</a>
               </li>
             </ul>
           </div>
@@ -113,21 +118,22 @@
   <div class="p-4 border-gray-200 rounded-lg dark:border-gray-700 mt-14 overflow-y-scroll">
     <!-- Primera fila -->
     <div class="grid grid-cols-3 gap-4 mb-4">
-      <div class="flex items-center justify-center h-20 rounded bg-gray-50 ">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">
-          Agenda de turnos
-        </p>
-      </div>
+      <ng-container *ngIf="selectedCenter && selectedCenter.name != null; else noCenterSelected">
+        <div class="flex items-center justify-center h-20 rounded bg-gray-50">
+          <button
+            class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            {{ selectedCenter.name }}
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #noCenterSelected>
+        <div class="flex items-center justify-center h-20 rounded bg-gray-50">
+          <p class="text-2xl text-gray-400 dark:text-gray-500">
+            Agenda de turnos
+          </p>
+        </div>
+      </ng-template>
       <div class="flex items-center relative justify-center h-20 rounded bg-gray-50 ">
-        <!-- <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          type="button"><i class="fa-solid fa-house-medical me-2"></i>Centros
-          <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-            viewBox="0 0 10 6">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="m1 1 4 4 4-4" />
-          </svg>
-        </button> -->
         <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper"
           class="text-blue-700 hover:text-white  border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium border-2 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
           <i class="fa-solid fa-house-medical me-2"></i> Centros
@@ -136,13 +142,13 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="m1 1 4 4 4-4" />
           </svg>
-          </button>
+        </button>
         <!-- Dropdown menu input-->
         <div id="dropdownRadioHelper"
           class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700 dark:divide-gray-600">
           <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownRadioHelperButton">
-            <ng-container *ngIf="centersName">
+
               <li *ngFor="let center of centersName; let i = index">
                 <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
                   <div class="flex items-center h-5">
@@ -158,7 +164,7 @@
                   </div>
                 </div>
               </li>
-            </ng-container>
+
           </ul>
         </div>
       </div>
@@ -233,17 +239,17 @@
           <table
             class="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto table-fixed">
             <thead
-              class="text-xs w-16 text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" class="px-6 py-3 w-16">
-                  Hora
-                </th>
-                <th *ngFor="let fecha of fechasSemana" scope="col" class="px-6 py-3 w-20">
-                  <abbr title="{{ diasSemana[fecha.getDay()] }}">{{ diasSemana[fecha.getDay()] }}</abbr><br>
-                  <span>{{ fecha.getDate() }}/{{ fecha.getMonth() + 1 }}/{{ obtenerDosUltimosDigitos() }}</span>
-                </th>
-              </tr>
-            </thead>
+            class="text-xs w-16 text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-6 py-3 w-16">
+                Hora
+              </th>
+              <th *ngFor="let fecha of fechasSemana" scope="col" class="px-6 py-3 w-20">
+                <abbr title="{{ diasSemana[fecha.getDay()] }}">{{ diasSemana[fecha.getDay()] }}</abbr><br>
+                <span>{{ fecha.getDate() }}/{{ fecha.getMonth() + 1 }}/{{ obtenerDosUltimosDigitos() }}</span>
+              </th>
+            </tr>
+          </thead>
             <tbody class="text-center">
               <div class="loading-overlay" *ngIf="loadingAva || loadingRet">
                 <!-- <div class="loading-content">

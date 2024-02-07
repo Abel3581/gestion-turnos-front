@@ -16,9 +16,16 @@ export class CreatePatientsComponent implements OnInit {
 
   formAltaPatient!: FormGroup;
   iconSeleccionado: string = '';
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef, private fb: FormBuilder,
-    private patientService: PatientService, private tostr: ToastrService, private local: LocalAuthService) {
+  constructor(private router: Router,
+              private cdr: ChangeDetectorRef,
+              private fb: FormBuilder,
+              private patientService: PatientService,
+              private tostr: ToastrService,
+              private local: LocalAuthService) {
     this.formAltaPatient = fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -47,6 +54,9 @@ export class CreatePatientsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.reinicializarFlowBite();
 
   }

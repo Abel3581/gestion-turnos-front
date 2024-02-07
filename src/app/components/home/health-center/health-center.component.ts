@@ -21,10 +21,18 @@ export class HealthCenterComponent implements OnInit{
   display: boolean = false;
   visible: boolean = false;
   centers!: HealthCenterResponse[];
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private fb: FormBuilder, private centerService: HealthCenterService,
-    private local: LocalAuthService, private tostr: ToastrService, private userService: UserService,
-    private zone: NgZone, private router: Router, private cdr: ChangeDetectorRef){
+  constructor(private fb: FormBuilder,
+              private centerService: HealthCenterService,
+              private local: LocalAuthService,
+              private tostr: ToastrService,
+              private userService: UserService,
+              private zone: NgZone,
+              private router: Router,
+              private cdr: ChangeDetectorRef){
     this.formGroup = fb.group({
       name : ['', Validators.required],
       address: ['', Validators.required],
@@ -37,6 +45,9 @@ export class HealthCenterComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getAllCenters();
     this.reinicializarFlowBite();
 

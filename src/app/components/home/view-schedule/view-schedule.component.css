@@ -35,8 +35,12 @@
   z-index: 1000; /* Asegúrate de que el valor del z-index sea mayor que el de otros elementos */
 }
 
-
 .loading-content {
   text-align: center;
 }
+
+/* thead th abbr {
+  text-decoration: none;
+} */
+
 

@@ -19,10 +19,17 @@ export class ScheduleFormComponent implements OnInit {
 
   timeForm: FormGroup;
   centersNames!: HealthCenterNamesResponse[];
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private healthService: HealthCenterService, private fb: FormBuilder,
-    private local: LocalAuthService, private daysService: DaysService, private tostr: ToastrService,
-    private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private healthService: HealthCenterService,
+              private fb: FormBuilder,
+              private local: LocalAuthService,
+              private daysService: DaysService,
+              private tostr: ToastrService,
+              private router: Router,
+              private cdr: ChangeDetectorRef) {
     this.timeForm = fb.group({
       centerName: ['', Validators.required],
       startTime: ['09:00', Validators.required],
@@ -34,6 +41,9 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getAllCentersName();
     this.reinicializarFlowBite();
   }

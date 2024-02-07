@@ -21,25 +21,40 @@
         </div>
       </div>
       <div class="flex items-center">
-        <div class="flex items-center ms-3 mr-2">
+        <div class="flex items-center ms-3 mr-3">
           <div>
             <button type="button"
               class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="user photo">
+              <div
+                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
+                </svg>
+              </div>
+
             </button>
           </div>
           <div
             class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
             id="dropdown-user">
-            <div class="px-4 py-3" role="none">
+            <!-- <div class="px-4 py-3" role="none">
               <p class="text-sm text-gray-900 dark:text-white" role="none">
                 Neil Sims
               </p>
               <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
                 neil.sims"&#64;"flowbite.com
+              </p>
+            </div> -->
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                {{ name }} {{ surname }}
+              </p>
+              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                {{ emailUser }}
               </p>
             </div>
             <ul class="py-1" role="none">
@@ -51,17 +66,7 @@
               <li>
                 <a href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Earnings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Sign out</a>
+                  role="menuitem">Apagar</a>
               </li>
             </ul>
           </div>

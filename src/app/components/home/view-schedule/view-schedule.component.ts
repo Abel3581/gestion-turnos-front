@@ -41,20 +41,25 @@ export class ViewScheduleComponent implements OnInit {
   loadingRet: boolean = false;
   name: string | null = '';
   surname: string | null = '';
+  emailUser: string | null = '';
 
-
-
-
-  constructor(private dateService: DataService, private http: HttpClient, private centers: HealthCenterService,
-    private local: LocalAuthService, private daysService: DaysService, private scheduleService: ScheduleService,
-    private cdr: ChangeDetectorRef, private modalService: ModalServiceService,private zone: NgZone,
-    private turnService: TurnService, private turnUpdateService: TurnUpdateService) {
-
+  constructor(private dateService: DataService,
+              private http: HttpClient,
+              private centers: HealthCenterService,
+              private local: LocalAuthService,
+              private daysService: DaysService,
+              private scheduleService: ScheduleService,
+              private cdr: ChangeDetectorRef,
+              private modalService: ModalServiceService,
+              private zone: NgZone,
+              private turnService: TurnService,
+              private turnUpdateService: TurnUpdateService) {
   }
 
   ngOnInit(): void {
     this.name = this.local.getName();
     this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getAllCentersName();
     this.calcularFechasSemana(this.fechaActual);
     this.http.get<string[]>('./assets/data/hours.json').subscribe((data) => {
@@ -71,7 +76,6 @@ export class ViewScheduleComponent implements OnInit {
   }
 
   // Calculos paginacion fecha //
-
   obtenerDosUltimosDigitos(): string {
     return this.fechaActual.getFullYear().toString().slice(-2);
   }
@@ -101,8 +105,6 @@ export class ViewScheduleComponent implements OnInit {
     setTimeout(() => {
       this.actualizarFechaSemana(-7);
     })
-
-
 
   }
 
@@ -162,7 +164,7 @@ export class ViewScheduleComponent implements OnInit {
     this.getAllTurnsByCenterName();
 
 
-    //this.reinicializarFlowBite();
+    this.reinicializarFlowBite();
   }
 
   getAllBusinessHours() {
@@ -248,7 +250,7 @@ export class ViewScheduleComponent implements OnInit {
     if (centerName && this.selectedCenter) {
       this.turnService.getAllTurnsByCenterName(centerName).subscribe(
         response => {
-          //console.log('getAllTurnsByCenterName - Response:', response);
+          console.log('getAllTurnsByCenterName - Response:', response);
           this.turns = response;
         },
         error => {
@@ -288,7 +290,7 @@ export class ViewScheduleComponent implements OnInit {
     if (centerName && hora && fecha) {
       this.turnService.getTurnByCenterNameAndDateAndHour(centerName, date, hora).subscribe(
         response => {
-          console.log(response);
+          console.log("Turnos del metodo getTurnByCenterNameAndDateAndHour", response);
           this.turnInfo = response;
         },
         error => {
