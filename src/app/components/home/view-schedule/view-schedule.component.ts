@@ -69,7 +69,8 @@ export class ViewScheduleComponent implements OnInit {
     this.turnUpdateService.turnAdded$.subscribe(() => {
       this.getAllTurnsByCenterName();
     });
-    //this.reinicializarFlowBite();
+
+    this.reinicializarFlowBite();
     //console.log("Fecha actual: ", this.fechaActual);
     console.log('ngOnInit called');
 
@@ -175,7 +176,7 @@ export class ViewScheduleComponent implements OnInit {
 
           this.attentionDays = response;
           //console.log("Horas y dias:", response);
-          this.cdr.detectChanges();
+          //this.cdr.detectChanges();
           //console.log("Horas de la agenda: " + this.selectedCenter.name, response);
           this.reinicializarFlowBite();
 
@@ -272,7 +273,12 @@ export class ViewScheduleComponent implements OnInit {
     if (typeof date === 'string') {
       return date;
     }
-    return new Date(date).toISOString().split('T')[0];
+    // return new Date(date).toISOString().split('T')[0];
+      // Si es un objeto Date, formatearlo
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
   }
 
   isTurnAssigned(hora: string, fecha: Date): boolean {
@@ -280,7 +286,7 @@ export class ViewScheduleComponent implements OnInit {
   }
 
   hasAssignedTurn(hora: string, fecha: Date): boolean {
-    return this.isTurnAssigned(hora, fecha);
+    return this.turns.some(turn => this.compareHourAndDate(hora, fecha, turn));
   }
 
   getTurnByCenterNameAndDateAndHour(hora: string, fecha: Date) {
@@ -301,11 +307,8 @@ export class ViewScheduleComponent implements OnInit {
   }
 
   getPatientInfo(hora: string, fecha: Date): TurnResponse | undefined {
-    const result = this.turns.find(turn => this.compareHourAndDate(hora, fecha, turn));
-    //console.log('getPatientInfo - Result:', result);
-    return result;
+    return this.turns.find(turn => this.compareHourAndDate(hora, fecha, turn));
   }
-
 
   getDropdownId(i: number, j: number): string {
     return `dropdown${i}_${j}`;
