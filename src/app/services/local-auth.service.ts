@@ -9,7 +9,9 @@ export class LocalAuthService {
 
   private readonly TOKEN_LOGIN = 'AuthToken';
   private readonly ROL_USER = 'RolUser';
-  private readonly EMAIL_USER = 'EmailUser';
+  private readonly EMAILUSER = 'EmailUser';
+  private readonly NAME = 'Name';
+  private readonly SURNAME = 'Surname';
   private readonly USER_ID = 'UserId';
   private readonly PROFILE_ID = 'ProfileId'
 
@@ -20,6 +22,24 @@ export class LocalAuthService {
   }
   public getToken(): string | null {
     return localStorage.getItem(this.TOKEN_LOGIN);
+  }
+  public setEmail(email: string): void {
+    localStorage.setItem(this.EMAILUSER, email);
+  }
+  public getEmail(): string | null {
+    return localStorage.getItem(this.EMAILUSER);
+  }
+  public setName(name: string):void{
+    localStorage.setItem(this.NAME, name);
+  }
+  public getName(): string | null {
+    return localStorage.getItem(this.NAME);
+  }
+  public setSurname(surname: string):void{
+    localStorage.setItem(this.SURNAME, surname);
+  }
+  public getSurname(): string | null {
+    return localStorage.getItem(this.SURNAME);
   }
   public logOut(): void {
     localStorage.removeItem(this.TOKEN_LOGIN);

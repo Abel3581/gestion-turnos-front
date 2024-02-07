@@ -20,6 +20,7 @@ export class ModalAltaTurnComponent implements OnInit {
   fecha!: Date;
   hora!: string;
   centro!: string;
+  loading: boolean = false;
 
   constructor(private modalService: ModalServiceService, private cdr: ChangeDetectorRef,
     private patientService: PatientService, private turnService: TurnService, private toast: ToastrService,
@@ -63,10 +64,16 @@ export class ModalAltaTurnComponent implements OnInit {
     console.log("Se apreto el boton searchPatient")
     // console.log("ModalComponente Fecha: " + this.fecha + " hora: " + this.hora + " Centro: " + this.centro);
     if (this.searchTerm.length >= 3) {
+      this.loading = true;
+      // Resto de tu lógica aquí
+      setTimeout(() => {
+        this.loading = false;
+      },1000)
       this.patientService.searchPatient(this.searchTerm).subscribe(
         response => {
           this.patientResults = response;
           console.log(response);
+
         },
         err => {
           console.log(err);

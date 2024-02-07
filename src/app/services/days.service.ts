@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BusinessHoursRequest } from '../models/request/business-hours-request';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { MessageResponse } from '../models/response/message-response';
 import { BusinessHoursResponse } from '../models/response/business-hours-response';
 
@@ -23,6 +23,21 @@ export class DaysService {
     const url = `${this.urlDays}/centerName`;
     const params = { centerName };
     return this.http.get<BusinessHoursResponse[]>(url, { params });
+  }
+
+  getAllBusinessHoursByCenterAndUserId(centerName: string, userId: number, day: string): Observable<BusinessHoursResponse[]> {
+    const url = `${this.urlDays}/business-hours?centerName=${centerName}&userId=${userId}&day=${day}`;
+
+    return this.http.get<BusinessHoursResponse[]>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('Ocurrió un error', error);
+    return new Observable<never>(() => {
+      throw error;
+    });
   }
 
 }

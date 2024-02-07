@@ -21,10 +21,18 @@ export class HealthCenterComponent implements OnInit{
   display: boolean = false;
   visible: boolean = false;
   centers!: HealthCenterResponse[];
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private fb: FormBuilder, private centerService: HealthCenterService,
-    private local: LocalAuthService, private tostr: ToastrService, private userService: UserService,
-    private zone: NgZone, private router: Router, private cdr: ChangeDetectorRef){
+  constructor(private fb: FormBuilder,
+              private centerService: HealthCenterService,
+              private local: LocalAuthService,
+              private tostr: ToastrService,
+              private userService: UserService,
+              private zone: NgZone,
+              private router: Router,
+              private cdr: ChangeDetectorRef){
     this.formGroup = fb.group({
       name : ['', Validators.required],
       address: ['', Validators.required],
@@ -37,38 +45,11 @@ export class HealthCenterComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getAllCenters();
-    initFlowbite();
-    this.iconSeleccionado = "";
-
-
-  }
-
-  seleccionarIcono(icono: string): void {
-    this.iconSeleccionado = icono;
-    if(this.iconSeleccionado === 'profile'){
-      this.router.navigate(['/home/user-profile']);
-      this.reinicializarFlowBite();
-    }
-    if(this.iconSeleccionado === 'center'){
-
-      this.router.navigate(['/home/center']);
-      this.reinicializarFlowBite();
-    }
-    if(this.iconSeleccionado === 'calendar'){
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'user'){
-      console.log('Navegando a /home/create-patients');
-      this.router.navigate(['/home/create-patients']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'hours'){
-      console.log('Navegando a /home/schedule');
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
+    this.reinicializarFlowBite();
 
   }
 

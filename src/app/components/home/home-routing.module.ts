@@ -7,9 +7,6 @@ import { ViewScheduleComponent } from './view-schedule/view-schedule.component';
 import { ViewPatientsComponent } from './view-patients/view-patients.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CreatePatientsComponent } from './create-patients/create-patients.component';
-import { ModalAltaTurnComponent } from './modal-alta-turn/modal-alta-turn.component';
-
-
 
 
 const routes: Routes = [

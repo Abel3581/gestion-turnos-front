@@ -1,13 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { format } from 'date-fns';
-
 import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
-
 import { BusinessHoursResponse } from 'src/app/models/response/business-hours-response';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
-import { LocalDate } from 'src/app/models/response/local-date';
 import { TurnResponse } from 'src/app/models/response/turn-response';
 import { DataService } from 'src/app/services/data.service';
 import { DaysService } from 'src/app/services/days.service';
@@ -27,6 +24,9 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
 })
 export class ViewScheduleComponent implements OnInit {
 
+  // En tu componente, define un nuevo array para almacenar la información de cada celda
+  filas: { hora: string; fecha: Date; isCellEnabled: boolean; hasAssignedTurn: boolean; turnInfo?: TurnResponse }[] = [];
+
   selectedCenter!: HealthCenterNamesResponse;
   turnInfo!: TurnResponse;
   centersName!: HealthCenterNamesResponse[];
@@ -37,16 +37,29 @@ export class ViewScheduleComponent implements OnInit {
   fechasSemana: Date[] = [];
   fechaActual: Date = new Date();
   visible: boolean = false;
+  loadingAva: boolean = false;
+  loadingRet: boolean = false;
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-
-  constructor(private dateService: DataService, private http: HttpClient, private centers: HealthCenterService,
-    private local: LocalAuthService, private daysService: DaysService, private scheduleService: ScheduleService,
-    private cdr: ChangeDetectorRef, private modalService: ModalServiceService,
-    private turnService: TurnService, private turnUpdateService: TurnUpdateService) {
-
+  constructor(private dateService: DataService,
+              private http: HttpClient,
+              private centers: HealthCenterService,
+              private local: LocalAuthService,
+              private daysService: DaysService,
+              private scheduleService: ScheduleService,
+              private cdr: ChangeDetectorRef,
+              private modalService: ModalServiceService,
+              private zone: NgZone,
+              private turnService: TurnService,
+              private turnUpdateService: TurnUpdateService) {
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getAllCentersName();
     this.calcularFechasSemana(this.fechaActual);
     this.http.get<string[]>('./assets/data/hours.json').subscribe((data) => {
@@ -56,45 +69,66 @@ export class ViewScheduleComponent implements OnInit {
     this.turnUpdateService.turnAdded$.subscribe(() => {
       this.getAllTurnsByCenterName();
     });
-    //this.reinicializarFlowBite();
+
+    this.reinicializarFlowBite();
     //console.log("Fecha actual: ", this.fechaActual);
+    console.log('ngOnInit called');
+
   }
 
   // Calculos paginacion fecha //
-
   obtenerDosUltimosDigitos(): string {
     return this.fechaActual.getFullYear().toString().slice(-2);
   }
 
   calcularFechasSemana(fecha: Date) {
-  // Obtener el primer día de la semana (lunes)
-  const primerDiaSemana = fecha.getDate() - fecha.getDay();
-  // Crear una nueva fecha con el primer día de la semana (clonando la fecha original)
-  const fechaInicioSemana = new Date(fecha.getTime());
-  this.fechasSemana = [];
-  // Usar un bucle más simple para construir la lista de fechas
-  for (let i = 0; i < 7; i++) {
-    const fecha = new Date(fechaInicioSemana);
-    fecha.setDate(primerDiaSemana + i);
-    this.fechasSemana.push(fecha);
-  }
+
+      // Obtener el primer día de la semana (lunes)
+      const primerDiaSemana = fecha.getDate() - fecha.getDay();
+      // Crear una nueva fecha con el primer día de la semana (clonando la fecha original)
+      const fechaInicioSemana = new Date(fecha.getTime());
+      this.fechasSemana = [];
+      // Usar un bucle más simple para construir la lista de fechas
+      for (let i = 0; i < 7; i++) {
+        const fecha = new Date(fechaInicioSemana);
+        fecha.setDate(primerDiaSemana + i);
+        this.fechasSemana.push(fecha);
+      }
+
   }
 
   retrocederSemana() {
-    this.actualizarFechaSemana(-7);
+    this.loadingRet = true;
+    // Resto de tu lógica aquí
+    setTimeout(() => {
+      this.loadingRet = false;
+    },1000)
+    setTimeout(() => {
+      this.actualizarFechaSemana(-7);
+    })
 
   }
 
   avanzarSemana() {
-    this.actualizarFechaSemana(7);
+    this.loadingAva = true;
+    // Resto de tu lógica aquí
+    setTimeout(() => {
+      this.loadingAva = false;
+    },1000)
+    setTimeout(() => {
+      this.actualizarFechaSemana(+7);
+    })
+
   }
+
   private actualizarFechaSemana(dias: number) {
     this.fechaActual.setDate(this.fechaActual.getDate() + dias);
     this.calcularFechasSemana(this.fechaActual);
     // if (this.centersName && this.selectedCenter) {
     //   this.getAllTurnsByCenterName();
     // }
-     this.reinicializarFlowBite();
+    this.reinicializarFlowBite();
+
   }
 
   private reinicializarFlowBite() {
@@ -129,7 +163,9 @@ export class ViewScheduleComponent implements OnInit {
     console.log("Centro seleccionado:", this.selectedCenter.name)
     this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
     this.getAllTurnsByCenterName();
-    //this.reinicializarFlowBite();
+
+
+    this.reinicializarFlowBite();
   }
 
   getAllBusinessHours() {
@@ -211,14 +247,15 @@ export class ViewScheduleComponent implements OnInit {
 
   getAllTurnsByCenterName() {
     const centerName: string = this.selectedCenter.name;
+    //console.log('getAllTurnsByCenterName - Center Name:', centerName)
     if (centerName && this.selectedCenter) {
       this.turnService.getAllTurnsByCenterName(centerName).subscribe(
         response => {
-          //console.log(response);
+          console.log('getAllTurnsByCenterName - Response:', response);
           this.turns = response;
         },
         error => {
-          console.error(error);
+          console.error('getAllTurnsByCenterName - Error:', error);
         }
       )
     }
@@ -227,28 +264,27 @@ export class ViewScheduleComponent implements OnInit {
 
   // Método para comparar la hora y fecha
   compareHourAndDate(hora: string, fecha: Date, turn: TurnResponse): boolean {
-    const formattedDate = this.formatDate(turn.date);
-    return hora === turn.hour && formattedDate === this.formatDate(fecha);
+    return hora === turn.hour && this.formatDate(fecha) === this.formatDate(turn.date);
   }
+
 
   // Método para formatear la fecha (puede ser cadena o Date)
   formatDate(date: string | Date): string {
-    // Si es una cadena, simplemente devolverla
     if (typeof date === 'string') {
       return date;
     }
-
-    // Si es un objeto Date, formatearlo
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    // return new Date(date).toISOString().split('T')[0];
+      // Si es un objeto Date, formatearlo
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
   }
-  // En tu componente
+
   isTurnAssigned(hora: string, fecha: Date): boolean {
     return this.turns.some(turn => this.compareHourAndDate(hora, fecha, turn));
   }
-  // En tu componente
+
   hasAssignedTurn(hora: string, fecha: Date): boolean {
     return this.turns.some(turn => this.compareHourAndDate(hora, fecha, turn));
   }
@@ -260,7 +296,7 @@ export class ViewScheduleComponent implements OnInit {
     if (centerName && hora && fecha) {
       this.turnService.getTurnByCenterNameAndDateAndHour(centerName, date, hora).subscribe(
         response => {
-          console.log(response);
+          console.log("Turnos del metodo getTurnByCenterNameAndDateAndHour", response);
           this.turnInfo = response;
         },
         error => {
@@ -273,6 +309,7 @@ export class ViewScheduleComponent implements OnInit {
   getPatientInfo(hora: string, fecha: Date): TurnResponse | undefined {
     return this.turns.find(turn => this.compareHourAndDate(hora, fecha, turn));
   }
+
   getDropdownId(i: number, j: number): string {
     return `dropdown${i}_${j}`;
   }
@@ -298,13 +335,47 @@ export class ViewScheduleComponent implements OnInit {
   }
 
 
+  calcularFilas() {
+    // console.log('Turns:', this.turns);
+    // console.log('Hours:', this.hours);
+    // console.log('Fechas Semana:', this.fechasSemana);
+    this.filas = [];
 
+    for (let i = 0; i < this.hours.length; i++) {
+      const hora = this.hours[i];
 
+      for (let j = 0; j < this.fechasSemana.length; j++) {
+        const fecha = this.fechasSemana[j];
+        const diaSemana = this.diasSemana[j];
 
+        // Asegúrate de que las fechas y horas se estén generando correctamente
+        // console.log(`Hora: ${hora}, Fecha: ${fecha}, Día Semana: ${diaSemana}`);
 
+        const isCellEnabled = this.isCellEnabled(diaSemana, hora);
+        const hasAssignedTurn = this.hasAssignedTurn(hora, fecha);
+        const turnInfo = hasAssignedTurn ? this.getPatientInfo(hora, fecha) : undefined;
 
+        this.filas.push({ hora, fecha, isCellEnabled, hasAssignedTurn, turnInfo });
+      }
+    }
+  }
 
+  deleteShift(turnId: number | undefined) {
+    console.log("Se apreto el boton borrar turno con id:", turnId);
+    this.turnService.deleteTurnById(turnId!).subscribe(
+      response => {
+        console.log(response);
+          // Después de crear el centro, actualiza la lista de centros
+          this.zone.run(() => {
+            this.getAllTurnsByCenterName();
+          });
+      },
+      error => {
+        console.error(error);
+      }
+    )
 
+  }
 
 
 

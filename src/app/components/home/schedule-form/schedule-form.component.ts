@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
@@ -17,16 +17,22 @@ import { LocalAuthService } from 'src/app/services/local-auth.service';
 })
 export class ScheduleFormComponent implements OnInit {
 
-  iconSeleccionado: string = "";
   timeForm: FormGroup;
   centersNames!: HealthCenterNamesResponse[];
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private healthService: HealthCenterService, private fb: FormBuilder,
-    private local: LocalAuthService, private daysService: DaysService, private tostr: ToastrService,
-    private router: Router) {
+  constructor(private healthService: HealthCenterService,
+              private fb: FormBuilder,
+              private local: LocalAuthService,
+              private daysService: DaysService,
+              private tostr: ToastrService,
+              private router: Router,
+              private cdr: ChangeDetectorRef) {
     this.timeForm = fb.group({
       centerName: ['', Validators.required],
-      startTime: ['08:00', Validators.required],
+      startTime: ['09:00', Validators.required],
       endTime: ['18:00', Validators.required],
       day: ['', Validators.required]
 
@@ -35,45 +41,54 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getAllCentersName();
-    initFlowbite();
-    this.iconSeleccionado = "";
+    this.reinicializarFlowBite();
   }
 
-  seleccionarIcono(icono: string): void {
-    this.iconSeleccionado = icono;
-    if(this.iconSeleccionado === 'profile'){
-      this.router.navigate(['/home/user-profile']);
+  public createAttentionDays() {
+    const businessHoursRequest: BusinessHoursRequest = this.timeForm.value;
+
+    const startTimeString = businessHoursRequest.startTime;
+    const endTimeString = businessHoursRequest.endTime;
+
+    const startTimeMinutes = this.convertTimeStringToMinutes(startTimeString);
+    const endTimeMinutes = this.convertTimeStringToMinutes(endTimeString);
+    const specificHourMin = "09:00";
+
+    const specificHourMax = "23:30";
+    const specificHourMaximo = this.convertTimeStringToMinutes(specificHourMin);
+    const specificHourMinimo = this.convertTimeStringToMinutes(specificHourMax);
+
+    if (startTimeMinutes < specificHourMaximo || endTimeMinutes > specificHourMinimo) {
+      this.tostr.info("Ingresa un horario en el rango de 09:00hs a 23:30hs.")
+    } else {
+      if (this.timeForm.valid) {
+        console.log("Entrando al metodo createAttentionDays()");
+        this.daysService.createAttentionDays(businessHoursRequest).subscribe(
+          response => {
+            console.log(response);
+            this.tostr.success(response.message);
+          },
+          err => {
+            console.log(err.error);
+            this.tostr.error(err.error);
+          }
+        )
+      } else {
+        this.tostr.error("Datos no validos");
+        this.timeForm.markAllAsTouched();
+      }
     }
-    if(this.iconSeleccionado === 'center'){
-      this.router.navigate(['/home/center']);
-    }
-    if(this.iconSeleccionado === 'calendar'){
-      this.router.navigate(['/home/schedule']);
-    }
+
 
   }
 
-  public createAttentionDays(){
-    const businessHoursRequest : BusinessHoursRequest = this.timeForm.value;
-    console.log("Antes del valid")
-    if(this.timeForm.valid){
-      console.log("Entrando al metodo createAttentionDays()");
-      this.daysService.createAttentionDays(businessHoursRequest).subscribe(
-        response => {
-          console.log(response);
-          this.tostr.success(response.message);
-        },
-        err => {
-          console.log(err.error);
-          this.tostr.error(err.error);
-        }
-      )
-    }else{
-      this.tostr.error("Datos no validos");
-      this.timeForm.markAllAsTouched();
-    }
-
+  convertTimeStringToMinutes(timeString: string): number {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return hours * 60 + minutes;
   }
 
   public getAllCentersName() {
@@ -137,5 +152,13 @@ export class ScheduleFormComponent implements OnInit {
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(remainder).padStart(2, '0');
     return `${formattedHours}:${formattedMinutes}`;
+  }
+
+  private reinicializarFlowBite() {
+    // Espera un momento antes de reinicializar para permitir que Angular actualice la vista
+    setTimeout(() => {
+      initFlowbite();
+      this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
+    });
   }
 }

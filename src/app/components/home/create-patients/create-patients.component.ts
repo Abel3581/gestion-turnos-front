@@ -16,9 +16,16 @@ export class CreatePatientsComponent implements OnInit {
 
   formAltaPatient!: FormGroup;
   iconSeleccionado: string = '';
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef, private fb: FormBuilder,
-    private patientService: PatientService, private tostr: ToastrService, private local: LocalAuthService) {
+  constructor(private router: Router,
+              private cdr: ChangeDetectorRef,
+              private fb: FormBuilder,
+              private patientService: PatientService,
+              private tostr: ToastrService,
+              private local: LocalAuthService) {
     this.formAltaPatient = fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -47,35 +54,10 @@ export class CreatePatientsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.iconSeleccionado = '';
-    initFlowbite();
-
-  }
-
-  seleccionarIcono(icono: string): void {
-    this.iconSeleccionado = icono;
-    console.log('Icono seleccionado:', icono);
-    if (this.iconSeleccionado === 'profile') {
-      console.log('Navegando a /home/user-profile');
-      this.router.navigate(['/home/user-profile']);
-      this.reinicializarFlowBite();
-    }
-
-    if (this.iconSeleccionado === 'hours') {
-      console.log('Navegando a /home/schedule');
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'user') {
-      console.log('Navegando a /home/create-patients');
-      this.router.navigate(['/home/create-patients']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'volver') {
-      console.log('Navegando a /home/view-schedule');
-      this.router.navigate(['/home/view-schedule']);
-      this.reinicializarFlowBite();
-    }
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
+    this.reinicializarFlowBite();
 
   }
 

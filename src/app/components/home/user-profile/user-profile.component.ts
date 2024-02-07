@@ -26,10 +26,18 @@ export class UserProfileComponent implements OnInit {
   username: string = '';
   titulosDisponibles: string[] = ['Dr.', 'Dra.', 'Lic.']; // Lista de títulos disponibles
   profileResponse!: ProfileResponse;
+  name: string | null = '';
+  surname: string | null = '';
+  emailUser: string | null = '';
 
-  constructor(private fb: FormBuilder, private profileService: ProfileService, private local: LocalAuthService,
-    private toastr: ToastrService, private userService: UserService, private http: HttpClient, private router: Router,
-    private cdr: ChangeDetectorRef
+  constructor(private fb: FormBuilder,
+              private profileService: ProfileService,
+              private local: LocalAuthService,
+              private toastr: ToastrService,
+              private userService: UserService,
+              private http: HttpClient,
+              private router: Router,
+              private cdr: ChangeDetectorRef
   ) {
     this.updateForm = fb.group({
       title: ['', Validators.required],
@@ -49,6 +57,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.getProfileComponent();
     this.getCurrentUser();
 
@@ -63,34 +74,6 @@ export class UserProfileComponent implements OnInit {
     this.iconSeleccionado = "";
     this.reinicializarFlowBite();
   }
-
-  seleccionarIcono(icono: string): void {
-    this.iconSeleccionado = icono;
-    console.log('Icono seleccionado:', icono);
-    if (this.iconSeleccionado === 'profile') {
-      console.log('Navegando a /home/user-profile');
-      this.router.navigate(['/home/user-profile']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'center') {
-      console.log('Navegando a /home/center');
-      this.router.navigate(['/home/center']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'calendar') {
-      console.log('Navegando a /home/schedule');
-      this.router.navigate(['/home/schedule']);
-      this.reinicializarFlowBite();
-    }
-    if (this.iconSeleccionado === 'users') {
-      console.log('Navegando a /home/create-patients');
-      this.router.navigate(['/home/create-patiens']);
-      this.reinicializarFlowBite();
-    }
-
-  }
-
-
 
   public getProfileComponent() {
     const userId = this.local.getUserId();
