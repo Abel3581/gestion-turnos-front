@@ -1,9 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { PatientRequest } from 'src/app/models/request/patient-request';
+import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
+import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -11,21 +13,26 @@ import { PatientService } from 'src/app/services/patient.service';
   selector: 'app-create-patients',
   templateUrl: './create-patients.component.html',
   styleUrl: './create-patients.component.css'
+
 })
 export class CreatePatientsComponent implements OnInit {
-
+  totalCentros: number = 0;
   formAltaPatient!: FormGroup;
   iconSeleccionado: string = '';
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  totalPatients: number = 0;
+  totalAgendas: number = 0;
 
   constructor(private router: Router,
               private cdr: ChangeDetectorRef,
               private fb: FormBuilder,
               private patientService: PatientService,
               private tostr: ToastrService,
-              private local: LocalAuthService) {
+              private local: LocalAuthService,
+              private totalCentersService: TotalCentrosService,
+              private centerService: HealthCenterService) {
     this.formAltaPatient = fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -43,7 +50,8 @@ export class CreatePatientsComponent implements OnInit {
       province: [''],
       landline: ['']
 
-    })
+    });
+
   }
 
   get dniControl() {
@@ -57,6 +65,24 @@ export class CreatePatientsComponent implements OnInit {
     this.name = this.local.getName();
     this.surname = this.local.getSurname();
     this.emailUser = this.local.getEmail();
+    this.totalCentersService.totalCentros$.subscribe((value) => {
+      this.totalCentros = value;
+      console.log("Cantidad de centros: " , value);
+    });
+    const userId = this.local.getUserId();
+    this.patientService.getTotalPatientsByUserId(userId!).subscribe(
+      total => {
+        this.totalPatients = total;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    this.centerService.totalCentersByUser(userId!).subscribe(
+      total => {
+        this.totalAgendas = total;
+      }
+    )
     this.reinicializarFlowBite();
 
   }

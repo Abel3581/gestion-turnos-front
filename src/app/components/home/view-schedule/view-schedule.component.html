@@ -81,16 +81,7 @@
           <i class="fa-regular fa-calendar-days fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Agendas</span>
           <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
-        </a>
-      </li>
-      <li>
-        <a href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <i class="fa-regular fa-calendar-check fa-lg"></i>
-          <span class="flex-1 ms-3 whitespace-nowrap">Buscar Turnos</span>
-          <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalAgendas }}</span>
         </a>
       </li>
       <li>
@@ -99,14 +90,30 @@
           <i class="fa-solid fa-hospital-user fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
           <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalPatiens }}</span>
         </a>
       </li>
       <li>
         <a href="#"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-          <i class="fa-solid fa-right-from-bracket fa-lg"></i>
-          <span class="flex-1 ms-3 whitespace-nowrap">Salir</span>
+          <i class="fa-regular fa-calendar-check fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Buscar Turnos</span>
+          <!-- <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"></span> -->
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/mi-consultorio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-reply-all fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Volver</span>
+        </a>
+      </li>
+      <li>
+        <a href="#"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-power-off fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Apaga sistema</span>
         </a>
       </li>
     </ul>

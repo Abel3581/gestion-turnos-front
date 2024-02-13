@@ -13,13 +13,14 @@ export class TurnService {
 
   constructor(private http: HttpClient) {}
 
-  public createPatientTurn(centerName: string, date: string, hour: string, dni: string): Observable<MessageResponse>{
+  public createPatientTurn(centerName: string, date: string, hour: string, dni: string, userId: number): Observable<MessageResponse>{
     const url = `${this.urlTurn}/create`;
     let params = new HttpParams();
     params = params.append('centerName', centerName);
     params = params.append('date', date);
     params = params.append('hour', hour);
     params = params.append('dni', dni);
+    params = params.append('userId', userId)
     return this.http.post<MessageResponse>(url, null, { params: params });
 
   }
@@ -43,6 +44,14 @@ export class TurnService {
   deleteTurnById(turnId: number): Observable<MessageResponse>{
     const url = `${this.urlTurn}/delete/${turnId}`;
     return this.http.delete<MessageResponse>(url);
+  }
+
+  public getAllTurnsByCenterNameAndUserId(centerName: string, userId: number): Observable<TurnResponse[]>{
+    const url = `${this.urlTurn}/center-name-userId`;
+    let params = new HttpParams();
+    params = params.append('centerName', centerName);
+    params = params.append('userId', userId);
+    return this.http.get<TurnResponse[]>(url, { params: params});
   }
 
 

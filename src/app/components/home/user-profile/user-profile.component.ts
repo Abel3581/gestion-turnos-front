@@ -6,7 +6,10 @@ import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { ProfileRequest } from 'src/app/models/request/profile-request';
 import { ProfileResponse } from 'src/app/models/response/profile-response';
+import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
+import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
+import { PatientService } from 'src/app/services/patient.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -29,6 +32,9 @@ export class UserProfileComponent implements OnInit {
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  totalCentros: number = 0;
+  totalAgendas: number = 0;
+  totalPatients: number = 0;
 
   constructor(private fb: FormBuilder,
               private profileService: ProfileService,
@@ -37,7 +43,10 @@ export class UserProfileComponent implements OnInit {
               private userService: UserService,
               private http: HttpClient,
               private router: Router,
-              private cdr: ChangeDetectorRef
+              private cdr: ChangeDetectorRef,
+              private totalCentrosService: TotalCentrosService,
+              private patientService: PatientService,
+              private centerService: HealthCenterService
   ) {
     this.updateForm = fb.group({
       title: ['', Validators.required],
@@ -72,6 +81,21 @@ export class UserProfileComponent implements OnInit {
     })
     // initFlowbite();
     this.iconSeleccionado = "";
+    this.totalCentrosService.totalCentros$.subscribe(
+      total => {
+        this.totalCentros = total;
+      }
+    )
+    this.patientService.getTotalPatientsByUserId(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalPatients = total;
+      }
+    )
+    this.centerService.totalCentersByUser(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalAgendas = total;
+      }
+    )
     this.reinicializarFlowBite();
   }
 

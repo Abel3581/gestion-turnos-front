@@ -6,9 +6,11 @@ import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
 import { BusinessHoursRequest } from 'src/app/models/request/business-hours-request';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
+import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
 import { DaysService } from 'src/app/services/days.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
+import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
   selector: 'app-schedule-form',
@@ -22,6 +24,9 @@ export class ScheduleFormComponent implements OnInit {
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  totalCentros: number = 0;
+  totalPatients: number = 0;
+  totalAgendas: number = 0;
 
   constructor(private healthService: HealthCenterService,
               private fb: FormBuilder,
@@ -29,7 +34,10 @@ export class ScheduleFormComponent implements OnInit {
               private daysService: DaysService,
               private tostr: ToastrService,
               private router: Router,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private totalCentrosService: TotalCentrosService,
+              private patientService: PatientService,
+              private centerService: HealthCenterService) {
     this.timeForm = fb.group({
       centerName: ['', Validators.required],
       startTime: ['09:00', Validators.required],
@@ -45,12 +53,28 @@ export class ScheduleFormComponent implements OnInit {
     this.surname = this.local.getSurname();
     this.emailUser = this.local.getEmail();
     this.getAllCentersName();
+    this.totalCentrosService.totalCentros$.subscribe(
+      total => {
+        this.totalCentros = total;
+      }
+    );
+    this.patientService.getTotalPatientsByUserId(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalPatients = total;
+      }
+    );
+    this.centerService.totalCentersByUser(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalAgendas = total;
+      }
+    )
     this.reinicializarFlowBite();
   }
 
   public createAttentionDays() {
     const businessHoursRequest: BusinessHoursRequest = this.timeForm.value;
-
+    const userId = this.local.getUserId()!;
+    businessHoursRequest.userId = userId;
     const startTimeString = businessHoursRequest.startTime;
     const endTimeString = businessHoursRequest.endTime;
 

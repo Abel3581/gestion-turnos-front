@@ -16,6 +16,7 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ModalAltaTurnComponent } from './modal-alta-turn/modal-alta-turn.component';
+import { MiConsultorioComponent } from './mi-consultorio/mi-consultorio.component';
 
 
 // Registra los datos de localización para español
@@ -31,6 +32,7 @@ registerLocaleData(localeEs);
     UserProfileComponent,
     CreatePatientsComponent,
     ModalAltaTurnComponent,
+    MiConsultorioComponent
 
 
   ],

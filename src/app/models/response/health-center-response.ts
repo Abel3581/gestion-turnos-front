@@ -6,4 +6,5 @@ export interface HealthCenterResponse {
   phone: string;
   email: string;
   specialty: string;
+  totalPatients: number;
 }

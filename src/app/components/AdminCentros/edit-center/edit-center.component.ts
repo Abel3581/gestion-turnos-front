@@ -1,54 +1,51 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { DaysComponent } from '../days/days.component';
 import { ActivatedRoute } from '@angular/router';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
+import { PatientsCenterComponent } from '../patients-center/patients-center.component';
 
 @Component({
   selector: 'app-edit-center',
   templateUrl: './edit-center.component.html',
   styleUrl: './edit-center.component.css'
 })
-export class EditCenterComponent implements OnInit{
-  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) dynamicComponentContainer: ViewContainerRef | undefined;
+export class EditCenterComponent implements OnInit {
   centerName: string = '';
   name: string | null = '';
   surname: string | null = '';
+  emailUser: string | null = '';
+
   constructor(private cdr: ChangeDetectorRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private route: ActivatedRoute,
-    private localService: LocalAuthService
-    ){
+              private route: ActivatedRoute,
+              private local: LocalAuthService
+  ) { }
 
-    }
-
-    ngOnInit(): void {
-
-     // Suscríbete a los cambios en los parámetros del enrutador
-     this.route.params.subscribe(params => {
+  ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
+    // Suscríbete a los cambios en los parámetros del enrutador
+    this.route.params.subscribe(params => {
       // Extrae el valor del parámetro centerName
       const centerName = params['centerName'];
       // Ahora, puedes usar centerName como desees, por ejemplo, cargar el componente correspondiente
       //this.loadComponent(centerName);
       // Asigna el valor a la propiedad de la clase si lo necesitas para otras partes del componente
       this.centerName = centerName;
-      this.name = this.localService.getName();
-      this.surname = this.localService.getSurname();
-      console.log("Nombre centro " + this.centerName);
-      setTimeout(() => {
-      this.loadComponent('ComponenteDias');
-      }, 0)
 
+      console.log("Nombre centro " + this.centerName);
+      // Cargar el componente de días por defecto al inicio
 
     });
-
+    this.reinicializarFlowBite();
 
 
   }
 
   ngAfterViewInit(): void {
 
-  this.reinicializarFlowBite()
+
 
   }
 
@@ -60,32 +57,6 @@ export class EditCenterComponent implements OnInit{
     });
   }
 
-  loadComponent(componentName: string) {
 
-    // Obtiene la clase del componente según el nombre
-    const componentType: Type<any> = this.getComponentTypeByName(componentName);
-
-    // Resuelve la factoría del componente
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-
-    // Limpia el contenedor dinámico antes de cargar un nuevo componente
-    this.dynamicComponentContainer?.clear();
-
-    // Crea una instancia del componente y lo inserta en el contenedor dinámico
-    const componentRef = this.dynamicComponentContainer?.createComponent(componentFactory);
-
-  }
-
-  private getComponentTypeByName(componentName: string): Type<any> {
-    // Mapea el nombre del componente a su tipo. Ajusta según la estructura de tu aplicación.
-
-    switch (componentName) {
-      case 'ComponenteDias':
-        return DaysComponent;
-      // Añade otros casos según sea necesario para otros componentes
-      default:
-        throw new Error(`Componente desconocido: ${componentName}`);
-    }
-  }
 
 }

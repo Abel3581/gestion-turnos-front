@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 import { DaysService } from 'src/app/services/days.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
+import { PatientService } from 'src/app/services/patient.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { TurnService } from 'src/app/services/turn.service';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
@@ -22,7 +23,7 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   templateUrl: './view-schedule.component.html',
   styleUrl: './view-schedule.component.css'
 })
-export class ViewScheduleComponent implements OnInit {
+export class ViewScheduleComponent implements OnInit, AfterViewInit {
 
   // En tu componente, define un nuevo array para almacenar la información de cada celda
   filas: { hora: string; fecha: Date; isCellEnabled: boolean; hasAssignedTurn: boolean; turnInfo?: TurnResponse }[] = [];
@@ -42,19 +43,23 @@ export class ViewScheduleComponent implements OnInit {
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  totalPatiens: number = 0;
+  totalAgendas: number = 0;
 
-  constructor(private dateService: DataService,
-              private http: HttpClient,
+  constructor(private http: HttpClient,
               private centers: HealthCenterService,
               private local: LocalAuthService,
               private daysService: DaysService,
-              private scheduleService: ScheduleService,
               private cdr: ChangeDetectorRef,
               private modalService: ModalServiceService,
               private zone: NgZone,
               private turnService: TurnService,
-              private turnUpdateService: TurnUpdateService) {
+              private turnUpdateService: TurnUpdateService,
+              private patientService: PatientService
+             ) {
   }
+
+
 
   ngOnInit(): void {
     this.name = this.local.getName();
@@ -67,14 +72,28 @@ export class ViewScheduleComponent implements OnInit {
 
     });
     this.turnUpdateService.turnAdded$.subscribe(() => {
-      this.getAllTurnsByCenterName();
+      //this.getAllTurnsByCenterName();
+      this.getAllTurnsByCenterNameAndUserId();
     });
-
+    this.centers.totalCentersByUser(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalAgendas = total;
+      }
+    );
+    this.patientService.getTotalPatientsByUserId(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalPatiens = total;
+      }
+    )
     this.reinicializarFlowBite();
     //console.log("Fecha actual: ", this.fechaActual);
     console.log('ngOnInit called');
 
   }
+
+  ngAfterViewInit(): void {
+    //this.reinicializarFlowBite();
+   }
 
   // Calculos paginacion fecha //
   obtenerDosUltimosDigitos(): string {
@@ -161,9 +180,10 @@ export class ViewScheduleComponent implements OnInit {
   selectCenter(center: any): void {
     this.selectedCenter = center;
     console.log("Centro seleccionado:", this.selectedCenter.name)
-    this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
-    this.getAllTurnsByCenterName();
-
+    //this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
+    this.getAllBusinessHoursByCenterAndUserId();
+    //this.getAllTurnsByCenterName();
+    this.getAllTurnsByCenterNameAndUserId();
 
     this.reinicializarFlowBite();
   }
@@ -253,13 +273,48 @@ export class ViewScheduleComponent implements OnInit {
         response => {
           console.log('getAllTurnsByCenterName - Response:', response);
           this.turns = response;
+          this.reinicializarFlowBite();
         },
         error => {
           console.error('getAllTurnsByCenterName - Error:', error);
         }
       )
     }
+  }
 
+  getAllTurnsByCenterNameAndUserId(){
+    console.log("getAllTurnsByCenterNameAndUserId()");
+    const centerName: string = this.selectedCenter.name;
+    const userId = this.local.getUserId();
+    if(centerName && this.selectedCenter && userId != null){
+      this.turnService.getAllTurnsByCenterNameAndUserId(centerName, userId).subscribe(
+        response => {
+          this.turns = response;
+          console.log("Turnos getAllTurnsByCenterNameAndUserId():", response );
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  }
+
+  getAllBusinessHoursByCenterAndUserId(){
+    console.log("getAllBusinessHoursByCenterAndUserId()");
+    const centerName: string = this.selectedCenter.name;
+    const userId = this.local.getUserId();
+    if(centerName && this.selectedCenter && userId != null){
+      this.daysService.getAllBusinessHoursByCenterAndUserId(centerName, userId).subscribe(
+        response => {
+          console.log("Dia y hora de atencione: ", response);
+          this.attentionDays = response;
+          this.reinicializarFlowBite();
+        },
+        error => {
+          console.error(error);
+        }
+      )
+    }
   }
 
   // Método para comparar la hora y fecha
@@ -365,9 +420,10 @@ export class ViewScheduleComponent implements OnInit {
     this.turnService.deleteTurnById(turnId!).subscribe(
       response => {
         console.log(response);
-          // Después de crear el centro, actualiza la lista de centros
+
           this.zone.run(() => {
             this.getAllTurnsByCenterName();
+
           });
       },
       error => {
@@ -376,9 +432,6 @@ export class ViewScheduleComponent implements OnInit {
     )
 
   }
-
-
-
 
 }
 
