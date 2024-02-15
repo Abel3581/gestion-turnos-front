@@ -54,5 +54,12 @@ export class TurnService {
     return this.http.get<TurnResponse[]>(url, { params: params});
   }
 
+  public getAllTurnsByUserId(userId: number): Observable<TurnResponse[]>{
+    const url = `${this.urlTurn}/all-by-user`;
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    return this.http.get<TurnResponse[]>(url, { params: params });
+  }
+
 
 }
