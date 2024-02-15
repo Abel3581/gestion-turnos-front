@@ -1,116 +1,145 @@
-<div class="bg-slate-800 w-screen h-screen flex flex-row ">
+<div class="bg-slate-800 w-screen h-screen flex flex-col md:flex-row ">
   <!-- Columna 1 -->
-  <div class=" w-1/2 h-10/12 flex flex-col ml-10 my-5">
-    <!-- <div class="w-full h-2/5">
-      <img class=" w-16 h-16 md:w-28 md:h-28 ml-28 " src="./../../../assets/img/logo.png" alt="" />
-    </div> -->
-    <div class="w-full h-screen flex justify-start items-start ">
-      <img class=" w-20 h-20 md:w-9/12 md:h-full ml-16 pb-14 pt-0 mt-0 " src="./../../../assets/img/medicos_remove.png" alt="" />
-    </div>
+  <div class="w-screen md:w-1/2 flex justify-center items-center">
+    <img class="w-20 h-20 md:w-9/12 md:h-full ml-16 pb-14 pt-0 mt-0" src="./../../../assets/img/medicos_remove.png"
+      alt="" />
   </div>
-  <!-- Fin colimna 1 -->
+  <!-- Fin columna 1 -->
   <!-- columna 2 -->
-  <div class="w-1/2 flex justify-center h-screen items-center border-2 border-l-violet-400 bg-slate-100">
-    <div class="w-full mr-10 h-3/4 my-5 flex items-center">
-      <form [formGroup]="registerForm" (ngSubmit)="register()" class="flex flex-col gap-8 w-full ml-10 max-w-2xl bg-slate-800 shadow-md rounded ">
+  <div>
+    <app-toast-success *ngIf="mostrarToastSuccess" [mensaje]="mensajeToast"
+      style="position: absolute; top: 5px; right: 10px; z-index: 1000;"></app-toast-success>
+  </div>
+  <div>
+    <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+      style="position: absolute; top: 5px; right: 10px; z-index: 1000;"></app-toast-danger>
+  </div>
+  <div class="w-screen md:w-1/2 flex justify-center items-center border-2 border-l-violet-400 bg-slate-100">
+    <div class="w-full h-3/4 my-5 flex items-center me-5">
+      <form [formGroup]="registerForm" (ngSubmit)="register()"
+        class="flex flex-col gap-8 w-full max-w-2xl bg-slate-800 shadow-md rounded p-5 md:ml-10 ">
         <div class="grid grid-cols-3 gap-4 w-full p-5 ">
-          <div class="">
-            <label for="title" class="block text-sm font-medium leading-6 text-slate-100">Título</label>
+          <div class="flex flex-col">
+            <label for="title" class="flex justify-between text-sm items-center font-medium leading-6 text-slate-100">Título
+              <i *ngIf="registerForm.get('title')?.invalid && (registerForm.get('title')?.dirty || registerForm.get('title')?.touched)"
+                class="fas fa-exclamation-circle text-red-500 me-2"></i></label>
             <div class="mt-1">
               <select name="title" autocomplete="title" formControlName="title"
-              class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
+                class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
                 <option value="">-</option>
                 <option value="Dr.">Dr.</option>
                 <option value="Dra.">Dra.</option>
                 <option value="Lic.">Lic.</option>
               </select>
             </div>
-            <div *ngIf="registerForm.get('title')?.hasError('required') && (registerForm.get('title')?.dirty || registerForm.get('title')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">El titulo es requerido.</p>
+          </div>
+          <div class="flex flex-col">
+            <label for="name" class="flex justify-between text-sm font-medium items-center leading-6 text-slate-100">Nombre
+              <i *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)"
+                class="fas fa-exclamation-circle text-red-500 me-2"></i>
+            </label>
+            <div class="mt-1">
+              <div
+                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <input formControlName="name" type="text" name="name" autocomplete="nombre"
+                  class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                  placeholder="Nombre">
+              </div>
             </div>
           </div>
-          <div class="">
-            <label for="name" class="block text-sm font-medium leading-6 text-slate-100">Nombre</label>
-              <div class="mt-1">
-                <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input formControlName="name" type="text" name="name" autocomplete="nombre" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
-                  placeholder="Nombre">
-                </div>
-                <div *ngIf="registerForm.get('name')?.hasError('required') && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched)" class="">
-                  <p class="text-red-500 text-xs italic ml-1">El nombre es requerido.</p>
-                </div>
+          <div class="flex flex-col">
+            <label for="lastname" class="flex justify-between text-sm font-medium items-center leading-6 text-slate-100">Apellido
+              <i *ngIf="registerForm.get('lastname')?.invalid && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)"
+                class="fas fa-exclamation-circle text-red-500 me-2"></i>
+            </label>
+            <div class="mt-1">
+              <div
+                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <input formControlName="lastname" type="text" autocomplete="Apellido"
+                  class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                  placeholder="Apellido">
               </div>
-          </div>
-          <div class="">
-            <label for="lastname" class="block text-sm font-medium leading-6 text-slate-100">Apellido</label>
-              <div class="mt-1">
-                <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <input formControlName="lastname" type="text" autocomplete="Apellido" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Apellido">
-                </div>
-              </div>
-              <div *ngIf="registerForm.get('lastname')?.hasError('required') && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)" class="">
-                <p class="text-red-500 text-xs italic ml-1">El apellido es requerido.</p>
-              </div>
+            </div>
+
           </div>
           <div class="col-span-3 ">
-            <label for="specialty" class="block text-sm font-medium leading-6 text-slate-100">Especialidad</label>
+            <label for="specialty" class="flex justify-between items-center text-sm font-medium leading-6 text-slate-100">Especialidad
+              <i *ngIf="registerForm.get('specialty')?.invalid && (registerForm.get('specialty')?.dirty || registerForm.get('specialty')?.touched)"
+                class="fas fa-exclamation-circle text-red-500 me-2"></i>
+            </label>
             <div class="mt-1">
-              <select formControlName="specialty" autocomplete="especialidad" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
+              <select formControlName="specialty" autocomplete="especialidad"
+                class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
                 <option value="" selected>-</option>
                 <option *ngFor="let specialty of specialties" [value]="specialty.label">
                   {{specialty.label}}
                 </option>
               </select>
             </div>
-            <div *ngIf="registerForm.get('specialty')?.hasError('required') && (registerForm.get('specialty')?.dirty || registerForm.get('specialty')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">La especialidad es requerida.</p>
-            </div>
+
           </div>
           <div class="col-span-3 ">
-            <label for="username" class="block text-sm font-medium leading-6 text-slate-100">Email</label>
+            <label for="username" class="flex justify-between items-center text-sm font-medium leading-6 text-slate-100">Email
+              <i class="fas fa-exclamation-circle text-red-500 me-2"
+                *ngIf="registerForm.get('username')?.hasError('required') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
+              </i>
+              <i class="fas fa-exclamation-circle text-red-500 me-2"
+                *ngIf="registerForm.get('username')?.hasError('email') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
+
+              </i>
+            </label>
             <div class="mt-1">
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                <input formControlName="username" type="text" autocomplete="username" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Email">
+              <div
+                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input formControlName="username" type="text" autocomplete="username"
+                  class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                  placeholder="Email">
               </div>
             </div>
-            <div *ngIf="registerForm.get('username')?.hasError('required') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">El email es requerido.</p>
-            </div>
-            <div *ngIf="registerForm.get('username')?.hasError('email') && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">Ingrese un email valido.</p>
-            </div>
           </div>
           <div class="col-span-3 ">
-            <label for="password" class="block text-sm font-medium leading-6 text-slate-100">Password</label>
+            <label for="password" class="flex justify-between items-center text-sm font-medium leading-6 text-slate-100">Password
+              <i class="fas fa-exclamation-circle text-red-500 me-2"
+                *ngIf="registerForm.get('password')?.hasError('required') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+
+              </i>
+              <i class="fas fa-exclamation-circle text-red-500 me-2"
+                *ngIf="registerForm.get('password')?.hasError('minlength') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+
+              </i>
+            </label>
             <div class="mt-1">
-              <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                <input formControlName="password" type="password" autocomplete="password" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6" placeholder="Password">
+              <div
+                class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                <input formControlName="password" type="password" autocomplete="password"
+                  class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6"
+                  placeholder="Password">
               </div>
             </div>
-            <div *ngIf="registerForm.get('password')?.hasError('required') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">El password es requerido.</p>
-            </div>
-            <div *ngIf="registerForm.get('password')?.hasError('minlength') && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">El password debe tener 8 o mas caracteres.</p>
-            </div>
+
           </div>
           <div class="col-span-3 ">
-            <label for="country" class="block text-sm font-medium leading-6 text-slate-100">País</label>
+            <label for="country" class="flex justify-between items-center text-sm font-medium leading-6 text-slate-100">País
+              <i class="fas fa-exclamation-circle text-red-500 me-2"
+                *ngIf="registerForm.get('country')?.hasError('required') && (registerForm.get('country')?.dirty || registerForm.get('country')?.touched)">
+
+              </i>
+            </label>
             <div class="mt-1">
-              <select formControlName="country" autocomplete="País" class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
+              <select formControlName="country" autocomplete="País"
+                class="block w-full py-1.5 px-2 placeholder:text-gray-400 focus:ring-0 bg-white border-2 border-violet-400 focus:border-yellow-300  rounded outline-none sm:text-sm sm:leading-6">
                 <option value="" selected>-</option>
                 <option *ngFor="let country of countries" [value]="country.label">
                   {{country.label}}
                 </option>
               </select>
             </div>
-            <div *ngIf="registerForm.get('country')?.hasError('required') && (registerForm.get('country')?.dirty || registerForm.get('country')?.touched)" class="">
-              <p class="text-red-500 text-xs italic ml-1">El país es requerido.</p>
-            </div>
+
           </div>
           <div class="col-span-3 ">
             <div class="flex items-center justify-end">
-              <button type="submit" class="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
+              <button type="submit"
+                class="bg-blue-500 text-sm hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline">
                 Empezar ahora
               </button>
 

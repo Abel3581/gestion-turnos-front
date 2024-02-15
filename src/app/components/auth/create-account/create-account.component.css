@@ -2,4 +2,7 @@ body {
     margin: 0;
     font-family: Roboto, sans-serif;
   }
+  select:invalid {
+    border-color: #ff0000; /* Cambiar el color del borde a rojo cuando el campo sea inválido */
+}
 

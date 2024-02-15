@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastNoAnimationModule, ToastrModule } from 'ngx-toastr';
 import { ComponentRoutingModule } from './component.routing';
 import { RouterModule } from '@angular/router';
+import { ToastSuccessComponent } from 'src/app/shared/componets/toast-success/toast-success.component';
+import { ToastDangerComponent } from 'src/app/shared/components/toast-danger/toast-danger.component';
 
 
 
@@ -14,6 +16,8 @@ import { RouterModule } from '@angular/router';
   declarations: [
     InitionSesionComponent,
     CreateAccountComponent,
+    ToastSuccessComponent,
+    ToastDangerComponent
 
   ],
   imports: [

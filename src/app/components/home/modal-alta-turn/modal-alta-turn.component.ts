@@ -61,37 +61,44 @@ export class ModalAltaTurnComponent implements OnInit {
     });
   }
 
-  onSearchTermChange() {
-    // Llama a tu función de búsqueda aquí
-    this.searchPatient();
+  public onSearchTermChange() {
+      this.searchPatient();
   }
 
   public searchPatient() {
-    console.log("Se apreto el boton searchPatient")
+    console.log("Se apretó el botón searchPatient");
     const userId = this.localService.getUserId();
-    // console.log("ModalComponente Fecha: " + this.fecha + " hora: " + this.hora + " Centro: " + this.centro);
-    if (this.searchTerm.length >= 3) {
-      this.loading = true;
-      // Resto de tu lógica aquí
-      setTimeout(() => {
-        this.loading = false;
-      },1000)
+
+    // Siempre limpiamos los resultados anteriores cuando el término de búsqueda está vacío
+    if (this.searchTerm === '') {
+      this.patientResults = [];
+    }
+
+    // Realizamos la búsqueda si hay al menos 3 caracteres o más, o si el término de búsqueda está vacío
+    if (this.searchTerm.length >= 3 || this.searchTerm === '') {
+      // this.loading = true;
+
       this.patientService.searchPatient(this.searchTerm, userId!).subscribe(
         response => {
           this.patientResults = response;
           console.log(response);
 
+            this.loading = true;
+
+          setTimeout(() => {
+            this.loading = false;
+          },2000)
         },
         err => {
           console.log(err);
+          this.loading = false;
         }
-      )
-    }
-    if (this.searchTerm.length === 0) {
+      );
       this.patientResults = [];
     }
-
   }
+
+
 
   addTurnPatient(dni: string) {
     console.log("Entró al método addTurnPatient");
