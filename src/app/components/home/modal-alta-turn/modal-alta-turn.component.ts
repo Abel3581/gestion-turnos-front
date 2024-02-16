@@ -1,6 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { PatientResponse } from 'src/app/models/response/patient-response';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
@@ -13,7 +14,7 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   templateUrl: './modal-alta-turn.component.html',
   styleUrl: './modal-alta-turn.component.css'
 })
-export class ModalAltaTurnComponent implements OnInit {
+export class ModalAltaTurnComponent implements OnInit, OnDestroy {
 
   public visible: boolean = false;
   patientResults: PatientResponse[] = [];
@@ -32,6 +33,7 @@ export class ModalAltaTurnComponent implements OnInit {
               private localService: LocalAuthService
   ) { }
 
+
   ngOnInit(): void {
     this.modalService.modalVisible$.subscribe((visible) => {
       this.visible = visible;
@@ -46,7 +48,14 @@ export class ModalAltaTurnComponent implements OnInit {
     });
     this.modalService.hora$.subscribe(hora => this.hora = hora);
     this.modalService.centro$.subscribe(centro => this.centro = centro);
+    this.searchPatient()
+  }
 
+  ngOnDestroy(): void {
+    this.closeDialog();
+     // Desuscribirse de todas las suscripciones al servicio de modal aquí
+    // Esto asegurará que no haya fugas de memoria ni llamadas innecesarias a los modales
+    this.turnUpdateService.unsubscribeAll();
   }
 
   public closeDialog(): void {
@@ -75,7 +84,7 @@ export class ModalAltaTurnComponent implements OnInit {
     }
 
     // Realizamos la búsqueda si hay al menos 3 caracteres o más, o si el término de búsqueda está vacío
-    if (this.searchTerm.length >= 3 || this.searchTerm === '') {
+    if (this.searchTerm.length >= 3  ) {
       // this.loading = true;
 
       this.patientService.searchPatient(this.searchTerm, userId!).subscribe(
@@ -83,11 +92,6 @@ export class ModalAltaTurnComponent implements OnInit {
           this.patientResults = response;
           console.log(response);
 
-            this.loading = true;
-
-          setTimeout(() => {
-            this.loading = false;
-          },2000)
         },
         err => {
           console.log(err);
@@ -124,11 +128,15 @@ export class ModalAltaTurnComponent implements OnInit {
       console.log(response);
       this.toast.success(response.message);
       this.turnUpdateService.notifyTurnAdded();
+
       setTimeout(() => {
+        this.patientResults = [];
+        this.searchTerm = '';
         this.closeDialog();
       },1000)
     },
       error => {
+        this.patientResults = [];
         this.toast.error(error.error);
         console.log(error)
       }

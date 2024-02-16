@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,7 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   templateUrl: './view-schedule.component.html',
   styleUrl: './view-schedule.component.css'
 })
-export class ViewScheduleComponent implements OnInit, AfterViewInit {
+export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // En tu componente, define un nuevo array para almacenar la información de cada celda
   filas: { hora: string; fecha: Date; isCellEnabled: boolean; hasAssignedTurn: boolean; turnInfo?: TurnResponse }[] = [];
@@ -59,8 +59,6 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit {
              ) {
   }
 
-
-
   ngOnInit(): void {
     this.name = this.local.getName();
     this.surname = this.local.getSurname();
@@ -85,15 +83,21 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit {
         this.totalPatiens = total;
       }
     )
-    this.reinicializarFlowBite();
+
+
     //console.log("Fecha actual: ", this.fechaActual);
     console.log('ngOnInit called');
 
   }
 
   ngAfterViewInit(): void {
-    //this.reinicializarFlowBite();
+    this.reinicializarFlowBite();
+
    }
+
+   ngOnDestroy(): void {
+    this.turnUpdateService.unsubscribeAll();
+  }
 
   // Calculos paginacion fecha //
   obtenerDosUltimosDigitos(): string {

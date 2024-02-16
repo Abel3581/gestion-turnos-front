@@ -13,6 +13,7 @@ import { TurnService } from 'src/app/services/turn.service';
   styleUrl: './mi-consultorio.component.css'
 })
 export class MiConsultorioComponent implements OnInit{
+
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
@@ -51,6 +52,7 @@ export class MiConsultorioComponent implements OnInit{
       }
     );
       this.getAllTurnsByUserId();
+      // this.cambiarEstado(11, 'ATENDIDO');
       this.reinicializarFlowBite();
   }
 
@@ -70,6 +72,19 @@ export class MiConsultorioComponent implements OnInit{
 
   updateSelectedOption(option: string) {
     this.selectedOption = option;
+}
+
+cambiarEstado(turnId: number, estado: string) {
+  console.log("Tuno id: " + turnId + " Estado: " + estado);
+  this.turnService.changeStatus(turnId, estado).subscribe(
+    response => {
+      console.log(response);
+      this.getAllTurnsByUserId();
+    },
+    error => {
+      console.log(error);
+    }
+  )
 }
 
 

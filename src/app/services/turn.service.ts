@@ -61,5 +61,15 @@ export class TurnService {
     return this.http.get<TurnResponse[]>(url, { params: params });
   }
 
+  public changeStatus(turnId: number, status: string): Observable<MessageResponse>{
+    const url = `${this.urlTurn}/change-status`;
+
+    let params = new HttpParams();
+    params = params.append('turnId', turnId);
+    params = params.append('status', status);
+
+    return this.http.put<MessageResponse>(url, {}, { params : params });
+
+  }
 
 }

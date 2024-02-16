@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,11 @@ export class ModalServiceService {
 
   private centroSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public centro$: Observable<string> = this.centroSubject.asObservable();
+  // Almacena las suscripciones para desuscribirse más tarde
+  private modalVisibleSubscription: Subscription | undefined;
+  private fechaSubscription: Subscription | undefined;
+  private horaSubscription: Subscription | undefined;
+  private centroSubscription: Subscription | undefined;
 
   constructor() { }
 
@@ -36,6 +41,14 @@ export class ModalServiceService {
   public hideModal(): void {
     this.modalVisibleSubject.next(false);
   }
+
+  // Método para desuscribirse de todas las suscripciones
+  public unsubscribeAll(): void {
+    this.modalVisibleSubscription?.unsubscribe();
+    this.fechaSubscription?.unsubscribe();
+    this.horaSubscription?.unsubscribe();
+    this.centroSubscription?.unsubscribe();
+  }
    // Función para formatear la fecha en "YYYY-MM-DD"
    private dateFormat(fecha: Date): string {
     const year = fecha.getFullYear();
@@ -44,6 +57,8 @@ export class ModalServiceService {
 
     return `${year}-${month}-${day}`;
   }
+
+
 
 
 }
