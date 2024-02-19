@@ -30,9 +30,9 @@ export class DaysComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private zone: NgZone) {}
 
-  // ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
 
-  // }
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
@@ -40,7 +40,11 @@ export class DaysComponent implements OnInit {
       this.centerName = centerName;
 
       await this.loadBusinessHours();
+
     });
+    setTimeout(() =>{
+      this.reinicializarFlowBite();
+    },1000)
   }
 
   async loadBusinessHours(): Promise<void> {
@@ -51,9 +55,10 @@ export class DaysComponent implements OnInit {
       this.getBusinessHours('Jueves'),
       this.getBusinessHours('Viernes'),
       this.getBusinessHours('Sábado'),
-      this.getBusinessHours('Domingo')
+      this.getBusinessHours('Domingo'),
+
     ]);
-    this.reinicializarFlowBite();
+
   }
 
   getBusinessHours(day: string): Promise<void> {
@@ -61,7 +66,7 @@ export class DaysComponent implements OnInit {
     const userId = this.localAuthService.getUserId();
     if (userId != null) {
       return new Promise<void>((resolve) => {
-        this.daysService.getAllBusinessHoursByCenterAndUserId(this.centerName, userId, day).subscribe(
+        this.daysService.getAllBusinessHoursByCenterAndUserIdAndDay(this.centerName, userId, day).subscribe(
           (response) => {
             switch (day) {
               case 'Lunes':

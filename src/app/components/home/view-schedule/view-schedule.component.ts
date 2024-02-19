@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
 import { BusinessHoursResponse } from 'src/app/models/response/business-hours-response';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
 import { TurnResponse } from 'src/app/models/response/turn-response';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { DataService } from 'src/app/services/data.service';
 import { DaysService } from 'src/app/services/days.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
+import { PatientService } from 'src/app/services/patient.service';
 import { ScheduleService } from 'src/app/services/schedule.service';
 import { TurnService } from 'src/app/services/turn.service';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
@@ -22,14 +24,12 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   templateUrl: './view-schedule.component.html',
   styleUrl: './view-schedule.component.css'
 })
-export class ViewScheduleComponent implements OnInit {
-
+export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   // En tu componente, define un nuevo array para almacenar la información de cada celda
   filas: { hora: string; fecha: Date; isCellEnabled: boolean; hasAssignedTurn: boolean; turnInfo?: TurnResponse }[] = [];
-
   selectedCenter!: HealthCenterNamesResponse;
   turnInfo!: TurnResponse;
-  centersName!: HealthCenterNamesResponse[];
+  centersName: HealthCenterNamesResponse[] = [];
   attentionDays: BusinessHoursResponse[] = [];
   turns: TurnResponse[] = [];
   hours: string[] = [];
@@ -42,18 +42,24 @@ export class ViewScheduleComponent implements OnInit {
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  totalPatiens: number = 0;
+  totalAgendas: number = 0;
+  mostrarToast: boolean = false;
+  mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
+  mostrarToastDander: boolean = false;
 
-  constructor(private dateService: DataService,
-              private http: HttpClient,
+  constructor(private http: HttpClient,
               private centers: HealthCenterService,
               private local: LocalAuthService,
               private daysService: DaysService,
-              private scheduleService: ScheduleService,
               private cdr: ChangeDetectorRef,
               private modalService: ModalServiceService,
               private zone: NgZone,
               private turnService: TurnService,
-              private turnUpdateService: TurnUpdateService) {
+              private turnUpdateService: TurnUpdateService,
+              private patientService: PatientService,
+              private toastService: ToastService
+             ) {
   }
 
   ngOnInit(): void {
@@ -67,13 +73,41 @@ export class ViewScheduleComponent implements OnInit {
 
     });
     this.turnUpdateService.turnAdded$.subscribe(() => {
-      this.getAllTurnsByCenterName();
+      //this.getAllTurnsByCenterName();
+      this.mostrarToast = true;
+      this.mensajeToast = "Turno creado"
+      this.getAllTurnsByCenterNameAndUserId();
+    });
+    this.centers.totalCentersByUser(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalAgendas = total;
+      }
+    );
+    this.patientService.getTotalPatientsByUserId(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalPatiens = total;
+      }
+    );
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToast = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
     });
 
-    this.reinicializarFlowBite();
+
     //console.log("Fecha actual: ", this.fechaActual);
     console.log('ngOnInit called');
 
+  }
+
+  ngAfterViewInit(): void {
+    this.reinicializarFlowBite();
+
+   }
+
+   ngOnDestroy(): void {
+    this.turnUpdateService.unsubscribeAll();
   }
 
   // Calculos paginacion fecha //
@@ -161,9 +195,10 @@ export class ViewScheduleComponent implements OnInit {
   selectCenter(center: any): void {
     this.selectedCenter = center;
     console.log("Centro seleccionado:", this.selectedCenter.name)
-    this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
-    this.getAllTurnsByCenterName();
-
+    //this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
+    this.getAllBusinessHoursByCenterAndUserId();
+    //this.getAllTurnsByCenterName();
+    this.getAllTurnsByCenterNameAndUserId();
 
     this.reinicializarFlowBite();
   }
@@ -253,13 +288,51 @@ export class ViewScheduleComponent implements OnInit {
         response => {
           console.log('getAllTurnsByCenterName - Response:', response);
           this.turns = response;
+          this.reinicializarFlowBite();
         },
         error => {
           console.error('getAllTurnsByCenterName - Error:', error);
         }
       )
     }
+  }
 
+  getAllTurnsByCenterNameAndUserId(){
+    console.log("getAllTurnsByCenterNameAndUserId()");
+    if(this.selectedCenter != null ){
+      const centerName: string = this.selectedCenter.name;
+      console.log("Centro:", centerName);
+      const userId = this.local.getUserId();
+      if(centerName && this.selectedCenter && userId != null){
+        this.turnService.getAllTurnsByCenterNameAndUserId(centerName, userId).subscribe(
+          response => {
+            this.turns = response;
+            console.log("Turnos getAllTurnsByCenterNameAndUserId():", response );
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    }
+  }
+
+  getAllBusinessHoursByCenterAndUserId(){
+    console.log("getAllBusinessHoursByCenterAndUserId()");
+    const centerName: string = this.selectedCenter.name;
+    const userId = this.local.getUserId();
+    if(centerName && this.selectedCenter && userId != null){
+      this.daysService.getAllBusinessHoursByCenterAndUserId(centerName, userId).subscribe(
+        response => {
+          console.log("Dia y hora de atencione: ", response);
+          this.attentionDays = response;
+          this.reinicializarFlowBite();
+        },
+        error => {
+          console.error(error);
+        }
+      )
+    }
   }
 
   // Método para comparar la hora y fecha
@@ -365,10 +438,13 @@ export class ViewScheduleComponent implements OnInit {
     this.turnService.deleteTurnById(turnId!).subscribe(
       response => {
         console.log(response);
-          // Después de crear el centro, actualiza la lista de centros
+
           this.zone.run(() => {
             this.getAllTurnsByCenterName();
+
           });
+          this.mostrarToast = true;
+          this.mensajeToast = response.message;
       },
       error => {
         console.error(error);
@@ -376,9 +452,6 @@ export class ViewScheduleComponent implements OnInit {
     )
 
   }
-
-
-
 
 }
 

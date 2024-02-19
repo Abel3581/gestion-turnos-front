@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { PatientResponse } from 'src/app/models/response/patient-response';
+import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { TurnService } from 'src/app/services/turn.service';
 import { ModalServiceService } from 'src/app/shared/services/modal-service.service';
@@ -12,7 +12,7 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   templateUrl: './modal-alta-turn.component.html',
   styleUrl: './modal-alta-turn.component.css'
 })
-export class ModalAltaTurnComponent implements OnInit {
+export class ModalAltaTurnComponent implements OnInit, OnDestroy {
 
   public visible: boolean = false;
   patientResults: PatientResponse[] = [];
@@ -21,10 +21,17 @@ export class ModalAltaTurnComponent implements OnInit {
   hora!: string;
   centro!: string;
   loading: boolean = false;
+  turnCreate: boolean = false;
 
-  constructor(private modalService: ModalServiceService, private cdr: ChangeDetectorRef,
-    private patientService: PatientService, private turnService: TurnService, private toast: ToastrService,
-    private turnUpdateService: TurnUpdateService) { }
+  constructor(private modalService: ModalServiceService,
+              private cdr: ChangeDetectorRef,
+              private patientService: PatientService,
+              private turnService: TurnService,
+
+              private turnUpdateService: TurnUpdateService,
+              private localService: LocalAuthService
+  ) { }
+
 
   ngOnInit(): void {
     this.modalService.modalVisible$.subscribe((visible) => {
@@ -40,7 +47,14 @@ export class ModalAltaTurnComponent implements OnInit {
     });
     this.modalService.hora$.subscribe(hora => this.hora = hora);
     this.modalService.centro$.subscribe(centro => this.centro = centro);
+    this.searchPatient()
+  }
 
+  ngOnDestroy(): void {
+    this.closeDialog();
+     // Desuscribirse de todas las suscripciones al servicio de modal aquí
+    // Esto asegurará que no haya fugas de memoria ni llamadas innecesarias a los modales
+    this.turnUpdateService.unsubscribeAll();
   }
 
   public closeDialog(): void {
@@ -55,21 +69,24 @@ export class ModalAltaTurnComponent implements OnInit {
     });
   }
 
-  onSearchTermChange() {
-    // Llama a tu función de búsqueda aquí
-    this.searchPatient();
+  public onSearchTermChange() {
+      this.searchPatient();
   }
 
   public searchPatient() {
-    console.log("Se apreto el boton searchPatient")
-    // console.log("ModalComponente Fecha: " + this.fecha + " hora: " + this.hora + " Centro: " + this.centro);
-    if (this.searchTerm.length >= 3) {
-      this.loading = true;
-      // Resto de tu lógica aquí
-      setTimeout(() => {
-        this.loading = false;
-      },1000)
-      this.patientService.searchPatient(this.searchTerm).subscribe(
+    console.log("Se apretó el botón searchPatient");
+    const userId = this.localService.getUserId();
+
+    // Siempre limpiamos los resultados anteriores cuando el término de búsqueda está vacío
+    if (this.searchTerm === '') {
+      this.patientResults = [];
+    }
+
+    // Realizamos la búsqueda si hay al menos 3 caracteres o más, o si el término de búsqueda está vacío
+    if (this.searchTerm.length >= 3  ) {
+      // this.loading = true;
+
+      this.patientService.searchPatient(this.searchTerm, userId!).subscribe(
         response => {
           this.patientResults = response;
           console.log(response);
@@ -77,14 +94,14 @@ export class ModalAltaTurnComponent implements OnInit {
         },
         err => {
           console.log(err);
+          this.loading = false;
         }
-      )
-    }
-    if (this.searchTerm.length === 0) {
+      );
       this.patientResults = [];
     }
-
   }
+
+
 
   addTurnPatient(dni: string) {
     console.log("Entró al método addTurnPatient");
@@ -102,19 +119,24 @@ export class ModalAltaTurnComponent implements OnInit {
 
     const formattedDate = `${year}-${month}-${day}`;
     const centro = this.centro;
+    const userId = this.localService.getUserId();
     //console.log("Fecha dentro del metodo agregar turno: " + formattedDate);
     //const date = this.fecha;
     const hour = this.hora;
-    this.turnService.createPatientTurn(centro, formattedDate, hour, dni).subscribe(response => {
+    this.turnService.createPatientTurn(centro, formattedDate, hour, dni, userId!).subscribe(response => {
       console.log(response);
-      this.toast.success(response.message);
+      // this.toast.success(response.message);
       this.turnUpdateService.notifyTurnAdded();
+      this.turnCreate = true;
       setTimeout(() => {
+        this.patientResults = [];
+        this.searchTerm = '';
         this.closeDialog();
       },1000)
     },
       error => {
-        this.toast.error(error.error);
+        this.patientResults = [];
+        // this.toast.error(error.error);
         console.log(error)
       }
     )

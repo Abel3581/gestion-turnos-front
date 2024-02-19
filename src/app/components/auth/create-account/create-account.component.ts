@@ -3,9 +3,9 @@ import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { RegisterRequest } from 'src/app/models/request/register-request';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
 
 
 @Component({
@@ -17,9 +17,15 @@ export class CreateAccountComponent implements OnInit {
   specialties!: any[];
   countries!: any[];
   registerForm: FormGroup;
+  mostrarToastSuccess: boolean = false;
+  mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
+  mostrarToastDander: boolean = false;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder, private toastr: ToastrService,
-    private router: Router, private http: HttpClient ){
+  constructor(private authService: AuthService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private http: HttpClient,
+              private toastService: ToastService ){
     this.registerForm = formBuilder.group({
       title: ['', Validators.required],
       name: ['', Validators.required],
@@ -39,7 +45,13 @@ export class CreateAccountComponent implements OnInit {
     });
     this.http.get<any[]>('./assets/data/countries.json').subscribe(data => {
       this.countries = data;
-    })
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastSuccess = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
   }
 
   register(){
@@ -48,7 +60,9 @@ export class CreateAccountComponent implements OnInit {
       this.authService.register(request).subscribe(
         data => {
           console.log(data);
-          this.toastr.success(data.message);
+          // this.toastr.success(data.message);
+          this.mostrarToastSuccess = true;
+          this.mensajeToast = data.message;
           this.registerForm.reset();
           alert("Serás redireccionado al login del usuario para iniciar sesión. 🚀✨");
           setTimeout(() => {
@@ -56,8 +70,9 @@ export class CreateAccountComponent implements OnInit {
           }, 3000);
         }, error => {
           console.log(error);
-          this.toastr.error(error.error);
-
+          // this.toastr.error(error.error);
+          this.mostrarToastDander = true;
+          this.mensajeToast = error.error;
         }
       )
     }else{

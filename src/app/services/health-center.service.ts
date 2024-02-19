@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HealthCenterRequest } from '../models/request/health-center-request';
 import { Observable } from 'rxjs';
@@ -22,6 +22,21 @@ export class HealthCenterService {
   public getAllCentersName(userId: number): Observable<HealthCenterNamesResponse[]>{
     const url = `${this.urlCenter}/user/${userId}`;
     return this.http.get<HealthCenterNamesResponse[]>(url);
+  }
+
+  public totalPatientsByCenter(userId: number, centerName: string): Observable<number>{
+    const url = `${this.urlCenter}/total-patients`;
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    params = params.append('centerName', centerName);
+    return this.http.get<number>(url, { params: params });
+  }
+
+  public totalCentersByUser(userId: number): Observable<number>{
+    const url = `${this.urlCenter}/total-centers`;
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    return this.http.get<number>(url, { params: params });
   }
 
 }

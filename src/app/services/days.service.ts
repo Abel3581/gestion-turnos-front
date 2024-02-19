@@ -25,8 +25,16 @@ export class DaysService {
     return this.http.get<BusinessHoursResponse[]>(url, { params });
   }
 
-  getAllBusinessHoursByCenterAndUserId(centerName: string, userId: number, day: string): Observable<BusinessHoursResponse[]> {
-    const url = `${this.urlDays}/business-hours?centerName=${centerName}&userId=${userId}&day=${day}`;
+  getAllBusinessHoursByCenterAndUserId(centerName: string, userId: number): Observable<BusinessHoursResponse[]> {
+    const url = `${this.urlDays}/business-hours?centerName=${centerName}&userId=${userId}`;
+
+    return this.http.get<BusinessHoursResponse[]>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAllBusinessHoursByCenterAndUserIdAndDay(centerName: string, userId: number, day: string): Observable<BusinessHoursResponse[]> {
+    const url = `${this.urlDays}/business-hours-day?centerName=${centerName}&userId=${userId}&day=${day}`;
 
     return this.http.get<BusinessHoursResponse[]>(url).pipe(
       catchError(this.handleError)

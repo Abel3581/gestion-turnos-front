@@ -14,7 +14,7 @@ export class ApiInterceptorInterceptor implements HttpInterceptor {
   constructor(private ngxUiLoaderService: NgxUiLoaderService) {}
   private activeRequest = 0;
   // Lista de URLs que deben excluirse del loader
-  private excludedUrls: string[] = ['/term', '/delete'];
+  private excludedUrls: string[] = [];
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     console.log('**INGRESANDO AL INTERCEPTOR**');

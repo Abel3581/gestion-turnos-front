@@ -27,9 +27,12 @@
               class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <div class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
-                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              <div
+                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
                 </svg>
               </div>
 
@@ -72,8 +75,7 @@
     <ul class="space-y-2 font-medium">
       <li>
         <a routerLink="/home/user-profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-          >
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="fa-solid fa-user-doctor fa-lg"></i>
           <span class="ms-3">Perfil</span>
         </a>
@@ -84,7 +86,7 @@
           <i class="fa-regular fa-hospital fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Centros</span>
           <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalAgendas }}</span>
         </a>
       </li>
       <li>
@@ -93,7 +95,7 @@
           <i class="fa-solid fa-hospital-user fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
           <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalPatients }}</span>
         </a>
       </li>
       <li>
@@ -116,11 +118,19 @@
     </ul>
   </div>
 </aside>
+<div>
+  <app-toast-success *ngIf="mostrarToastSuccess" [mensaje]="mensajeToast"
+    style="position: absolute; top: 5px; right: 10px; z-index: 1000;"></app-toast-success>
+</div>
+<div>
+  <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+    style="position: absolute; top: 5px; right: 10px; z-index: 1000;"></app-toast-danger>
+</div>
 <!-- Body -->
-<div class="p-4 sm:ml-64">
-  <div class="p-4 border-gray-200 rounded-lg dark:border-gray-700 mt-14">
-    <div class="grid grid-rows-2 grid-flow-col gap-2 ">
-      <div class=" flex items-center">
+<div class="p-4 sm:ml-60">
+  <div class="p-4 flex justify-center border-gray-200 rounded-lg dark:border-gray-700 mt-14">
+    <div class="grid grid-rows-2 grid-flow-col gap-2 w-11/12 ">
+      <div class=" flex items-center bg-slate-50 rounded ">
         <div class="w-full">
           <img class="w-64 h-32" src="./../../../assets/img/centro_remove1.png" alt="Centro medico" />
         </div>
@@ -245,26 +255,46 @@
           </div>
         </div>
       </div>
-      <div class=" h-52 mb-5 shadow-2xl bg-white overflow-auto rounded ">
+      <div class=" h-52 mb-5  shadow-2xl bg-white overflow-auto rounded ">
         <ng-container *ngIf="centers && centers.length >= 0">
           <div class=" mx-2 p-4 ">
-            <ul *ngFor="let center of centers">
-              <li class="flex justify-between items-center hover:bg-slate-300 mb-2 px-2 py-2 bg-slate-200 rounded">
+            <ul *ngFor="let center of centers; let i = index">
+              <li class="flex justify-between items-center hover:bg-slate-200 bg-slate-100 mb-2 px-2 py-2 rounded">
                 <div>
                   <span class="font-semibold text-sm">{{center.name}}</span><br>
-                  <span class="text-xs text-slate-500">1 profesional - pacientes 236</span>
+                  <span class="text-xs text-slate-500"><span class="font-bold">1</span> profesional - <span class="font-bold">{{ center?.totalPatients }}</span> pacientes </span>
                 </div>
                 <div>
-                  <button [routerLink]="'/edit/edit-center/' +  center.name"
+                  <button [attr.data-tooltip-target]="'tooltip-centro-' + i"
+                    [routerLink]="'/edit/edit-center/' +  center.name"
                     class="rounded-full bg-blue-500 w-7 h-7 text-white hover:bg-blue-600 flex-col items-center justify-center mr-2"><i
-                      class="fa-regular fa-pen-to-square fa-xs "></i></button>
-                  <button
+                      class="fa-regular fa-pen-to-square fa-xs "></i>
+                  </button>
+                  <div [attr.id]="'tooltip-centro-' + i" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Administración del centro
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div>
+                  <button [attr.data-tooltip-target]="'tooltip-eliminar-' + i"
                     class="rounded-full text-white bg-red-500 w-7 h-7 hover:bg-red-600 flex-col items-center justify-center"><i
-                      class="fa-regular fa-trash-can fa-xs "></i></button>
+                      class="fa-regular fa-trash-can fa-xs "></i>
+                  </button>
+                  <div [attr.id]="'tooltip-eliminar-' + i" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    Eliminar centro
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div>
                 </div>
               </li>
             </ul>
           </div>
+        </ng-container>
+        <ng-container *ngIf="centers.length === 0">
+
+            <p class=" text-center font-medium font-sans">
+              Aún no has creado ningún centro...
+            </p>
+
         </ng-container>
       </div>
     </div>

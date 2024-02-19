@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Login } from '../models/login';
-import { Observable, catchError, map, pipe, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { LoginResponse } from '../models/LoginResponse';
 import { RegisterRequest } from '../models/request/register-request';
 import { RegisterResponse } from '../models/response/register-response';

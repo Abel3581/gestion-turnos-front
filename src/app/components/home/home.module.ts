@@ -16,6 +16,9 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ModalAltaTurnComponent } from './modal-alta-turn/modal-alta-turn.component';
+import { MiConsultorioComponent } from './mi-consultorio/mi-consultorio.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SharedModule } from 'src/app/shared/shared/shared.module';
 
 
 // Registra los datos de localización para español
@@ -31,6 +34,7 @@ registerLocaleData(localeEs);
     UserProfileComponent,
     CreatePatientsComponent,
     ModalAltaTurnComponent,
+    MiConsultorioComponent
 
 
   ],
@@ -38,6 +42,7 @@ registerLocaleData(localeEs);
   imports: [
     FormsModule,
     CommonModule,
+    HttpClientModule,
     HomeRoutingModule,
     ReactiveFormsModule,
     DialogModule,
@@ -46,6 +51,8 @@ registerLocaleData(localeEs);
     TableModule,
     ButtonModule,
     DialogModule,
+    SharedModule
+
 
   ],
   providers: [

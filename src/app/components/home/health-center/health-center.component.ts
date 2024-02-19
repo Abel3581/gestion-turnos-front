@@ -1,11 +1,13 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { HealthCenterResponse } from 'src/app/models/response/health-center-response';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
+import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
+import { PatientService } from 'src/app/services/patient.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,8 +15,10 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './health-center.component.html',
   styleUrls: ['./health-center.component.css']
 })
-export class HealthCenterComponent implements OnInit{
-
+export class HealthCenterComponent implements OnInit, AfterViewInit {
+  mostrarToastSuccess: boolean = false;
+  mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
+  mostrarToastDander: boolean = false;
   iconSeleccionado: string = '';
   formGroup!: FormGroup;
   liSeleccionado: string = "";
@@ -24,23 +28,28 @@ export class HealthCenterComponent implements OnInit{
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  totalCentros: number = 0;
+  totalPatients: number = 0;
+  totalAgendas: number = 0;
 
   constructor(private fb: FormBuilder,
-              private centerService: HealthCenterService,
-              private local: LocalAuthService,
-              private tostr: ToastrService,
-              private userService: UserService,
-              private zone: NgZone,
-              private router: Router,
-              private cdr: ChangeDetectorRef){
+    private centerService: HealthCenterService,
+    private local: LocalAuthService,
+    private userService: UserService,
+    private zone: NgZone,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private totalCentersService: TotalCentrosService,
+    private patientService: PatientService,
+    private toastService: ToastService) {
     this.formGroup = fb.group({
-      name : ['', Validators.required],
+      name: ['', Validators.required],
       address: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       specialty: ['', Validators.required]
 
-  })
+    });
 
   }
 
@@ -49,7 +58,27 @@ export class HealthCenterComponent implements OnInit{
     this.surname = this.local.getSurname();
     this.emailUser = this.local.getEmail();
     this.getAllCenters();
+    this.patientService.getTotalPatientsByUserId(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalPatients = total;
+      }
+    );
+    this.centerService.totalCentersByUser(this.local.getUserId()!).subscribe(
+      total => {
+        this.totalAgendas = total;
+      }
+    );
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastSuccess = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
     this.reinicializarFlowBite();
+
+  }
+
+  ngAfterViewInit(): void {
 
   }
 
@@ -65,48 +94,58 @@ export class HealthCenterComponent implements OnInit{
     this.visible = true;
   }
 
-  public modalClose(){
+  public modalClose() {
     this.visible = false;
   }
 
-  public seleccionarLi(li: string): void{
+  public seleccionarLi(li: string): void {
     this.liSeleccionado = li;
   }
 
-  public createCenter(){
-    if(this.formGroup.valid){
+  public createCenter() {
+    if (this.formGroup.valid) {
       const userId = this.local.getUserId();
       const request = this.formGroup.value;
       console.log("UserId: en createCenter():" + userId);
       this.centerService.createCenter(userId!, request).subscribe(
-        response =>{
+        response => {
           console.log(response.message);
-          this.tostr.success(response.message);
+          this.mostrarToastSuccess = true;
+          this.mensajeToast = response.message;
           this.formGroup.reset();
-           // Después de crear el centro, actualiza la lista de centros
-           this.zone.run(() => {
+          setTimeout(() => {
+            this.modalClose();
+          },1000)
+          // Después de crear el centro, actualiza la lista de centros
+          this.zone.run(() => {
             this.getAllCenters();
           });
         },
         err => {
           console.log(err.error);
-          this.tostr.error(err.error);
+          this.mostrarToastDander = true;
+          this.mensajeToast = "No se oudo crear el centro"
+          // this.tostr.error(err.error);
         }
       )
 
-    }else{
+    } else {
       this.formGroup.markAllAsTouched();
     }
   }
 
-  public getAllCenters(){
-
+  public getAllCenters() {
     const userId = this.local.getUserId();
-    if(userId != null){
+    if (userId != null) {
       this.userService.getAllCenterForUser(userId).subscribe(
         response => {
-          console.log(response);
+          console.log("Centros: ", response);
           this.centers = response;
+          this.totalCentros = response.length;
+          this.totalCentersService.setTotalCentros(response.length);
+          console.log("Total Centros: " , this.totalCentros);
+
+          this.reinicializarFlowBite();
         },
         err => {
           console.log(err.error);
@@ -115,4 +154,6 @@ export class HealthCenterComponent implements OnInit{
       )
     }
   }
+
+
 }
