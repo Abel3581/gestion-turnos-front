@@ -56,4 +56,19 @@ export class PatientService {
     return this.http.get<number>(url, { params: params});
   }
 
+  public getPatientByIdAndUserId(patientId: number, userId: number): Observable<PatientPageResponse>{
+    const url = `${this.urlPatient}/patient-by-id-and-user-id`;
+    let params = new HttpParams();
+    params = params.append('patientId', patientId);
+    params = params.append('userId', userId);
+    return this.http.get<PatientPageResponse>(url, { params:  params });
+  }
+
+  public updatePatient(patientId: number, userId: number, request: PatientRequest): Observable<MessageResponse>{
+    const url = `${this.urlPatient}/update-patient`;
+    let params = new HttpParams();
+    params = params.append('patientId', patientId);
+    params = params.append('userId', userId);
+    return this.http.put<MessageResponse>(url, request, { params: params });
+  }
 }

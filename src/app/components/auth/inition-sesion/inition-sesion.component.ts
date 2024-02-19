@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
-import { min, timeout } from 'rxjs';
+
 import { Login } from 'src/app/models/login';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/compartidos/toast.service';
@@ -58,16 +57,12 @@ export class InitionSesionComponent implements OnInit {
       this.authService.login(request).subscribe({
         next: (response) => {
           console.log(response);
-          // this.erroresDeValidacion = '';
-          if (response.token != "") {
-            this.localAuth.setToken(response.token);
-            this.localAuth.setUserId(response.id);
-            this.localAuth.setProfileId(response.profileId);
-            this.localAuth.setName(response.name);
-            this.localAuth.setSurname(response.lastname);
-            this.localAuth.setEmail(response.userName);
-
-          }
+          this.localAuth.setToken(response.token);
+          this.localAuth.setUserId(response.id);
+          this.localAuth.setProfileId(response.profileId);
+          this.localAuth.setName(response.name);
+          this.localAuth.setSurname(response.lastname);
+          this.localAuth.setEmail(response.userName);
 
           this.mostrarToast = true;
           this.mensajeToast = response.message;
@@ -77,13 +72,17 @@ export class InitionSesionComponent implements OnInit {
           }, 3000);
         },
         error: (err) => {
-          console.log(err.message)
+          if (err.error) {
+            console.log(err.error); // Manejar el objeto de error devuelto por el servidor
+            this.mostrarToastDander = true;
+            this.mensajeToast = err.error.message;
+            setTimeout(() => {
+              this.loginForm.reset();
+            }, 1000);
+          } else {
+            console.log('Error desconocido:', err); // Manejar otros errores desconocidos
+          }
 
-          this.mostrarToastDander = true;
-          this.mensajeToast = err.error.message;
-          setTimeout(() => {
-            this.loginForm.reset();
-          }, 1000);
         },
         complete: () => {
           console.log("Login completo con exito");

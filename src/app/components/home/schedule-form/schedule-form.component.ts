@@ -3,9 +3,9 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { BusinessHoursRequest } from 'src/app/models/request/business-hours-request';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
 import { DaysService } from 'src/app/services/days.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
@@ -18,7 +18,9 @@ import { PatientService } from 'src/app/services/patient.service';
   styleUrl: './schedule-form.component.css'
 })
 export class ScheduleFormComponent implements OnInit {
-
+  mostrarToast: boolean = false;
+  mensajeToast: string = '';
+  mostrarToastDander: boolean = false;
   timeForm: FormGroup;
   centersNames!: HealthCenterNamesResponse[];
   name: string | null = '';
@@ -29,15 +31,14 @@ export class ScheduleFormComponent implements OnInit {
   totalAgendas: number = 0;
 
   constructor(private healthService: HealthCenterService,
-              private fb: FormBuilder,
-              private local: LocalAuthService,
-              private daysService: DaysService,
-              private tostr: ToastrService,
-              private router: Router,
-              private cdr: ChangeDetectorRef,
-              private totalCentrosService: TotalCentrosService,
-              private patientService: PatientService,
-              private centerService: HealthCenterService) {
+    private fb: FormBuilder,
+    private local: LocalAuthService,
+    private daysService: DaysService,
+    private toastService: ToastService,
+    private cdr: ChangeDetectorRef,
+    private totalCentrosService: TotalCentrosService,
+    private patientService: PatientService,
+    private centerService: HealthCenterService) {
     this.timeForm = fb.group({
       centerName: ['', Validators.required],
       startTime: ['09:00', Validators.required],
@@ -67,11 +68,18 @@ export class ScheduleFormComponent implements OnInit {
       total => {
         this.totalAgendas = total;
       }
-    )
+    );
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToast = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
     this.reinicializarFlowBite();
   }
 
   public createAttentionDays() {
+    //TODO agregar toasts nuevos
     const businessHoursRequest: BusinessHoursRequest = this.timeForm.value;
     const userId = this.local.getUserId()!;
     businessHoursRequest.userId = userId;
@@ -87,22 +95,25 @@ export class ScheduleFormComponent implements OnInit {
     const specificHourMinimo = this.convertTimeStringToMinutes(specificHourMax);
 
     if (startTimeMinutes < specificHourMaximo || endTimeMinutes > specificHourMinimo) {
-      this.tostr.info("Ingresa un horario en el rango de 09:00hs a 23:30hs.")
+      // this.tostr.info("Ingresa un horario en el rango de 09:00hs a 23:30hs.")
     } else {
       if (this.timeForm.valid) {
         console.log("Entrando al metodo createAttentionDays()");
         this.daysService.createAttentionDays(businessHoursRequest).subscribe(
           response => {
             console.log(response);
-            this.tostr.success(response.message);
+            this.mostrarToast = true;
+            this.mensajeToast = response.message;
           },
           err => {
             console.log(err.error);
-            this.tostr.error(err.error);
+            this.mostrarToastDander = true;
+            this.mensajeToast = err.error;
           }
         )
       } else {
-        this.tostr.error("Datos no validos");
+            this.mostrarToastDander = true;
+            this.mensajeToast = "Datos no validos";
         this.timeForm.markAllAsTouched();
       }
     }

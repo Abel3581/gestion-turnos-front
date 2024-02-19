@@ -1,7 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 import { PatientResponse } from 'src/app/models/response/patient-response';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
@@ -23,12 +21,13 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
   hora!: string;
   centro!: string;
   loading: boolean = false;
+  turnCreate: boolean = false;
 
   constructor(private modalService: ModalServiceService,
               private cdr: ChangeDetectorRef,
               private patientService: PatientService,
               private turnService: TurnService,
-              private toast: ToastrService,
+
               private turnUpdateService: TurnUpdateService,
               private localService: LocalAuthService
   ) { }
@@ -126,9 +125,9 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
     const hour = this.hora;
     this.turnService.createPatientTurn(centro, formattedDate, hour, dni, userId!).subscribe(response => {
       console.log(response);
-      this.toast.success(response.message);
+      // this.toast.success(response.message);
       this.turnUpdateService.notifyTurnAdded();
-
+      this.turnCreate = true;
       setTimeout(() => {
         this.patientResults = [];
         this.searchTerm = '';
@@ -137,7 +136,7 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
     },
       error => {
         this.patientResults = [];
-        this.toast.error(error.error);
+        // this.toast.error(error.error);
         console.log(error)
       }
     )

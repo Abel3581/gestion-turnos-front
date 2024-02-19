@@ -21,6 +21,14 @@
   background-color: #3490dc;
   color: #ffffff;
 }
+.active-hover:hover{
+  background-color: #84E1BC;
+  color: #111827;
+}
+.active-select {
+  background-color: #1F2937;
+  color: white;
+}
 
 .loading-overlay {
   position: fixed;

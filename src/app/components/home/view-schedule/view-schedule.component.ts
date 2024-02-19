@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { BusinessHoursResponse } from 'src/app/models/response/business-hours-response';
 import { HealthCenterNamesResponse } from 'src/app/models/response/health-center-names-response';
 import { TurnResponse } from 'src/app/models/response/turn-response';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { DataService } from 'src/app/services/data.service';
 import { DaysService } from 'src/app/services/days.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
@@ -24,13 +25,11 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   styleUrl: './view-schedule.component.css'
 })
 export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
-
   // En tu componente, define un nuevo array para almacenar la información de cada celda
   filas: { hora: string; fecha: Date; isCellEnabled: boolean; hasAssignedTurn: boolean; turnInfo?: TurnResponse }[] = [];
-
   selectedCenter!: HealthCenterNamesResponse;
   turnInfo!: TurnResponse;
-  centersName!: HealthCenterNamesResponse[];
+  centersName: HealthCenterNamesResponse[] = [];
   attentionDays: BusinessHoursResponse[] = [];
   turns: TurnResponse[] = [];
   hours: string[] = [];
@@ -45,6 +44,9 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   emailUser: string | null = '';
   totalPatiens: number = 0;
   totalAgendas: number = 0;
+  mostrarToast: boolean = false;
+  mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
+  mostrarToastDander: boolean = false;
 
   constructor(private http: HttpClient,
               private centers: HealthCenterService,
@@ -55,7 +57,8 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
               private zone: NgZone,
               private turnService: TurnService,
               private turnUpdateService: TurnUpdateService,
-              private patientService: PatientService
+              private patientService: PatientService,
+              private toastService: ToastService
              ) {
   }
 
@@ -71,6 +74,8 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.turnUpdateService.turnAdded$.subscribe(() => {
       //this.getAllTurnsByCenterName();
+      this.mostrarToast = true;
+      this.mensajeToast = "Turno creado"
       this.getAllTurnsByCenterNameAndUserId();
     });
     this.centers.totalCentersByUser(this.local.getUserId()!).subscribe(
@@ -82,7 +87,13 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
       total => {
         this.totalPatiens = total;
       }
-    )
+    );
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToast = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
 
 
     //console.log("Fecha actual: ", this.fechaActual);
@@ -288,18 +299,21 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getAllTurnsByCenterNameAndUserId(){
     console.log("getAllTurnsByCenterNameAndUserId()");
-    const centerName: string = this.selectedCenter.name;
-    const userId = this.local.getUserId();
-    if(centerName && this.selectedCenter && userId != null){
-      this.turnService.getAllTurnsByCenterNameAndUserId(centerName, userId).subscribe(
-        response => {
-          this.turns = response;
-          console.log("Turnos getAllTurnsByCenterNameAndUserId():", response );
-        },
-        error => {
-          console.log(error);
-        }
-      )
+    if(this.selectedCenter != null ){
+      const centerName: string = this.selectedCenter.name;
+      console.log("Centro:", centerName);
+      const userId = this.local.getUserId();
+      if(centerName && this.selectedCenter && userId != null){
+        this.turnService.getAllTurnsByCenterNameAndUserId(centerName, userId).subscribe(
+          response => {
+            this.turns = response;
+            console.log("Turnos getAllTurnsByCenterNameAndUserId():", response );
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
     }
   }
 
@@ -429,6 +443,8 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getAllTurnsByCenterName();
 
           });
+          this.mostrarToast = true;
+          this.mensajeToast = response.message;
       },
       error => {
         console.error(error);

@@ -167,7 +167,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.8", "@angular/common@>=13.0.0", "@angular/common@>=16.0.0-0", "@angular/common@17.0.8":
+"@angular/common@^17.0.0", "@angular/common@^17.0.0 || ^18.0.0", "@angular/common@^17.0.8", "@angular/common@>=13.0.0", "@angular/common@17.0.8":
   version "17.0.8"
   resolved "https://registry.npmjs.org/@angular/common/-/common-17.0.8.tgz"
   integrity sha512-fFfwtdg7H+OkqnvV/ENu8F8KGfgIiH16DDbQqYY5KQyyQB+SMsoVW29F1fGx6Y30s7ZlsLOy6cHhgrw74itkSw==
@@ -195,7 +195,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.9", "@angular/core@>=13.0.0", "@angular/core@>=16.0.0-0", "@angular/core@17.0.8", "@angular/core@17.0.9":
+"@angular/core@^17.0.0", "@angular/core@^17.0.0 || ^18.0.0", "@angular/core@^17.0.9", "@angular/core@>=13.0.0", "@angular/core@17.0.8", "@angular/core@17.0.9":
   version "17.0.9"
   resolved "https://registry.npmjs.org/@angular/core/-/core-17.0.9.tgz"
   integrity sha512-LtDWzyx19XNmAjXju9xjw//rDZPUFu2bllHqzS6NVO1bE4PwJHIs0zfvygh0j46ubKp1gUICNk3jvYK9FMVinA==
@@ -216,7 +216,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/platform-browser@^17.0.8", "@angular/platform-browser@>=16.0.0-0", "@angular/platform-browser@17.0.8":
+"@angular/platform-browser@^17.0.8", "@angular/platform-browser@17.0.8":
   version "17.0.8"
   resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-17.0.8.tgz"
   integrity sha512-XaI+p2AxQaIHzR761lhPUf4OcOp46WDW0IfbvOzaezHE+8r81joZyVSDQPgXSa/aRfI58YhcfUavuGqyU3PphA==
@@ -4673,13 +4673,6 @@ ngx-pagination@^6.0.3:
   version "6.0.3"
   resolved "https://registry.npmjs.org/ngx-pagination/-/ngx-pagination-6.0.3.tgz"
   integrity sha512-lONjTQ7hFPh1SyhwDrRd5ZwM4NMGQ7bNR6vLrs6mrU0Z8Q1zCcWbf/pvyp4DOlGyd9uyZxRy2wUsSZLeIPjbAw==
-  dependencies:
-    tslib "^2.3.0"
-
-ngx-toastr@^17.0.2:
-  version "17.0.2"
-  resolved "https://registry.npmjs.org/ngx-toastr/-/ngx-toastr-17.0.2.tgz"
-  integrity sha512-KehiPx6bkbiUyJbabf0ZA04+ASumS8r/y4wPsUOMI9OrBvBcfq27UQmWuQKoVR8E+9y4Pq7eZkSg2kvxNvpxTA==
   dependencies:
     tslib "^2.3.0"
 

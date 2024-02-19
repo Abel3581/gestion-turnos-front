@@ -3,7 +3,6 @@ import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { RegisterRequest } from 'src/app/models/request/register-request';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/compartidos/toast.service';
@@ -24,7 +23,6 @@ export class CreateAccountComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private formBuilder: FormBuilder,
-              private toastr: ToastrService,
               private router: Router,
               private http: HttpClient,
               private toastService: ToastService ){
@@ -67,9 +65,9 @@ export class CreateAccountComponent implements OnInit {
           this.mensajeToast = data.message;
           this.registerForm.reset();
           alert("Serás redireccionado al login del usuario para iniciar sesión. 🚀✨");
-          // setTimeout(() => {
-          //   this.router.navigate(['']);
-          // }, 3000);
+          setTimeout(() => {
+            this.router.navigate(['']);
+          }, 3000);
         }, error => {
           console.log(error);
           // this.toastr.error(error.error);

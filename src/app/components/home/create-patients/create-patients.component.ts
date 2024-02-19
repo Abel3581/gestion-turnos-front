@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { PatientRequest } from 'src/app/models/request/patient-request';
 import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
@@ -34,7 +33,6 @@ export class CreatePatientsComponent implements OnInit {
               private cdr: ChangeDetectorRef,
               private fb: FormBuilder,
               private patientService: PatientService,
-              private tostr: ToastrService,
               private local: LocalAuthService,
               private totalCentersService: TotalCentrosService,
               private centerService: HealthCenterService,
@@ -88,7 +86,13 @@ export class CreatePatientsComponent implements OnInit {
       total => {
         this.totalAgendas = total;
       }
-    )
+    );
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastSuccess = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
 
     this.reinicializarFlowBite();
 
@@ -114,16 +118,20 @@ export class CreatePatientsComponent implements OnInit {
         response => {
           console.log("Paciente creado")
           console.log(response);
-          this.tostr.success(response.message);
+          this.mostrarToastSuccess = true;
+          this.mensajeToast = response.message;
 
         },
         err => {
-          this.tostr.error(err.error);
+          this.mostrarToastDander = true;
+          this.mensajeToast = err.error;
           console.error('Error en el componente:', err);
 
           // Puedes acceder a la propiedad 'error' para obtener detalles específicos del error
           if (err.error && err.error.dni) {
-            this.tostr.error(err.error.dni);
+            // this.tostr.error(err.error.dni);
+            this.mostrarToastDander = true;
+            this.mensajeToast = err.error.dni;
             console.error('Detalles específicos del error:', err.error.dni);
           }
         }

@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { ProfileRequest } from 'src/app/models/request/profile-request';
 import { ProfileResponse } from 'src/app/models/response/profile-response';
 import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
@@ -39,7 +38,6 @@ export class UserProfileComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private profileService: ProfileService,
               private local: LocalAuthService,
-              private toastr: ToastrService,
               private userService: UserService,
               private http: HttpClient,
               private router: Router,
@@ -138,11 +136,11 @@ export class UserProfileComponent implements OnInit {
       this.profileService.update(profileId, userId, request).subscribe(
         response => {
           console.log(response.message);
-          this.toastr.success(response.message + " " + response.status.toString());
+          // this.toastr.success(response.message + " " + response.status.toString());
         }, err => {
           console.log(err);
           if (err.status === 0) {
-            this.toastr.error("Acceso denegado");
+            // this.toastr.error("Acceso denegado");
           }
         }
       );

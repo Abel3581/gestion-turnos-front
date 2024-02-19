@@ -4,12 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ApiInterceptorInterceptor } from './interceptors/api-interceptor.interceptor';
-import { PageModule } from './components/auth/page.module';
+
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PageModule } from './components/auth/page.module';
+import { SharedModule } from './shared/shared/shared.module';
+
 
 
 @NgModule({
@@ -23,10 +26,11 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    PageModule,
+    HttpClientModule,
     AppRoutingModule,
     NgxUiLoaderModule,
     RouterModule,
+    SharedModule,
 
 
 

@@ -27,9 +27,12 @@
               class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <div class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
-                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+              <div
+                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
                 </svg>
               </div>
 
@@ -72,8 +75,7 @@
     <ul class="space-y-2 font-medium">
       <li>
         <a routerLink="/home/user-profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-          >
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
           <i class="fa-solid fa-user-doctor fa-lg"></i>
           <span class="ms-3">Perfil</span>
         </a>
@@ -84,7 +86,8 @@
           <i class="fa-regular fa-hospital fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Centros</span>
           <span
-          class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalAgendas }}</span>
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{
+            totalAgendas }}</span>
         </a>
       </li>
       <li>
@@ -93,7 +96,8 @@
           <i class="fa-solid fa-hospital-user fa-lg"></i>
           <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
           <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalPatients }}</span>
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{
+            totalPatients }}</span>
         </a>
       </li>
       <li>
@@ -115,16 +119,27 @@
     </ul>
   </div>
 </aside>
+<div>
+  <app-toast-success *ngIf="mostrarToastSuccess" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-success>
+</div>
+<div>
+  <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-danger>
+</div>
 <!-- Body -->
 <div class="p-4 sm:ml-64 ">
-  <div class=" text-gray-900 dark:text-white p-4 border-2 bg-slate-800 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+  <div
+    class=" text-gray-900 dark:text-white p-4 border-2 bg-slate-800 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
     <form class="" [formGroup]="formAltaPatient">
-      <div class="bg-blue-700 mb-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">Alta Paciente</div>
+      <div
+        class="bg-blue-700 mb-2 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700">
+        Alta Paciente</div>
       <div class="grid gap-4 mb-2 md:grid-cols-4">
         <div>
           <label for="name" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Nombre<span class="ml-2 font-bold text-red-600">*</span></label>
-            <div
+          <div
             *ngIf="formAltaPatient.get('name')?.hasError('required') && (formAltaPatient.get('name')?.dirty || formAltaPatient.get('name')?.touched)"
             class="inline-block ml-1">
             <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
@@ -136,20 +151,22 @@
         <div>
           <label for="surname" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido<span
               class="ml-2 font-bold text-red-600">*</span></label>
-            <div *ngIf="formAltaPatient.get('surname')?.hasError('required') && (formAltaPatient.get('surname')?.dirty || formAltaPatient.get('surname')?.touched)" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-            </div>
+          <div
+            *ngIf="formAltaPatient.get('surname')?.hasError('required') && (formAltaPatient.get('surname')?.dirty || formAltaPatient.get('surname')?.touched)"
+            class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div>
           <input formControlName="surname" type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Ingrasar apellido">
         </div>
         <div>
           <label for="dni" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dni<span
-            class="ml-2 font-bold text-red-600">*</span></label>
-          <!-- <div *ngIf="formAltaPatient.get('dni')?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
-            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-          </div> -->
-          <div *ngIf="dniControl?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)" class="inline-block ml-1">
+              class="ml-2 font-bold text-red-600">*</span></label>
+
+          <div
+            *ngIf="dniControl?.hasError('required') && (formAltaPatient.get('dni')?.dirty || formAltaPatient.get('dni')?.touched)"
+            class="inline-block ml-1">
             <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
           </div>
           <div *ngIf="dniControl?.hasError('pattern')" class="inline-block ml-1">
@@ -162,9 +179,11 @@
         <div class="">
           <label for="cellphone" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono -
             WhatsApp <span class="ml-2 font-bold text-red-600">*</span></label>
-            <div *ngIf="formAltaPatient.get('cellphone')?.hasError('required') && (formAltaPatient.get('cellphone')?.dirty || formAltaPatient.get('cellphone')?.touched)" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-            </div>
+          <div
+            *ngIf="formAltaPatient.get('cellphone')?.hasError('required') && (formAltaPatient.get('cellphone')?.dirty || formAltaPatient.get('cellphone')?.touched)"
+            class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
+          </div>
           <div class="relative">
             <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
               <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -200,9 +219,7 @@
         <div>
           <label for="nationality"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nacionalidad</label>
-            <!-- <div *ngIf="formAltaPatient.get('nationality')?.hasError('required') && (formAltaPatient.get('nationality')?.dirty || formAltaPatient.get('nationality')?.touched)" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-            </div> -->
+
           <select formControlName="nationality"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option value="12">Bolivia</option>
@@ -232,7 +249,7 @@
         <div>
           <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
           <input formControlName="address" type="text"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Ej: Barrio 24 de febrero">
         </div>
       </div>
@@ -261,16 +278,16 @@
       <div class="grid gap-4 mb-2 md:grid-cols-4 ">
         <div class="mb-2 ">
           <label for="email" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email<span
-            class="ml-2 font-bold text-red-600">*</span></label>
-            <div *ngIf="emailControl?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">El email es obligatorio.</p>
-            </div>
-            <div *ngIf="emailControl?.hasError('email')" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">Ingresa un email válido.</p>
-            </div>
-            <!-- <div *ngIf="formAltaPatient.get('email')?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)" class="inline-block ml-1">
-              <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
-            </div> -->
+              class="ml-2 font-bold text-red-600">*</span></label>
+          <div
+            *ngIf="emailControl?.hasError('required') && (formAltaPatient.get('email')?.dirty || formAltaPatient.get('email')?.touched)"
+            class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">El email es obligatorio.</p>
+          </div>
+          <div *ngIf="emailControl?.hasError('email')" class="inline-block ml-1">
+            <p class="text-red-500 text-xs italic ml-1">Ingresa un email válido.</p>
+          </div>
+
           <input formControlName="email" type="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="paciente@gmail.com">

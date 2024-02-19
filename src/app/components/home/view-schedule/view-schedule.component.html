@@ -15,7 +15,7 @@
         </button>
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-7 w-7 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
@@ -125,8 +125,16 @@
   </div>
 </aside>
 <app-modal-alta-turn></app-modal-alta-turn>
+<div>
+  <app-toast-success *ngIf="mostrarToast" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-success>
+</div>
+<div>
+  <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-danger>
+</div>
 <!--  Cuerpo -->
-<div class="p-4 sm:ml-64">
+<div class="p-4 sm:ml-60">
   <div class="p-4 border-gray-200 rounded-lg dark:border-gray-700 mt-14 overflow-y-scroll">
     <!-- Primera fila -->
     <div class="grid grid-cols-3 gap-4 mb-4">
@@ -140,14 +148,19 @@
       </ng-container>
       <ng-template #noCenterSelected>
         <div class="flex items-center justify-center h-20 rounded bg-gray-50">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            Agenda de turnos
+          <div class="me-2">
+            <a class="">
+              <img src="../../../../assets/img/agenda.png" class="h-8 w-8 " alt="Icono nav-bar" />
+            </a>
+          </div>
+          <p class="text-2xl font-medium text-gray-400 dark:text-gray-500">
+            Agenda
           </p>
         </div>
       </ng-template>
       <div class="flex items-center relative justify-center h-20 rounded bg-gray-50 ">
         <button id="dropdownRadioHelperButton" data-dropdown-toggle="dropdownRadioHelper"
-          class="text-blue-700 hover:text-white  border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium border-2 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+          class="text-blue-700 hover:text-white  border-blue-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium border-2 rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:border-blue-400 dark:text-blue-400 dark:hover:text-white dark:hover:bg-blue-400 dark:focus:ring-blue-500">
           <i class="fa-solid fa-house-medical me-2"></i> Centros
           <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 10 6">
@@ -157,25 +170,35 @@
         </button>
         <!-- Dropdown menu input-->
         <div id="dropdownRadioHelper"
-          class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700 dark:divide-gray-600">
+          class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-64 dark:bg-gray-700 dark:divide-gray-600">
           <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownRadioHelperButton">
+            <ng-container *ngIf="centersName && centersName.length > 0">
+              <li *ngFor="let center of centersName; let i = index">
+                <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <div class="flex items-center h-5">
+                    <input id="helper-radio-{{i}}" name="helper-radio-group" type="radio"
+                      [checked]="selectedCenter === center" (change)="selectCenter(center)"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                  </div>
+                  <div class="ms-2 text-sm ">
+                    <label for="helper-radio-{{i}}" class="font-medium text-gray-900 dark:text-gray-300">
+                      <p id="helper-radio-text-{{i}}" class="text-xs font-normal text-gray-500 dark:text-gray-300">
+                        {{center.name}}</p>
+                    </label>
+                  </div>
+                </div>
+              </li>
+            </ng-container>
+            <ng-container *ngIf="centersName.length === 0">
+              <li class="py-2">
+                <p class="text-white font-medium font-sans text-center">
+                  Aún no has creado ningún centro...
+                </p>
 
-            <li *ngFor="let center of centersName; let i = index">
-              <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                <div class="flex items-center h-5">
-                  <input id="helper-radio-{{i}}" name="helper-radio-group" type="radio"
-                    [checked]="selectedCenter === center" (change)="selectCenter(center)"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                </div>
-                <div class="ms-2 text-sm ">
-                  <label for="helper-radio-{{i}}" class="font-medium text-gray-900 dark:text-gray-300">
-                    <p id="helper-radio-text-{{i}}" class="text-xs font-normal text-gray-500 dark:text-gray-300">
-                      {{center.name}}</p>
-                  </label>
-                </div>
-              </div>
-            </li>
+              </li>
+            </ng-container>
+
 
           </ul>
         </div>
@@ -244,6 +267,7 @@
         </nav>
       </div>
     </div>
+
     <!-- segunda fila -->
     <div class="flex items-start justify-center h-screen mb-4 rounded bg-gray-100">
       <div class="relative flex w-full">
@@ -292,6 +316,7 @@
                   <th scope="row" class="px-6 py-4 w-16 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     <span>{{ hora }}</span>
                   </th>
+
                   <ng-container *ngFor="let fecha of fechasSemana; let j = index">
                     <td class="w-20 justify-center">
 
@@ -299,7 +324,7 @@
                         <ng-container *ngIf="hasAssignedTurn(hora, fecha)">
                           <button [id]="getDropdownButtonId(i, j)"
                             [attr.data-dropdown-toggle]="getDropdownToggleId(i, j)"
-                            class="text-red-700 w-11/12 justify-center items-center hover:text-white border border-red-800 inline-flex hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-2 py-2 text-center dark:border-red-500 dark:text-red-700 dark:hover:text-white dark:hover:bg-red-800 dark:focus:ring-red-900"
+                            class="text-red-700 w-11/12 justify-center items-center hover:text-white border border-red-800 inline-flex hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-2 py-2 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-700 dark:focus:ring-red-900"
                             type="button">Ocupado
                             <svg class="w-2 h-2 ms-3 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                               viewBox="0 0 10 6">
@@ -308,56 +333,42 @@
                             </svg>
                           </button>
                           <div [id]="getDropdownId(i ,j)"
-                            class="z-10 hidden bg-white rounded-lg shadow w-52 dark:bg-gray-700">
-                            <ul class="p-3 text-xs text-left text-gray-700 dark:text-gray-200"
-                              [attr.aria-labelledby]="getDropdownButtonId(i, j)">
-                              <li class="p-1">
+                            class="z-10 hidden bg-white  rounded-lg shadow-md p-4 w-64 dark:bg-gray-700">
+                            <ul class="ml-2 text-sm text-gray-700 dark:text-gray-200">
+                              <li class="mb-2">
                                 <span class="font-semibold">FECHA:</span> {{ getPatientInfo(hora, fecha)?.date |
                                 date:'d/M/yy'}}
                               </li>
-                              <li class="p-1">
+                              <li class="mb-2">
                                 <span class="font-semibold">HORA:</span> {{ getPatientInfo(hora, fecha)?.hour }}
                               </li>
-                              <li class="p-1">
+                              <li class="mb-2">
                                 <span class="font-semibold">NOMBRE:</span> {{ getPatientInfo(hora,
                                 fecha)?.patientResponse?.name }}
                               </li>
-                              <li class="p-1">
+                              <li class="mb-2">
                                 <span class="font-semibold">APELLIDO:</span> {{ getPatientInfo(hora,
                                 fecha)?.patientResponse?.surname }}
                               </li>
-                              <li class="p-1">
-                                <span class="font-semibold"> DNI:</span> {{ getPatientInfo(hora,
+                              <li class="mb-2">
+                                <span class="font-semibold">DNI:</span> {{ getPatientInfo(hora,
                                 fecha)?.patientResponse?.dni }}
                               </li>
                             </ul>
                             <button (click)="deleteShift(getPatientInfo(hora,fecha)?.id)"
-                              class="flex w-full justify-center items-center p-3 text-sm font-medium text-red-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-red-500 hover:underline">
+                              class="mt-4 w-full flex justify-center items-center py-2 px-4 bg-red-600 text-white font-semibold rounded-md border border-transparent shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                               <i class="fa-regular fa-calendar-xmark fa-lg me-2"></i>
                               Cancelar
                             </button>
-                            <!-- <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
-                              <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                              </svg>
-                              <div class="ms-3 text-sm font-medium">
-                                A simple success alert with an <a href="#" class="font-semibold underline hover:no-underline">example link</a>. Give it a click if you like.
-                              </div>
-                              <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-3" aria-label="Close">
-                                <span class="sr-only">Dismiss</span>
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                </svg>
-                              </button>
-                          </div> -->
                           </div>
+
 
                         </ng-container>
                         <button *ngIf="!hasAssignedTurn(hora, fecha)" [id]="getUserButtonId(i, j)"
                           [attr.data-dropdown-toggle]="getUserToggleId(i, j)" data-dropdown-placement="bottom" class="px-2 py-2 w-11/12 justify-center text-xs font-medium text-center inline-flex items-center
                           hover:text-white border border-green-700 hover:bg-green-700 focus:ring-4 focus:outline-none
-                          focus:ring-green-300 rounded-lg dark:border-green-700 dark:text-green-600
-                          dark:hover:text-white dark:hover:bg-green-800 dark:focus:ring-green-900" type="button">
+                          focus:ring-green-300 rounded-lg dark:border-green-600 dark:text-green-600
+                          dark:hover:text-white dark:hover:bg-green-700 dark:focus:ring-green-800" type="button">
                           Disponible
                           <svg class="w-2 h-2 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 10 6">
@@ -367,22 +378,22 @@
                         </button>
                       </ng-container>
                       <div [id]="getUserDropdownId(i, j)"
-                        class="z-10 hidden bg-white rounded-lg shadow w-52 dark:bg-gray-700">
-                        <ul class="h-20 py-2 text-left px-1 overflow-y-auto text-gray-700 dark:text-gray-200"
-                          [attr.aria-labelledby]="getUserButtonId(i, j)">
-                          <li class="p-1">
-                            <span class="font-semibold">FECHA:</span> {{ fecha | date:'d/M/yy'}}
-                          </li>
-                          <li class="p-1">
-                            <span class="font-semibold">HORA:</span> {{ hora }}
-                          </li>
-                        </ul>
-                        <button (click)="openModal(fecha, hora)"
-                          class="flex w-full justify-center items-center p-3 text-sm font-medium text-green-600 border-t border-gray-200 rounded-b-lg bg-gray-50 dark:border-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-green-500 hover:underline">
-                          <i class="fa-regular fa-calendar-check fa-lg me-2"></i>
-                          Agregar turno
-                        </button>
-                      </div>
+                      class="z-10 hidden bg-white rounded-lg shadow-md p-4 w-64 dark:bg-gray-700">
+                      <ul class="text-sm text-gray-700 dark:text-gray-200">
+                        <li class="mb-2">
+                          <span class="font-semibold">FECHA:</span> {{ fecha | date:'d/M/yy'}}
+                        </li>
+                        <li class="mb-2">
+                          <span class="font-semibold">HORA:</span> {{ hora }}
+                        </li>
+                      </ul>
+                      <button (click)="openModal(fecha, hora)"
+                        class="mt-4 w-full flex justify-center items-center py-2 px-4 bg-green-600 text-white font-semibold rounded-md border border-transparent shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <i class="fa-regular fa-calendar-check fa-lg me-2"></i>
+                        Agregar turno
+                      </button>
+                    </div>
+
                     </td>
                   </ng-container>
                 </tr>

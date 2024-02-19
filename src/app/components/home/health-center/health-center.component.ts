@@ -2,8 +2,8 @@ import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit } from '@an
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
-import { ToastrService } from 'ngx-toastr';
 import { HealthCenterResponse } from 'src/app/models/response/health-center-response';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
@@ -16,7 +16,9 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./health-center.component.css']
 })
 export class HealthCenterComponent implements OnInit, AfterViewInit {
-
+  mostrarToastSuccess: boolean = false;
+  mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
+  mostrarToastDander: boolean = false;
   iconSeleccionado: string = '';
   formGroup!: FormGroup;
   liSeleccionado: string = "";
@@ -33,13 +35,13 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder,
     private centerService: HealthCenterService,
     private local: LocalAuthService,
-    private tostr: ToastrService,
     private userService: UserService,
     private zone: NgZone,
     private router: Router,
     private cdr: ChangeDetectorRef,
     private totalCentersService: TotalCentrosService,
-    private patientService: PatientService) {
+    private patientService: PatientService,
+    private toastService: ToastService) {
     this.formGroup = fb.group({
       name: ['', Validators.required],
       address: ['', Validators.required],
@@ -60,12 +62,18 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
       total => {
         this.totalPatients = total;
       }
-    )
+    );
     this.centerService.totalCentersByUser(this.local.getUserId()!).subscribe(
       total => {
         this.totalAgendas = total;
       }
-    )
+    );
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastSuccess = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
     this.reinicializarFlowBite();
 
   }
@@ -102,8 +110,12 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
       this.centerService.createCenter(userId!, request).subscribe(
         response => {
           console.log(response.message);
-          this.tostr.success(response.message);
+          this.mostrarToastSuccess = true;
+          this.mensajeToast = response.message;
           this.formGroup.reset();
+          setTimeout(() => {
+            this.modalClose();
+          },1000)
           // Después de crear el centro, actualiza la lista de centros
           this.zone.run(() => {
             this.getAllCenters();
@@ -111,7 +123,9 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
         },
         err => {
           console.log(err.error);
-          this.tostr.error(err.error);
+          this.mostrarToastDander = true;
+          this.mensajeToast = "No se oudo crear el centro"
+          // this.tostr.error(err.error);
         }
       )
 

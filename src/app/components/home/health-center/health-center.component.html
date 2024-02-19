@@ -16,7 +16,7 @@
         </button>
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-7 w-7 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
@@ -118,8 +118,16 @@
     </ul>
   </div>
 </aside>
+<div>
+  <app-toast-success *ngIf="mostrarToastSuccess" [mensaje]="mensajeToast"
+    style="position: absolute; top: 5px; right: 10px; z-index: 1000;"></app-toast-success>
+</div>
+<div>
+  <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+    style="position: absolute; top: 5px; right: 10px; z-index: 1000;"></app-toast-danger>
+</div>
 <!-- Body -->
-<div class="p-4 sm:ml-64">
+<div class="p-4 sm:ml-60">
   <div class="p-4 flex justify-center border-gray-200 rounded-lg dark:border-gray-700 mt-14">
     <div class="grid grid-rows-2 grid-flow-col gap-2 w-11/12 ">
       <div class=" flex items-center bg-slate-50 rounded ">
@@ -280,6 +288,13 @@
               </li>
             </ul>
           </div>
+        </ng-container>
+        <ng-container *ngIf="centers.length === 0">
+
+            <p class=" text-center font-medium font-sans">
+              Aún no has creado ningún centro...
+            </p>
+
         </ng-container>
       </div>
     </div>
