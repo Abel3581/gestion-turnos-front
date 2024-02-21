@@ -1,0 +1,238 @@
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+          </svg>
+        </button>
+        <div class="ml-3">
+          <a class="flex ms-2 md:me-24 ">
+            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center  ">
+        <div class="items-center ms-3 mr-3">
+          <div class="">
+            <button type="button"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <span class="sr-only">Open user menu</span>
+              <div
+                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
+                </svg>
+              </div>
+            </button>
+          </div>
+          <div
+            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                {{ name }} {{ surname }}
+              </p>
+              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                {{ emailUser }}
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a routerLink="/home/user-profile"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-solid fa-user-doctor fa-sm"></i> Mi Perfil</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Settings</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">Apagar</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Body -->
+<!-- Dashboard -->
+<aside id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-60 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+  aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+    <app-botones-patient-record [centerName]="centerName" [patientId]="patientId"></app-botones-patient-record>
+  </div>
+</aside>
+<!-- Body -->
+<div class="p-4 sm:ml-60 h-screen">
+  <div class="p-4 border-gray-200 shadow-md rounded-lg dark:border-gray-700 mt-14 h-4/5">
+    <div class="flex items-center mb-1">
+      <!-- Todo Aca se habre un modal y se cargan los datos de la historia clinica -->
+      <button type="button" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+        class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-xs px-3 py-2.5 text-center ">
+        <i class="fa-solid fa-plus fa-lg"></i> Agregar historia clínica
+      </button>
+    </div>
+    <!-- Main modal -->
+    <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div class="relative p-4 w-full max-w-xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+              Agrega una historia clínica
+            </h3>
+            <button type="button"
+              class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="authentication-modal">
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <!-- Modal body -->
+          <div class="p-4 md:p-5">
+            <form>
+              <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                  <label for="localDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Fecha</label>
+                  <input type="date" name="localDate"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="2024-02-20" required />
+                </div>
+                <div>
+                  <label for="reasonForConsultation"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Motivo
+                  </label>
+                  <input type="text" name="reasonForConsultation"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Motivo de la copnsulta" required />
+                </div>
+                <div>
+                  <label for="background" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Antecedentes</label>
+                  <textarea name="background" rows="5"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingrese algun antecedente..."></textarea>
+                </div>
+                <div>
+                    <label for="PhysicalExam" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Examen fisico</label>
+                    <textarea name="PhysicalExam" rows="5"
+                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Ingrese examen fisico..."></textarea>
+                </div>
+                <div>
+                  <label for="ComplementaryStudies" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Estudios complementarios</label>
+                  <textarea name="ComplementaryStudies" rows="5"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Estudios complementarios..."></textarea>
+                </div>
+                <div>
+                  <label for="Observations" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Observaciones</label>
+                  <textarea name="Observations" rows="5"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Observaciones..."></textarea>
+                </div>
+
+              </div>
+
+              <button type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Agregar historia clínica
+              </button>
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class=" justify-between mb-4 h-5/6 bg-gray-100 ">
+      <div class="overflow-y-auto shadow-md sm:rounded-lg h-full w-full">
+        <div>
+          <div class="grid grid-rows-1 bg  grid-flow-col gap-4 mb-2">
+            <div class=" p-2 flex items-center ">
+              <svg class="w-12 h-12 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a9 9 0 0 0 5-1.5 4 4 0 0 0-4-3.5h-2a4 4 0 0 0-4 3.5 9 9 0 0 0 5 1.5Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <div class="ml-5">
+                <p class="font-medium text-lg">Abel Acevedo</p>
+                <p class="text-slate-500">Dni: 28881785 <span class="text-xs">Fecha Nac: 3-05-81</span></p>
+                <p class="text-slate-400 text-xs">Edad: 34 años</p>
+              </div>
+            </div>
+            <div class="font-medium  p-3">
+              <p>Última consulta: <span class="text-slate-400">19/2/2014</span></p>
+              <p class="text-green-300">Centro Tortuguitas</p>
+            </div>
+          </div>
+          <div class="overflow-x-auto overflow-y-auto ">
+            <div
+              class="block mb-2 max-w-full mx-1 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+              <div class="grid grid-cols-3 gap-4 items-center my-2">
+                <div class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Fecha: 20/2/2024
+                </div>
+                <div class="text-white text-center">
+                  Centro Tortuguitas
+                </div>
+                <div class="col-span-1 text-center">
+                  <button type="button"
+                    class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-xs px-2 py-2 text-center">
+                    <i class="fa-regular fa-pen-to-square fa-lg"></i>
+                  </button>
+                </div>
+
+              </div>
+              <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+              <div class="grid grid-cols-3 gap-4 items-center my-2">
+                <div class="">
+                  <h6 class="font-bold tracking-tight text-gray-900 dark:text-white">
+                    Motivo de consulta:
+                  </h6>
+                </div>
+                <div class="col-span-2">
+                  <p class=" font-normal text-gray-700 dark:text-gray-400">
+                    Aca va el motivo de la consulta. Aca va el motivo de la consulta.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

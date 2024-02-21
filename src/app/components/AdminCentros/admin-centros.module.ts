@@ -9,6 +9,8 @@ import { PatientsCenterComponent } from './patients-center/patients-center.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { PatientRecordComponent } from './patient-record/patient-record.component';
+import { BotonesPatientRecordComponent } from './botones-patient-record/botones-patient-record.component';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
         DaysComponent,
         BotonesComponent,
         PatientsCenterComponent,
+        PatientRecordComponent,
+        BotonesPatientRecordComponent
         // ToastDangerComponent,
         // ToastSuccessComponent
     ],
