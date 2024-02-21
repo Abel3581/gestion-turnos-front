@@ -1,0 +1,26 @@
+
+<ul
+  class="space-y-2 font-medium">
+  <li>
+    <a [routerLink]="['/edit/patient-record/', centerName, patientId]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <i class="fa-solid fa-laptop-medical fa-xl mr-1"></i>
+      Historia clínica
+    </a>
+  </li>
+  <!-- <li>
+    <a [routerLink]="['/edit/edit-center/patients/', centerName]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+      class="inline-flex items-center p-4 rounded-full hover:text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
+      <i class="fa-solid fa-hospital-user fa-xl"></i>
+
+    </a>
+  </li> -->
+  <li>
+    <a routerLink="/home/view-schedule" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+      class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+      <i class="fa-solid fa-reply-all fa-lg"></i>
+      <span class="flex-1 ms-3 whitespace-nowrap">Volver</span>
+    </a>
+  </li>
+
+</ul>

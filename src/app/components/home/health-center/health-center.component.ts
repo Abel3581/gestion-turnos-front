@@ -24,7 +24,7 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
   liSeleccionado: string = "";
   display: boolean = false;
   visible: boolean = false;
-  centers!: HealthCenterResponse[];
+  centers: HealthCenterResponse[] = [];
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';

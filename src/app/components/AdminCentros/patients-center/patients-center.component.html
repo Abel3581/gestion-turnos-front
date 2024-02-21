@@ -187,7 +187,7 @@
                         <div class="p-4 md:p-5 space-y-4">
                           <div class=" text-gray-900 dark:text-white p-4 border-2 bg-slate-800 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
                             <div >
-                              <app-toast-success *ngIf="mostrarToast" [mensaje]="mensajeToast" style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-success>
+                              <app-toast-success *ngIf="mostrarToastSuccess" [mensaje]="mensajeToast" style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-success>
                             </div>
                             <div>
                               <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast" style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-danger>
@@ -393,10 +393,10 @@
                     </div>
                   </div>
                   <!-- Fin Modal  -->
-                  <button type="button" [attr.data-tooltip-target]="'tooltip-medical-' + i"
+                  <a type="button"[routerLink]="['/edit/patient-record', centerName, patient.id]" [attr.data-tooltip-target]="'tooltip-medical-' + i"
                     class="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-2 py-1.5 text-center me-1 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">
                     <i class="fa-solid fa-suitcase-medical"></i>
-                  </button>
+                  </a>
                   <div [attr.id]="'tooltip-medical-' + i" role="tooltip"
                     class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Ir a ficha del paciente

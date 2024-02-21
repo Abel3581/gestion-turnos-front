@@ -26,7 +26,7 @@ export class PatientsCenterComponent implements OnInit {
   formUpdatePatient!: FormGroup;
   patient!: PatientPageResponse;
   patientId!: number;
-  mostrarToast: boolean = false;
+  mostrarToastSuccess: boolean = false;
   mensajeToast: string = '';
   mostrarToastDander: boolean = false;
 
@@ -56,7 +56,6 @@ export class PatientsCenterComponent implements OnInit {
     });
   }
 
-
   get dniControl() {
     return this.formUpdatePatient.get('dni');
   }
@@ -79,12 +78,11 @@ export class PatientsCenterComponent implements OnInit {
       this.buscarPacienteId(this.patientId);
     }
     this.toastService.cerrarToast$.subscribe(() => {
-      this.mostrarToast = false;
+      this.mostrarToastSuccess = false;
     });
     this.toastService.cerrarToast$.subscribe(() => {
       this.mostrarToastDander = false;
     });
-
 
   }
 
@@ -184,23 +182,23 @@ export class PatientsCenterComponent implements OnInit {
           console.log("Paciente", response);
           this.patient = response;
           // Llena los valores del paciente en el formulario
-        this.formUpdatePatient.patchValue({
-          name: this.patient.name,
-          surname: this.patient.surname,
-          dni: this.patient.dni,
-          cellphone: this.patient.cellphone,
-          genre: this.patient.genre,
-          dateOfBirth: this.patient.dateOfBirth,
-          nationality: this.patient.nationality,
-          address: this.patient.address,
-          healthInsurance: this.patient.healthInsurance,
-          plan: this.patient.plan,
-          affiliateNumber: this.patient.affiliateNumber,
-          email: this.patient.email,
-          profession: this.patient.profession,
-          province: this.patient.province,
-          landline: this.patient.landline
-        });
+          this.formUpdatePatient.patchValue({
+            name: this.patient.name,
+            surname: this.patient.surname,
+            dni: this.patient.dni,
+            cellphone: this.patient.cellphone,
+            genre: this.patient.genre,
+            dateOfBirth: this.patient.dateOfBirth,
+            nationality: this.patient.nationality,
+            address: this.patient.address,
+            healthInsurance: this.patient.healthInsurance,
+            plan: this.patient.plan,
+            affiliateNumber: this.patient.affiliateNumber,
+            email: this.patient.email,
+            profession: this.patient.profession,
+            province: this.patient.province,
+            landline: this.patient.landline
+          });
         },
         error => {
           console.log(error);
@@ -211,37 +209,41 @@ export class PatientsCenterComponent implements OnInit {
 
   }
 
-  updatePatient(){
+  updatePatient() {
     const userId = this.local.getUserId();
-    console.log("Paciente variable global: " +  this.patientId);
-   // Obtener los valores del formulario
-   const formData = this.formUpdatePatient.value;
-   // Crear una instancia de PatientRequest con los datos del formulario
-   const request: PatientRequest = {
-     name: formData.name,
-     surname: formData.surname,
-     dni: formData.dni,
-     cellphone: formData.cellphone,
-     genre: formData.genre,
-     dateOfBirth: formData.dateOfBirth,
-     nationality: formData.nationality,
-     address: formData.address,
-     healthInsurance: formData.healthInsurance,
-     plan: formData.plan,
-     affiliateNumber: formData.affiliateNumber,
-     email: formData.email,
-     profession: formData.profession,
-     province: formData.province,
-     landline: formData.landline
-   };
-   this.patientService.updatePatient(this.patientId, userId!, request).subscribe(
-    response => {
-      console.log(response);
-    },
-    error => {
-      console.log(error);
-    }
-   )
+    console.log("Paciente variable global: " + this.patientId);
+    // Obtener los valores del formulario
+    const formData = this.formUpdatePatient.value;
+    // Crear una instancia de PatientRequest con los datos del formulario
+    const request: PatientRequest = {
+      name: formData.name,
+      surname: formData.surname,
+      dni: formData.dni,
+      cellphone: formData.cellphone,
+      genre: formData.genre,
+      dateOfBirth: formData.dateOfBirth,
+      nationality: formData.nationality,
+      address: formData.address,
+      healthInsurance: formData.healthInsurance,
+      plan: formData.plan,
+      affiliateNumber: formData.affiliateNumber,
+      email: formData.email,
+      profession: formData.profession,
+      province: formData.province,
+      landline: formData.landline
+    };
+    this.patientService.updatePatient(this.patientId, userId!, request).subscribe(
+      response => {
+        console.log(response);
+        this.mostrarToastSuccess = true;
+        this.mensajeToast = response.message;
+      },
+      error => {
+        console.log(error);
+        this.mostrarToastDander = true;
+        this.mensajeToast = error.error.message;
+      }
+    )
   }
 
 }
