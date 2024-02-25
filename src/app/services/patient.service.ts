@@ -71,4 +71,27 @@ export class PatientService {
     params = params.append('userId', userId);
     return this.http.put<MessageResponse>(url, request, { params: params });
   }
+
+  public getPatientById(patientId: number): Observable<PatientPageResponse>{
+    const url = `${this.urlPatient}/${patientId}`;
+    return this.http.get<PatientPageResponse>(url);
+  }
+
+  public searchPatients(centerName: string, userId: number, term: string):Observable<PatientPageResponse[]>{
+    const url = `${this.urlPatient}/search`;
+    let params = new HttpParams();
+    params = params.append('centerName', centerName);
+    params = params.append('userId', userId);
+    params = params.append('term', term);
+    return this.http.get<PatientPageResponse[]>(url, { params: params });
+
+  }
+
+  public searchPatientsByCenterNameAndUser(centerName: string, userId: number){
+    const url = `${this.urlPatient}/search`;
+    let params = new HttpParams();
+    params = params.append('centerName', centerName);
+    params = params.append('userId', userId);
+    return this.http.get<PatientPageResponse[]>(url, { params: params });
+  }
 }

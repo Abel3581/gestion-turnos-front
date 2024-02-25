@@ -21,7 +21,8 @@ const routes: Routes = [
       { path: 'view-patients', component: ViewPatientsComponent},
       { path: 'user-profile', component: UserProfileComponent},
       { path: 'create-patients', component: CreatePatientsComponent},
-      { path: 'mi-consultorio', component: MiConsultorioComponent}
+      { path: 'mi-consultorio', component: MiConsultorioComponent},
+      { path: 'view-patients', component: ViewPatientsComponent}
 
     ]
   }

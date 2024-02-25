@@ -174,7 +174,7 @@
           </div>
           <input formControlName="dni" type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Ingrsar dni">
+            placeholder="Ingresar dni">
         </div>
         <div class="">
           <label for="cellphone" class="inline-block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono -
@@ -203,9 +203,9 @@
           <select formControlName="genre"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option selected>Selecciona el género</option>
-            <option value="MC">Masculino</option>
-            <option value="FE">Femenino</option>
-            <option value="TR">Transgénero</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Transgénero">Transgénero</option>
 
           </select>
         </div>
@@ -219,32 +219,31 @@
         <div>
           <label for="nationality"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nacionalidad</label>
-
           <select formControlName="nationality"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="12">Bolivia</option>
-            <option value="6" selected="selected">Argentina</option>
-            <option value="14">Brasil</option>
-            <option value="16">Canada</option>
-            <option value="18">Chile</option>
-            <option value="19">Colombia</option>
-            <option value="20">Costa Rica</option>
-            <option value="25">Ecuador</option>
-            <option value="27">El Salvador</option>
-            <option value="85">España</option>
-            <option value="95">Estados Unidos</option>
-            <option value="37">Guatemala</option>
-            <option value="39">Honduras</option>
-            <option value="60">Mexico</option>
-            <option value="68">Nicaragua</option>
-            <option value="73">Panama</option>
-            <option value="74">Paraguay</option>
-            <option value="75">Peru</option>
-            <option value="157">República Dominicana</option>
-            <option value="96">Uruguay</option>
-            <option value="97">Venezuela</option>
-
+            <option value="Argentina" selected="selected">Argentina</option>
+            <option value="Brasil">Brasil</option>
+            <option value="Canada">Canadá</option>
+            <option value="Chile">Chile</option>
+            <option value="Colombia">Colombia</option>
+            <option value="Costa Rica">Costa Rica</option>
+            <option value="Ecuador">Ecuador</option>
+            <option value="El Salvador">El Salvador</option>
+            <option value="España">España</option>
+            <option value="Estados Unidos">Estados Unidos</option>
+            <option value="Guatemala">Guatemala</option>
+            <option value="Honduras">Honduras</option>
+            <option value="México">México</option>
+            <option value="Nicaragua">Nicaragua</option>
+            <option value="Panamá">Panamá</option>
+            <option value="Paraguay">Paraguay</option>
+            <option value="Perú">Perú</option>
+            <option value="República Dominicana">República Dominicana</option>
+            <option value="Uruguay">Uruguay</option>
+            <option value="Venezuela">Venezuela</option>
+            <option value="Bolivia">Bolivia</option>
           </select>
+
         </div>
         <div>
           <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dirección</label>
@@ -321,10 +320,19 @@
           </div>
         </div>
       </div>
-
-
-      <button type="button" (click)="createPatient()"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Alta</button>
+      <div class="flex items-end justify-items-stretch">
+        <div>
+          <label for="number-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Edad</label>
+          <input type="number" id="number-input" aria-describedby="helper-text-explanation"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-3 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="90210" required />
+        </div>
+        <button type="button" (click)="createPatient()"
+          class="text-white ml-5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  rounded-lg text-sm w-full sm:w-auto px-6 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          Alta paciente
+        </button>
+      </div>
     </form>
   </div>
 </div>
