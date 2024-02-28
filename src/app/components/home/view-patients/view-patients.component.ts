@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { initFlowbite } from "flowbite";
+import { filter } from "rxjs";
 import { HealthCenterNamesResponse } from "src/app/models/response/health-center-names-response";
 import { HealthCenterResponse } from "src/app/models/response/health-center-response";
 import { PatientPageResponse } from "src/app/models/response/patient-page-response";
@@ -7,6 +8,10 @@ import { ToastService } from "src/app/services/compartidos/toast.service";
 import { HealthCenterService } from "src/app/services/health-center.service";
 import { LocalAuthService } from "src/app/services/local-auth.service";
 import { PatientService } from "src/app/services/patient.service";
+import { Chart } from 'chart.js';
+import { GetTotalGendersResponse } from "src/app/models/response/get-total-genders-response";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { PatientRequest } from "src/app/models/request/patient-request";
 
 
 @Component({
@@ -27,14 +32,46 @@ export class ViewPatientsComponent implements OnInit {
   selectedCenterName: string = '';
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   patients: PatientPageResponse[] = [];
+  dropdownOpen: boolean = false;
+  searching: boolean = false; // Variable para controlar la visibilidad del spinner
+  totalGenders!: GetTotalGendersResponse;
+  patientId!: number;
+  formUpdatePatient!: FormGroup;
+  patient!: PatientPageResponse;
+
+
 
   constructor(private patientService: PatientService,
     private centers: HealthCenterService,
     private local: LocalAuthService,
     private toastService: ToastService,
     private cdr: ChangeDetectorRef,
+    private fb: FormBuilder
   ) {
+    this.formUpdatePatient = fb.group({
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8,}$/)]],
+      cellphone: ['', Validators.required],
+      genre: [''],
+      dateOfBirth: [''],
+      nationality: [''],
+      address: [''],
+      healthInsurance: [''],
+      plan: [''],
+      affiliateNumber: [''],
+      email: ['', [Validators.required, Validators.email]],
+      profession: [''],
+      province: [''],
+      landline: ['']
+    });
 
+  }
+  get dniControl() {
+    return this.formUpdatePatient.get('dni');
+  }
+  get emailControl() {
+    return this.formUpdatePatient.get('email');
   }
 
   ngOnInit(): void {
@@ -57,11 +94,71 @@ export class ViewPatientsComponent implements OnInit {
     this.toastService.cerrarToast$.subscribe(() => {
       this.mostrarToastDander = false;
     });
-
+    this.getTotalGenders();
     this.getAlCentersByUserId();
     this.searchPatientsByCenterNameAndUser();
-    this.reinicializarFlowBite();
+    if (this.patientId != null) {
+      this.buscarPacienteId(this.patientId);
+    }
+    setTimeout(() => {
+      if (this.totalGenders) {
+        this.createGrafic();
+      }
+    }, 1000);
 
+    this.reinicializarFlowBite();
+  }
+
+  public getTotalGenders() {
+    const userId = this.local.getUserId();
+    this.patientService.getTotalGenders(userId!).subscribe(
+      response => {
+        console.log(response);
+        this.totalGenders = response;
+      },
+      error => {
+        console.error(error);
+      }
+    )
+  }
+
+  public createGrafic() {
+    // Datos de ejemplo para el gráfico (número de pacientes por género)
+    const genderData = {
+      labels: ['Hombre', 'Mujer', 'Transgénero'],
+      datasets: [{
+        data: [this.totalGenders.totalMale, this.totalGenders.totalFemale,
+        this.totalGenders.totalTransgender], // Aquí deberías reemplazar estos valores con los datos reales
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.5)', // Color para hombre
+          'rgba(54, 162, 235, 0.5)', // Color para mujer
+          'rgba(255, 206, 86, 0.5)' // Color para transgénero
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)'
+        ],
+        borderWidth: 1
+      }]
+    };
+
+    // Configuración del gráfico
+    const genderChartOptions = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    };
+
+    // Crear el gráfico
+    const genderChart = new Chart('genderChart', {
+      type: 'pie',
+      data: genderData,
+      options: genderChartOptions
+    });
   }
 
   public getAlCentersByUserId() {
@@ -84,7 +181,10 @@ export class ViewPatientsComponent implements OnInit {
   selectCenter(centerName: string, event: Event): void {
     event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
     this.selectedCenterName = centerName;
-    this.search();
+    this.dropdownOpen = false; // Cierra el menú desplegable
+    this.searchPatientsByCenterNameAndUser();
+    this.searchTerm = "";
+
 
   }
 
@@ -111,7 +211,7 @@ export class ViewPatientsComponent implements OnInit {
         }
       )
     }
-    if(this.selectedCenterName && term.length >= 3){
+    if (this.selectedCenterName && term.length >= 3) {
       this.patientService.searchPatients(centerName, userId!, term).subscribe(
         response => {
           console.log(response);
@@ -126,25 +226,130 @@ export class ViewPatientsComponent implements OnInit {
 
   }
 
-  buscarPacienteId(arg0: number) {
+  buscarPacienteId(patientId: number) {
     console.log("Se apreto el boton actualizar paciente")
+    if (patientId != null) {
+      this.patientId = patientId;
+      console.log(this.patientId);
+      const userId = this.local.getUserId();
+      this.patientService.getPatientByIdAndUserId(patientId, userId!).subscribe(
+        response => {
+          console.log("Paciente", response);
+          this.patient = response;
+          // Llena los valores del paciente en el formulario
+          this.formUpdatePatient.patchValue({
+            name: this.patient.name,
+            surname: this.patient.surname,
+            dni: this.patient.dni,
+            cellphone: this.patient.cellphone,
+            genre: this.patient.genre,
+            dateOfBirth: this.patient.dateOfBirth,
+            nationality: this.patient.nationality,
+            address: this.patient.address,
+            healthInsurance: this.patient.healthInsurance,
+            plan: this.patient.plan,
+            affiliateNumber: this.patient.affiliateNumber,
+            email: this.patient.email,
+            profession: this.patient.profession,
+            province: this.patient.province,
+            landline: this.patient.landline
+          });
+          this.reinicializarFlowBite();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    } else
+      return;
   }
 
-  public searchPatientsByCenterNameAndUser(){
+  updatePatient() {
+    const userId = this.local.getUserId();
+    console.log("Paciente variable global: " + this.patientId);
+    // Obtener los valores del formulario
+    const formData = this.formUpdatePatient.value;
+    // Crear una instancia de PatientRequest con los datos del formulario
+    const request: PatientRequest = {
+      name: formData.name,
+      surname: formData.surname,
+      dni: formData.dni,
+      cellphone: formData.cellphone,
+      genre: formData.genre,
+      dateOfBirth: formData.dateOfBirth,
+      nationality: formData.nationality,
+      address: formData.address,
+      healthInsurance: formData.healthInsurance,
+      plan: formData.plan,
+      affiliateNumber: formData.affiliateNumber,
+      email: formData.email,
+      profession: formData.profession,
+      province: formData.province,
+      landline: formData.landline
+    };
+    this.patientService.updatePatient(this.patientId, userId!, request).subscribe(
+      response => {
+        console.log(response);
+        this.mostrarToast = true;
+        this.mensajeToast = response.message;
+        this.reinicializarFlowBite();
+      },
+      error => {
+        console.log(error);
+        this.mostrarToastDander = true;
+        this.mensajeToast = error.error.message;
+      }
+    )
+  }
+
+  public searchPatientsByCenterNameAndUser() {
     const userId = this.local.getUserId();
     let centerName = this.selectedCenterName;
-    if(centerName === ''){
+    if (centerName === '') {
       centerName = "Todos";
     }
     this.patientService.searchPatientsByCenterNameAndUser(centerName, userId!).subscribe(
       response => {
         console.log(response);
         this.patients = response;
+        this.reinicializarFlowBite();
       },
       error => {
         console.error(error);
       }
     )
+  }
+
+  public patientsFilters() {
+    const userId = this.local.getUserId();
+    const term = this.searchTerm;
+    if (term.length == 1) {
+      this.patients = [];
+      this.selectedCenterName = "";
+    }
+    if(term.length == 0){
+      this.searchPatientsByCenterNameAndUser();
+    }
+    if (term.length >= 3) {
+      this.patientService.filtersPatients(term, userId!).subscribe(
+        response => {
+          console.log(response);
+          this.patients = response;
+          this.searching = true;
+
+          // Simulación de búsqueda durante 2 segundos
+          setTimeout(() => {
+            // Después de 2 segundos, detiene la búsqueda y oculta el spinner
+            this.searching = false;
+          }, 2000);
+          this.reinicializarFlowBite();
+
+        },
+        error => {
+          console.error(error);
+        }
+      )
+    }
   }
 
 

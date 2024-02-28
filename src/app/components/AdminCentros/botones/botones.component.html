@@ -1,24 +1,36 @@
 <ul
   class="flex  flex-col mt-16 space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
   <li>
-    <button [routerLink]="['/edit/edit-center/', centerName]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    <button data-tooltip-target="tooltip-right" data-tooltip-placement="right" [routerLink]="['/edit/edit-center/', centerName]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
       class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
       <i class="fa-regular fa-calendar-days fa-lg mr-2"></i>
       Días
     </button>
+    <div id="tooltip-right" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+      Días de atención
+      <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
   </li>
   <li>
-    <button [routerLink]="['/edit/edit-center/patients/', centerName]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    <button data-tooltip-target="tooltip-right-2" data-tooltip-placement="right"  [routerLink]="['/edit/edit-center/patients/', centerName]"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
       class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
       <i class="fa-solid fa-hospital-user fa-lg mr-2"></i>
       Pacientes
     </button>
+    <div id="tooltip-right-2" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+      Pacientes del centro actual
+      <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
   </li>
   <li>
-    <button routerLink="/home/view-schedule" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"
+    <button data-tooltip-target="tooltip-right-3" data-tooltip-placement="right" routerLink="/home/view-schedule" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}"
       class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
       <i class="fa-regular fa-calendar-days fa-lg mr-2"></i>
       Agenda
     </button>
+    <div id="tooltip-right-3" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+      Volver a la agenda
+      <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
   </li>
 </ul>

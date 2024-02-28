@@ -6,6 +6,7 @@ import { MessageResponse } from '../models/response/message-response';
 import { PatientResponse } from '../models/response/patient-response';
 import { PatientPageResponse } from '../models/response/patient-page-response';
 import { Page } from '../models/response/page';
+import { GetTotalGendersResponse } from '../models/response/get-total-genders-response';
 
 
 
@@ -94,4 +95,32 @@ export class PatientService {
     params = params.append('userId', userId);
     return this.http.get<PatientPageResponse[]>(url, { params: params });
   }
+
+  public filtersPatients(term: string, userId: number): Observable<PatientPageResponse[]>{
+    const url = `${this.urlPatient}/filters`;
+    let params = new HttpParams();
+    params = params.append('term', term);
+    params = params.append('userId', userId);
+    return this.http.get<PatientPageResponse[]>(url, { params: params });
+  }
+
+  public getTotalGenders(userId: number): Observable<GetTotalGendersResponse>{
+    const url = `${this.urlPatient}/get-total-genders`;
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    return this.http.get<GetTotalGendersResponse>(url, { params: params });
+  }
+
+  public getPatientsPageByTerm(userId: number, centerName: string, term: string,
+    page: number, size: number): Observable<Page<PatientPageResponse>>{
+      const url = `${this.urlPatient}/page-term`;
+    let params = new HttpParams()
+    params = params.append('userId', userId);
+    params = params.append('centerName', centerName);
+    params = params.append('term', term);
+    params = params.append('page', page);
+    params = params.append('size', size);
+    return this.http.get<Page<PatientPageResponse>>(url, { params: params });
+    }
+
 }

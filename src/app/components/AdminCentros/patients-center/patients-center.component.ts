@@ -29,6 +29,9 @@ export class PatientsCenterComponent implements OnInit {
   mostrarToastSuccess: boolean = false;
   mensajeToast: string = '';
   mostrarToastDander: boolean = false;
+  searching: boolean = false;
+  searchTerm: string = '';
+  patients: PatientPageResponse[] = [];
 
   constructor(private local: LocalAuthService,
     private route: ActivatedRoute,
@@ -85,6 +88,42 @@ export class PatientsCenterComponent implements OnInit {
     });
 
   }
+
+
+  public getPatientsPageByTerm(){
+    const userId = this.local.getUserId();
+    const center = this.centerName;
+    const term = this.searchTerm;
+    if (term.length == 1) {
+      this.patientsPage.content = [];
+      this.searching = true;
+      setTimeout(() => {
+        this.searching = false;
+      },1000)
+      this.reinicializarFlowBite();
+    }
+    if(term.length == 0){
+      this.getPatientsPage();
+    }
+    if(term.length >= 3){
+      this.patientService.getPatientsPageByTerm(userId!, center, term,this.page, this.size).subscribe(
+        response => {
+          console.log(response);
+          this.patientsPage = response;
+          this.searching = true;
+          setTimeout(() => {
+            this.searching = false;
+          },2000);
+          this.reinicializarFlowBite();
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+
+  }
+
 
   getPatientsPage() {
     const userId = this.local.getUserId();
@@ -199,6 +238,7 @@ export class PatientsCenterComponent implements OnInit {
             province: this.patient.province,
             landline: this.patient.landline
           });
+          this.reinicializarFlowBite();
         },
         error => {
           console.log(error);
@@ -237,6 +277,7 @@ export class PatientsCenterComponent implements OnInit {
         console.log(response);
         this.mostrarToastSuccess = true;
         this.mensajeToast = response.message;
+        this.reinicializarFlowBite();
       },
       error => {
         console.log(error);
@@ -245,5 +286,35 @@ export class PatientsCenterComponent implements OnInit {
       }
     )
   }
+
+  public patientsFilters() {
+    const userId = this.local.getUserId();
+    const term = this.searchTerm;
+    if (term.length == 1) {
+      this.patients = [];
+
+    }
+    if (term.length >= 3) {
+      this.patientService.filtersPatients(term, userId!).subscribe(
+        response => {
+          console.log(response);
+          this.patients = response;
+          this.searching = true;
+
+          // Simulación de búsqueda durante 2 segundos
+          setTimeout(() => {
+            // Después de 2 segundos, detiene la búsqueda y oculta el spinner
+            this.searching = false;
+          }, 2000);
+          this.reinicializarFlowBite();
+
+        },
+        error => {
+          console.error(error);
+        }
+      )
+    }
+  }
+
 
 }
