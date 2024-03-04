@@ -6,3 +6,6 @@
 .width{
   width: 7%;
 }
+.altura-tabla {
+  min-height: 430px;
+}

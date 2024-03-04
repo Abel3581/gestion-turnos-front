@@ -31,7 +31,8 @@ import { BotonesPatientRecordComponent } from './botones-patient-record/botones-
         ReactiveFormsModule,
         AdminCentrosRoutingModule,
         SharedModule,
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
 
     ]
 })

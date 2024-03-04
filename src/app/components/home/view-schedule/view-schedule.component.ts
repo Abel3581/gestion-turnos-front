@@ -49,17 +49,17 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   mostrarToastDander: boolean = false;
 
   constructor(private http: HttpClient,
-              private centers: HealthCenterService,
-              private local: LocalAuthService,
-              private daysService: DaysService,
-              private cdr: ChangeDetectorRef,
-              private modalService: ModalServiceService,
-              private zone: NgZone,
-              private turnService: TurnService,
-              private turnUpdateService: TurnUpdateService,
-              private patientService: PatientService,
-              private toastService: ToastService
-             ) {
+    private centers: HealthCenterService,
+    private local: LocalAuthService,
+    private daysService: DaysService,
+    private cdr: ChangeDetectorRef,
+    private modalService: ModalServiceService,
+    private zone: NgZone,
+    private turnService: TurnService,
+    private turnUpdateService: TurnUpdateService,
+    private patientService: PatientService,
+    private toastService: ToastService
+  ) {
   }
 
   ngOnInit(): void {
@@ -104,9 +104,9 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.reinicializarFlowBite();
 
-   }
+  }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.turnUpdateService.unsubscribeAll();
   }
 
@@ -117,17 +117,17 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   calcularFechasSemana(fecha: Date) {
 
-      // Obtener el primer día de la semana (lunes)
-      const primerDiaSemana = fecha.getDate() - fecha.getDay();
-      // Crear una nueva fecha con el primer día de la semana (clonando la fecha original)
-      const fechaInicioSemana = new Date(fecha.getTime());
-      this.fechasSemana = [];
-      // Usar un bucle más simple para construir la lista de fechas
-      for (let i = 0; i < 7; i++) {
-        const fecha = new Date(fechaInicioSemana);
-        fecha.setDate(primerDiaSemana + i);
-        this.fechasSemana.push(fecha);
-      }
+    // Obtener el primer día de la semana (lunes)
+    const primerDiaSemana = fecha.getDate() - fecha.getDay();
+    // Crear una nueva fecha con el primer día de la semana (clonando la fecha original)
+    const fechaInicioSemana = new Date(fecha.getTime());
+    this.fechasSemana = [];
+    // Usar un bucle más simple para construir la lista de fechas
+    for (let i = 0; i < 7; i++) {
+      const fecha = new Date(fechaInicioSemana);
+      fecha.setDate(primerDiaSemana + i);
+      this.fechasSemana.push(fecha);
+    }
 
   }
 
@@ -136,7 +136,7 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     // Resto de tu lógica aquí
     setTimeout(() => {
       this.loadingRet = false;
-    },1000)
+    }, 100)
     setTimeout(() => {
       this.actualizarFechaSemana(-7);
     })
@@ -148,7 +148,7 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     // Resto de tu lógica aquí
     setTimeout(() => {
       this.loadingAva = false;
-    },1000)
+    }, 100)
     setTimeout(() => {
       this.actualizarFechaSemana(+7);
     })
@@ -297,17 +297,17 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getAllTurnsByCenterNameAndUserId(){
+  getAllTurnsByCenterNameAndUserId() {
     console.log("getAllTurnsByCenterNameAndUserId()");
-    if(this.selectedCenter != null ){
+    if (this.selectedCenter != null) {
       const centerName: string = this.selectedCenter.name;
       console.log("Centro:", centerName);
       const userId = this.local.getUserId();
-      if(centerName && this.selectedCenter && userId != null){
+      if (centerName && this.selectedCenter && userId != null) {
         this.turnService.getAllTurnsByCenterNameAndUserId(centerName, userId).subscribe(
           response => {
             this.turns = response;
-            console.log("Turnos getAllTurnsByCenterNameAndUserId():", response );
+            console.log("Turnos getAllTurnsByCenterNameAndUserId():", response);
           },
           error => {
             console.log(error);
@@ -317,11 +317,11 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getAllBusinessHoursByCenterAndUserId(){
+  getAllBusinessHoursByCenterAndUserId() {
     console.log("getAllBusinessHoursByCenterAndUserId()");
     const centerName: string = this.selectedCenter.name;
     const userId = this.local.getUserId();
-    if(centerName && this.selectedCenter && userId != null){
+    if (centerName && this.selectedCenter && userId != null) {
       this.daysService.getAllBusinessHoursByCenterAndUserId(centerName, userId).subscribe(
         response => {
           console.log("Dia y hora de atencione: ", response);
@@ -347,11 +347,11 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
       return date;
     }
     // return new Date(date).toISOString().split('T')[0];
-      // Si es un objeto Date, formatearlo
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      return `${year}-${month}-${day}`;
+    // Si es un objeto Date, formatearlo
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   isTurnAssigned(hora: string, fecha: Date): boolean {
@@ -439,12 +439,12 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
       response => {
         console.log(response);
 
-          this.zone.run(() => {
-            this.getAllTurnsByCenterName();
+        this.zone.run(() => {
+          this.getAllTurnsByCenterName();
 
-          });
-          this.mostrarToast = true;
-          this.mensajeToast = response.message;
+        });
+        this.mostrarToast = true;
+        this.mensajeToast = response.message;
       },
       error => {
         console.error(error);

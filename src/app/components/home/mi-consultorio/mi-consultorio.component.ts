@@ -12,23 +12,23 @@ import { TurnService } from 'src/app/services/turn.service';
   templateUrl: './mi-consultorio.component.html',
   styleUrl: './mi-consultorio.component.css'
 })
-export class MiConsultorioComponent implements OnInit{
+export class MiConsultorioComponent implements OnInit {
 
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
   totalPatiens: number = 0;
   totalAgendas: number = 0;
-  turns: TurnResponse [] = [];
+  turns: TurnResponse[] = [];
   selectedOption: string = 'Pendiente'; // Valor por defecto
-  options: string [] = ['En_curso', 'Finalizado', 'No_llegó'];
+  options: string[] = ['En_curso', 'Finalizado', 'No_llegó'];
 
   constructor(private patientService: PatientService,
-              private centerService: HealthCenterService,
-              private local: LocalAuthService,
-              private cdr: ChangeDetectorRef,
-              private turnService: TurnService
-              ){}
+    private centerService: HealthCenterService,
+    private local: LocalAuthService,
+    private cdr: ChangeDetectorRef,
+    private turnService: TurnService
+  ) { }
 
   ngOnInit(): void {
     const userId = this.local.getUserId();
@@ -51,12 +51,12 @@ export class MiConsultorioComponent implements OnInit{
         this.totalAgendas = total;
       }
     );
-      this.getAllTurnsByUserId();
-      // this.cambiarEstado(11, 'ATENDIDO');
-      this.reinicializarFlowBite();
+    this.getAllTurnsByUserId();
+    // this.cambiarEstado(11, 'ATENDIDO');
+    this.reinicializarFlowBite();
   }
 
-  getAllTurnsByUserId(){
+  getAllTurnsByUserId() {
     const userId = this.local.getUserId();
     this.turnService.getAllTurnsByUserId(userId!).subscribe(
       response => {
@@ -72,20 +72,20 @@ export class MiConsultorioComponent implements OnInit{
 
   updateSelectedOption(option: string) {
     this.selectedOption = option;
-}
+  }
 
-cambiarEstado(turnId: number, estado: string) {
-  console.log("Tuno id: " + turnId + " Estado: " + estado);
-  this.turnService.changeStatus(turnId, estado).subscribe(
-    response => {
-      console.log(response);
-      this.getAllTurnsByUserId();
-    },
-    error => {
-      console.log(error);
-    }
-  )
-}
+  cambiarEstado(turnId: number, estado: string) {
+    console.log("Tuno id: " + turnId + " Estado: " + estado);
+    this.turnService.changeStatus(turnId, estado).subscribe(
+      response => {
+        console.log(response);
+        this.getAllTurnsByUserId();
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
 
 
   private reinicializarFlowBite() {

@@ -1,5 +1,5 @@
 .active {
-  background-color: #3490dc;
+  background-color: #3182CE;
   color: #ffffff;
 
 
@@ -8,4 +8,7 @@
   background-color: #1877c4;
   color: #ffffff;
 
+}
+.overlay-background {
+  background-color: rgba(0, 0, 0, 0.5); /* Puedes ajustar el valor de opacidad según tus necesidades */
 }

@@ -13,16 +13,16 @@ import { MiConsultorioComponent } from './mi-consultorio/mi-consultorio.componen
 const routes: Routes = [
   {
     path: '',
-    children:[
+    children: [
       { path: 'profile', component: ProfileComponent },
-      { path: 'center', component: HealthCenterComponent},
-      { path: 'schedule', component: ScheduleFormComponent},
-      { path: 'view-schedule', component: ViewScheduleComponent},
-      { path: 'view-patients', component: ViewPatientsComponent},
-      { path: 'user-profile', component: UserProfileComponent},
-      { path: 'create-patients', component: CreatePatientsComponent},
-      { path: 'mi-consultorio', component: MiConsultorioComponent}
-
+      { path: 'center', component: HealthCenterComponent },
+      { path: 'schedule', component: ScheduleFormComponent },
+      { path: 'view-schedule', component: ViewScheduleComponent },
+      { path: 'view-patients', component: ViewPatientsComponent },
+      { path: 'user-profile', component: UserProfileComponent },
+      { path: 'create-patients', component: CreatePatientsComponent },
+      { path: 'mi-consultorio', component: MiConsultorioComponent },
+      { path: 'view-patients', component: ViewPatientsComponent }
     ]
   }
 ];
@@ -30,6 +30,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers:[RouterModule],
+  providers: [RouterModule],
 })
 export class HomeRoutingModule { }

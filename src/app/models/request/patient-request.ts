@@ -15,5 +15,6 @@ export interface PatientRequest {
   profession: string;
   email: string;
   dni: string;
+  age: string;
 
 }

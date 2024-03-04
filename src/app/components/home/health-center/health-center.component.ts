@@ -16,6 +16,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./health-center.component.css']
 })
 export class HealthCenterComponent implements OnInit, AfterViewInit {
+
   mostrarToastSuccess: boolean = false;
   mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
   mostrarToastDander: boolean = false;
@@ -79,7 +80,7 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
+    this.reinicializarFlowBite();
   }
 
   private reinicializarFlowBite() {
@@ -150,6 +151,31 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
         err => {
           console.log(err.error);
 
+        }
+      )
+    }
+  }
+
+  public deletedCenterBy(centerId: number) {
+    console.log("Ingresando al metodo deletedCenterBy()");
+    if(centerId != null){
+      this.centerService.deleteCenterById(centerId).subscribe(
+        response => {
+          console.log(response);
+          this.mostrarToastSuccess = true;
+          this.mensajeToast = response.message;
+          this.getAllCenters();
+          this.centerService.totalCentersByUser(this.local.getUserId()!).subscribe(
+            total => {
+              this.totalAgendas = total;
+            }
+          );
+
+        },
+        error => {
+          console.log(error);
+          this.mostrarToastDander = true;
+          this.mensajeToast = error.error.mensaje;
         }
       )
     }
