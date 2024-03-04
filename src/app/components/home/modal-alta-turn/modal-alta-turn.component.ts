@@ -22,16 +22,15 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
   centro!: string;
   loading: boolean = false;
   turnCreate: boolean = false;
+  searching: boolean = false;
 
   constructor(private modalService: ModalServiceService,
-              private cdr: ChangeDetectorRef,
-              private patientService: PatientService,
-              private turnService: TurnService,
-
-              private turnUpdateService: TurnUpdateService,
-              private localService: LocalAuthService
+    private cdr: ChangeDetectorRef,
+    private patientService: PatientService,
+    private turnService: TurnService,
+    private turnUpdateService: TurnUpdateService,
+    private localService: LocalAuthService
   ) { }
-
 
   ngOnInit(): void {
     this.modalService.modalVisible$.subscribe((visible) => {
@@ -52,7 +51,7 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.closeDialog();
-     // Desuscribirse de todas las suscripciones al servicio de modal aquí
+    // Desuscribirse de todas las suscripciones al servicio de modal aquí
     // Esto asegurará que no haya fugas de memoria ni llamadas innecesarias a los modales
     this.turnUpdateService.unsubscribeAll();
   }
@@ -70,7 +69,7 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
   }
 
   public onSearchTermChange() {
-      this.searchPatient();
+    this.searchPatient();
   }
 
   public searchPatient() {
@@ -83,13 +82,18 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
     }
 
     // Realizamos la búsqueda si hay al menos 3 caracteres o más, o si el término de búsqueda está vacío
-    if (this.searchTerm.length >= 3  ) {
+    if (this.searchTerm.length >= 3) {
       // this.loading = true;
 
       this.patientService.searchPatient(this.searchTerm, userId!).subscribe(
         response => {
           this.patientResults = response;
           console.log(response);
+          this.searching = true;
+          setTimeout(() => {
+            this.searching = false;
+          }, 1000)
+          //this.reinicializarFlowBite();
 
         },
         err => {
@@ -132,7 +136,7 @@ export class ModalAltaTurnComponent implements OnInit, OnDestroy {
         this.patientResults = [];
         this.searchTerm = '';
         this.closeDialog();
-      },1000)
+      }, 1000)
     },
       error => {
         this.patientResults = [];

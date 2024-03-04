@@ -12,6 +12,7 @@ import { Chart } from 'chart.js';
 import { GetTotalGendersResponse } from "src/app/models/response/get-total-genders-response";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PatientRequest } from "src/app/models/request/patient-request";
+import { TurnService } from "src/app/services/turn.service";
 
 
 @Component({
@@ -20,12 +21,13 @@ import { PatientRequest } from "src/app/models/request/patient-request";
   styleUrl: './view-patients.component.css'
 })
 export class ViewPatientsComponent implements OnInit {
+
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
   totalPatiens: number = 0;
   totalAgendas: number = 0;
-  mostrarToast: boolean = false;
+  mostrarToastSuccess: boolean = false;
   mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
   mostrarToastDander: boolean = false;
   centersName: HealthCenterNamesResponse[] = [];
@@ -46,7 +48,8 @@ export class ViewPatientsComponent implements OnInit {
     private local: LocalAuthService,
     private toastService: ToastService,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private turnService: TurnService
   ) {
     this.formUpdatePatient = fb.group({
       name: ['', Validators.required],
@@ -63,7 +66,8 @@ export class ViewPatientsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       profession: [''],
       province: [''],
-      landline: ['']
+      landline: [''],
+      age: ['', [Validators.required]]
     });
 
   }
@@ -89,7 +93,7 @@ export class ViewPatientsComponent implements OnInit {
       }
     );
     this.toastService.cerrarToast$.subscribe(() => {
-      this.mostrarToast = false;
+      this.mostrarToastSuccess = false;
     });
     this.toastService.cerrarToast$.subscribe(() => {
       this.mostrarToastDander = false;
@@ -130,15 +134,16 @@ export class ViewPatientsComponent implements OnInit {
         data: [this.totalGenders.totalMale, this.totalGenders.totalFemale,
         this.totalGenders.totalTransgender], // Aquí deberías reemplazar estos valores con los datos reales
         backgroundColor: [
-          'rgba(255, 99, 132, 0.5)', // Color para hombre
-          'rgba(54, 162, 235, 0.5)', // Color para mujer
-          'rgba(255, 206, 86, 0.5)' // Color para transgénero
+          'rgba(255, 69, 96, 0.5)', // Color para hombre (rojo más oscuro)
+          'rgba(24, 119, 194, 0.5)', // Color para mujer (azul más oscuro)
+          'rgba(255, 180, 0, 0.5)' // Color para transgénero (amarillo más oscuro)
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)'
+          'rgba(255, 69, 96, 1)', // Color para hombre (rojo más oscuro)
+          'rgba(24, 119, 194, 1)', // Color para mujer (azul más oscuro)
+          'rgba(255, 180, 0, 1)' // Color para transgénero (amarillo más oscuro)
         ],
+
         borderWidth: 1
       }]
     };
@@ -148,7 +153,7 @@ export class ViewPatientsComponent implements OnInit {
       responsive: true,
       plugins: {
         legend: {
-          position: 'bottom'
+          position: 'top'
         }
       }
     };
@@ -252,7 +257,8 @@ export class ViewPatientsComponent implements OnInit {
             email: this.patient.email,
             profession: this.patient.profession,
             province: this.patient.province,
-            landline: this.patient.landline
+            landline: this.patient.landline,
+            age: this.patient.age
           });
           this.reinicializarFlowBite();
         },
@@ -285,13 +291,15 @@ export class ViewPatientsComponent implements OnInit {
       email: formData.email,
       profession: formData.profession,
       province: formData.province,
-      landline: formData.landline
+      landline: formData.landline,
+      age: formData.age
     };
     this.patientService.updatePatient(this.patientId, userId!, request).subscribe(
       response => {
         console.log(response);
-        this.mostrarToast = true;
+        this.mostrarToastSuccess = true;
         this.mensajeToast = response.message;
+        this.searchPatientsByCenterNameAndUser();
         this.reinicializarFlowBite();
       },
       error => {
@@ -327,7 +335,7 @@ export class ViewPatientsComponent implements OnInit {
       this.patients = [];
       this.selectedCenterName = "";
     }
-    if(term.length == 0){
+    if (term.length == 0) {
       this.searchPatientsByCenterNameAndUser();
     }
     if (term.length >= 3) {
@@ -352,7 +360,27 @@ export class ViewPatientsComponent implements OnInit {
     }
   }
 
+  deletePatientById(patientId: number) {
+    console.log("Entrando al metodo deletePatientById()");
+    this.turnService.deletePatient(patientId).subscribe(
+      response => {
+        console.log(response);
+        this.mostrarToastSuccess = true;
+        this.mensajeToast = response.message;
+        this.searchPatientsByCenterNameAndUser();
+        this.patientService.getTotalPatientsByUserId(this.local.getUserId()!).subscribe(
+          total => {
+            this.totalPatiens = total;
+          }
+        );
+      },
+      error => {
+        console.log(error);
 
+      }
+    )
+
+  }
 
   private reinicializarFlowBite() {
     // Espera un momento antes de reinicializar para permitir que Angular actualice la vista

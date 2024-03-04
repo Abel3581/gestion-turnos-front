@@ -39,4 +39,20 @@ export class HealthCenterService {
     return this.http.get<number>(url, { params: params });
   }
 
+  //Creo el servicio para conectarme con el back
+  public deletePatientByCenter(userId: number, centerName: string, patientId: number):Observable<MessageResponse>{
+    const url = `${this.urlCenter}/delete-patient`;
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    params = params.append('centerName', centerName);
+    params = params.append('patientId', patientId);
+    return this.http.delete<MessageResponse>(url, { params: params});
+
+  }
+
+  public deleteCenterById(id: number): Observable<MessageResponse>{
+    const url = `${this.urlCenter}/delete-center/${id}`;
+    return this.http.delete<MessageResponse>(url);
+  }
+
 }

@@ -7,6 +7,7 @@ import { Page } from 'src/app/models/response/page';
 import { PatientPageResponse } from 'src/app/models/response/patient-page-response';
 import { PatientResponse } from 'src/app/models/response/patient-response';
 import { ToastService } from 'src/app/services/compartidos/toast.service';
+import { HealthCenterService } from 'src/app/services/health-center.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -16,6 +17,7 @@ import { PatientService } from 'src/app/services/patient.service';
   styleUrl: './patients-center.component.css'
 })
 export class PatientsCenterComponent implements OnInit {
+
   centerName: string = '';
   name: string | null = '';
   surname: string | null = '';
@@ -38,7 +40,8 @@ export class PatientsCenterComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private patientService: PatientService,
     private fb: FormBuilder,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private centerService: HealthCenterService
   ) {
     this.formUpdatePatient = fb.group({
       name: ['', Validators.required],
@@ -55,7 +58,8 @@ export class PatientsCenterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       profession: [''],
       province: [''],
-      landline: ['']
+      landline: [''],
+      age: ['', [Validators.required]]
     });
   }
 
@@ -89,31 +93,32 @@ export class PatientsCenterComponent implements OnInit {
 
   }
 
-
-  public getPatientsPageByTerm(){
+  public getPatientsPageByTerm() {
     const userId = this.local.getUserId();
     const center = this.centerName;
     const term = this.searchTerm;
     if (term.length == 1) {
       this.patientsPage.content = [];
+      // this.patientsPage.size = 0
       this.searching = true;
       setTimeout(() => {
         this.searching = false;
-      },1000)
+      }, 100)
       this.reinicializarFlowBite();
     }
-    if(term.length == 0){
+    if (term.length == 0) {
       this.getPatientsPage();
     }
-    if(term.length >= 3){
-      this.patientService.getPatientsPageByTerm(userId!, center, term,this.page, this.size).subscribe(
+    if (term.length >= 3) {
+      console.log
+      this.patientService.getPatientsPageByTerm(userId!, center, term, this.page, this.size).subscribe(
         response => {
           console.log(response);
           this.patientsPage = response;
           this.searching = true;
           setTimeout(() => {
             this.searching = false;
-          },2000);
+          }, 2000);
           this.reinicializarFlowBite();
         },
         error => {
@@ -124,8 +129,7 @@ export class PatientsCenterComponent implements OnInit {
 
   }
 
-
-  getPatientsPage() {
+  public getPatientsPage() {
     const userId = this.local.getUserId();
     const center = this.centerName;
     console.log("GetPatientPage: " + userId + this.centerName);
@@ -142,12 +146,12 @@ export class PatientsCenterComponent implements OnInit {
     )
   }
 
-  onPageChange(page: number) {
+  public onPageChange(page: number) {
     this.page = page;
     this.getPatientsPage();
   }
   // Método para obtener el total de páginas
-  getTotalPages(): number[] {
+  public getTotalPages(): number[] {
     if (this.patientsPage) {
       const totalPages = this.patientsPage.totalPages;
       return Array.from({ length: totalPages }, (_, index) => index);
@@ -155,7 +159,7 @@ export class PatientsCenterComponent implements OnInit {
     return [];
   }
 
-  getTotalPagesToShow(): number[] {
+  public getTotalPagesToShow(): number[] {
     const totalPages = this.patientsPage.totalPages;
     const currentPage = this.page;
     const visiblePages = 5; // Define cuántas páginas quieres mostrar alrededor de la actual
@@ -211,7 +215,7 @@ export class PatientsCenterComponent implements OnInit {
     });
   }
 
-  buscarPacienteId(patientId: number) {
+  public buscarPacienteId(patientId: number) {
     if (patientId != null) {
       this.patientId = patientId;
       console.log(this.patientId);
@@ -236,7 +240,8 @@ export class PatientsCenterComponent implements OnInit {
             email: this.patient.email,
             profession: this.patient.profession,
             province: this.patient.province,
-            landline: this.patient.landline
+            landline: this.patient.landline,
+            age: this.patient.age
           });
           this.reinicializarFlowBite();
         },
@@ -249,7 +254,7 @@ export class PatientsCenterComponent implements OnInit {
 
   }
 
-  updatePatient() {
+  public updatePatient() {
     const userId = this.local.getUserId();
     console.log("Paciente variable global: " + this.patientId);
     // Obtener los valores del formulario
@@ -270,21 +275,27 @@ export class PatientsCenterComponent implements OnInit {
       email: formData.email,
       profession: formData.profession,
       province: formData.province,
-      landline: formData.landline
+      landline: formData.landline,
+      age: formData.age
     };
-    this.patientService.updatePatient(this.patientId, userId!, request).subscribe(
-      response => {
-        console.log(response);
-        this.mostrarToastSuccess = true;
-        this.mensajeToast = response.message;
-        this.reinicializarFlowBite();
-      },
-      error => {
-        console.log(error);
-        this.mostrarToastDander = true;
-        this.mensajeToast = error.error.message;
-      }
-    )
+    if(this.formUpdatePatient.valid){
+      this.patientService.updatePatient(this.patientId, userId!, request).subscribe(
+        response => {
+          console.log(response);
+          this.mostrarToastSuccess = true;
+          this.mensajeToast = response.message;
+          this.reinicializarFlowBite();
+        },
+        error => {
+          console.log(error);
+          this.mostrarToastDander = true;
+          this.mensajeToast = error.error.message;
+        }
+      );
+    }else {
+      this.formUpdatePatient.markAsTouched();
+    }
+
   }
 
   public patientsFilters() {
@@ -315,6 +326,27 @@ export class PatientsCenterComponent implements OnInit {
       )
     }
   }
+
+  deletePatientBy(patientId: number) {
+    console.log("Entrando al metodo deletePatientBy()");
+    const userId = this.local.getUserId();
+    const centerName = this.centerName;
+    // llamo al servicio del center
+    this.centerService.deletePatientByCenter(userId!, centerName, patientId).subscribe(
+      response => {
+        console.log(response);
+        this.mostrarToastSuccess = true;
+        this.mensajeToast = response.message;
+        this.getPatientsPage();
+      },
+      error => {
+        console.error(error);
+        this.mostrarToastDander = true;
+        this.mensajeToast = error.error.message;
+      }
+    )
+  }
+
 
 
 }

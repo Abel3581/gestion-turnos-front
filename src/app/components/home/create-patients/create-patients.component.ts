@@ -52,7 +52,8 @@ export class CreatePatientsComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       profession: [''],
       province: [''],
-      landline: ['']
+      landline: [''],
+      age: ['', [Validators.required]]
 
     });
 
@@ -120,6 +121,14 @@ export class CreatePatientsComponent implements OnInit {
           console.log(response);
           this.mostrarToastSuccess = true;
           this.mensajeToast = response.message;
+          this.patientService.getTotalPatientsByUserId(userId!).subscribe(
+            total => {
+              this.totalPatients = total;
+            },
+            error => {
+              console.log(error);
+            }
+          );
 
         },
         err => {

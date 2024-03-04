@@ -72,4 +72,11 @@ export class TurnService {
 
   }
 
+  public deletePatient(patientId: number): Observable<MessageResponse>{
+    const url = `${this.urlTurn}/delete/patient/${patientId}`;
+    let params = new HttpParams();
+    params = params.append('patientId', patientId);
+    return this.http.delete<MessageResponse>(url, { params: params });
+  }
+
 }
