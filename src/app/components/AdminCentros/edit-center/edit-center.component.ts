@@ -4,6 +4,8 @@ import { DaysComponent } from '../days/days.component';
 import { ActivatedRoute } from '@angular/router';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientsCenterComponent } from '../patients-center/patients-center.component';
+import { ImageResponse } from 'src/app/models/response/image-response';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-edit-center',
@@ -15,10 +17,14 @@ export class EditCenterComponent implements OnInit {
   name: string | null = '';
   surname: string | null = '';
   emailUser: string | null = '';
+  image!: ImageResponse;
+  imageUrl: string | undefined;
+  selectedFile: File | null = null;
 
   constructor(private cdr: ChangeDetectorRef,
               private route: ActivatedRoute,
-              private local: LocalAuthService
+              private local: LocalAuthService,
+              private imageService: ImageService
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +44,7 @@ export class EditCenterComponent implements OnInit {
       // Cargar el componente de días por defecto al inicio
 
     });
+    this.getImage();
     this.reinicializarFlowBite();
 
 
@@ -55,6 +62,47 @@ export class EditCenterComponent implements OnInit {
       initFlowbite();
       this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
     });
+  }
+
+  getImage(): void {
+    console.log("Entrando al metodo getImage()")
+    const userId = this.local.getUserId();
+    this.imageService.getImageByUserId(userId!).subscribe(
+      response => {
+        this.image = response; // Asigna los datos de la imagen
+        console.log("Respuesta getImage(): ", response);
+
+        // Aquí asumimos que tienes acceso a los datos de la imagen
+        const imageDataBase64 = response.imageData;
+
+        // Decodificar los datos base64 en un ArrayBuffer
+        const arrayBuffer = this.base64ToArrayBuffer(imageDataBase64);
+
+        // Crear un blob a partir del ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: response.imageType });
+
+        // Crear una URL de objeto para el blob
+        this.imageUrl = URL.createObjectURL(blob);
+
+
+      },
+      error => {
+        console.error('Failed to get image:', error);
+      }
+    );
+  }
+
+  // Función para convertir una cadena base64 en un ArrayBuffer
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes.buffer;
   }
 
 

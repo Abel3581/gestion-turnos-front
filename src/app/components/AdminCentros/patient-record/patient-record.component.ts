@@ -5,9 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { ConsultationRequest } from 'src/app/models/request/consultation-request';
 import { ClinicHistoryResponse } from 'src/app/models/response/clinic-history-response';
+import { ImageResponse } from 'src/app/models/response/image-response';
 import { PatientPageResponse } from 'src/app/models/response/patient-page-response';
 import { ClinicHistoryServiceService } from 'src/app/services/clinic-history-service.service';
 import { ToastService } from 'src/app/services/compartidos/toast.service';
+import { ImageService } from 'src/app/services/image.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -28,6 +30,10 @@ export class PatientRecordComponent implements OnInit, AfterViewInit {
   mostrarToastDander: boolean = false;
   clinics: ClinicHistoryResponse[] = [];
   patient!: PatientPageResponse;
+  image!: ImageResponse;
+  imageUrl: string | undefined;
+  selectedFile: File | null = null;
+
 
   constructor(private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -35,7 +41,9 @@ export class PatientRecordComponent implements OnInit, AfterViewInit {
     private localService: LocalAuthService,
     private formBuilder: FormBuilder,
     private toastService: ToastService,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private imageService: ImageService,
+    private local: LocalAuthService
 
   ) {
     this.formCreateHistory = formBuilder.group({
@@ -50,6 +58,9 @@ export class PatientRecordComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.name = this.local.getName();
+    this.surname = this.local.getSurname();
+    this.emailUser = this.local.getEmail();
     this.route.params.subscribe(params => {
       this.centerName = params['centerName'];
       this.patientId = params['patientId'];
@@ -65,6 +76,7 @@ export class PatientRecordComponent implements OnInit, AfterViewInit {
     });
     this.getPatientById();
     this.getAllClinicHistory();
+    this.getImage();
     this.reinicializarFlowBite();
     // console.log(this.formCreateHistory.valid);
   }
@@ -173,6 +185,47 @@ export class PatientRecordComponent implements OnInit, AfterViewInit {
         }
       )
     }
+  }
+
+  getImage(): void {
+    console.log("Entrando al metodo getImage()")
+    const userId = this.local.getUserId();
+    this.imageService.getImageByUserId(userId!).subscribe(
+      response => {
+        this.image = response; // Asigna los datos de la imagen
+        console.log("Respuesta getImage(): ", response);
+
+        // Aquí asumimos que tienes acceso a los datos de la imagen
+        const imageDataBase64 = response.imageData;
+
+        // Decodificar los datos base64 en un ArrayBuffer
+        const arrayBuffer = this.base64ToArrayBuffer(imageDataBase64);
+
+        // Crear un blob a partir del ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: response.imageType });
+
+        // Crear una URL de objeto para el blob
+        this.imageUrl = URL.createObjectURL(blob);
+
+
+      },
+      error => {
+        console.error('Failed to get image:', error);
+      }
+    );
+  }
+
+  // Función para convertir una cadena base64 en un ArrayBuffer
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes.buffer;
   }
 
 }

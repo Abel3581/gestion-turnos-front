@@ -1,3 +1,12 @@
+<!-- Toast -->
+<div>
+  <app-toast-success *ngIf="mostrarToastSuccess" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-success>
+</div>
+<div>
+  <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-danger>
+</div>
 <div class="flex justify-center">
   <div class="mb-5 border-b border-gray-200 dark:border-gray-700">
   <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
@@ -25,12 +34,11 @@
   </ul>
   </div>
 </div>
-
 <div id="default-tab-content">
   <!-- Lunes -->
   <div *ngIf="horasLunes && horasLunes.length > 0; else horasNoAsignadasLunes" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile-example" role="tabpanel" aria-labelledby="profile-tab-example">
     <button *ngFor="let hora of horasLunes" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -47,8 +55,8 @@
 
   <!-- Martes -->
   <div *ngIf="horasMartes && horasMartes.length > 0; else horasNoAsignadasMartes" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard-example" role="tabpanel" aria-labelledby="dashboard-tab-example">
-    <button *ngFor="let hora of horasMartes" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+    <button  *ngFor="let hora of horasMartes" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -66,7 +74,7 @@
   <!-- Miércoles -->
   <div *ngIf="horasMiercoles && horasMiercoles.length > 0; else horasNoAsignadasMiercoles" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings-example" role="tabpanel" aria-labelledby="settings-tab-example">
     <button *ngFor="let hora of horasMiercoles" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -84,7 +92,7 @@
   <!-- Jueves -->
   <div *ngIf="horasJueves && horasJueves.length > 0; else horasNoAsignadasJueves" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts-example" role="tabpanel" aria-labelledby="contacts-tab-example">
     <button *ngFor="let hora of horasJueves" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -98,11 +106,10 @@
       <p class="text-center font-semibold">Sin agendar horario de atención para el día jueves.</p>
     </div>
   </ng-template>
-
   <!-- Viernes -->
   <div *ngIf="horasViernes && horasViernes.length > 0; else horasNoAsignadasViernes" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="friday-example" role="tabpanel" aria-labelledby="friday-tab-example">
     <button *ngFor="let hora of horasViernes" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -116,11 +123,10 @@
       <p class="text-center font-semibold">Sin agendar horario de atención para el día viernes.</p>
     </div>
   </ng-template>
-
   <!-- Sábado -->
   <div *ngIf="horasSabados && horasSabados.length > 0; else horasNoAsignadasSabado" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="saturday-example" role="tabpanel" aria-labelledby="saturday-tab-example">
     <button *ngFor="let hora of horasSabados" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -134,11 +140,10 @@
       <p class="text-center font-semibold">Sin agendar horario de atención para el día sábado.</p>
     </div>
   </ng-template>
-
   <!-- Domingo -->
-  <div *ngIf="horasDomingo && horasDomingo.length > 0; else horasNoAsignadasDomingo" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="sunday-example" role="tabpanel" aria-labelledby="sunday-tab-example">
+  <div *ngIf="horasDomingo.length > 0; else horasNoAsignadasDomingo" class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="sunday-example" role="tabpanel" aria-labelledby="sunday-tab-example">
     <button *ngFor="let hora of horasDomingo" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-      <div class="relative flex items-center">
+      <div (click)="deleteBusinessHourById(hora.id)" class="relative flex items-center">
         <span class="relative pl-2.5 py-2.5 pr-6 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
           {{hora.startTime}} A {{hora.endTime}}
           <i class="fa-regular fa-clock  transition-opacity duration-300 opacity-100 group-hover:opacity-0 absolute top-3 right-2"></i>
@@ -152,7 +157,6 @@
       <p class="text-center font-semibold">Sin agendar horario de atención para el día domingo.</p>
     </div>
   </ng-template>
-
 </div>
 
 

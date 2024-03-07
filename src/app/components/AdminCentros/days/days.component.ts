@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnInit } from '@an
 import { ActivatedRoute } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { BusinessHoursResponse } from 'src/app/models/response/business-hours-response';
+import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { DaysService } from 'src/app/services/days.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 
@@ -12,7 +13,6 @@ import { LocalAuthService } from 'src/app/services/local-auth.service';
   styleUrl: './days.component.css'
 })
 export class DaysComponent implements OnInit {
-
   horasLunes: BusinessHoursResponse[] = [];
   horasMartes: BusinessHoursResponse[] = [];
   horasMiercoles: BusinessHoursResponse[] = [];
@@ -22,17 +22,19 @@ export class DaysComponent implements OnInit {
   horasDomingo: BusinessHoursResponse[] = [];
   centerName = '';
   daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  mostrarToastSuccess: boolean = false;
+  mensajeToast: string = '';
+  mostrarToastDander: boolean = false;
 
   // daysOfWeek: string[] = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO', 'DOMINGO'];
   constructor(private daysService: DaysService,
     private route: ActivatedRoute,
     private localAuthService: LocalAuthService,
     private cdr: ChangeDetectorRef,
-    private zone: NgZone) {}
-
-  ngAfterViewInit(): void {
-
-  }
+    private zone: NgZone,
+    private dayService: DaysService,
+    private toastService: ToastService,
+    ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(async (params) => {
@@ -42,9 +44,15 @@ export class DaysComponent implements OnInit {
       await this.loadBusinessHours();
 
     });
-    setTimeout(() =>{
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastSuccess = false;
+    });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToastDander = false;
+    });
+    setTimeout(() => {
       this.reinicializarFlowBite();
-    },1000)
+    }, 1000)
   }
 
   async loadBusinessHours(): Promise<void> {
@@ -62,7 +70,6 @@ export class DaysComponent implements OnInit {
   }
 
   getBusinessHours(day: string): Promise<void> {
-
     const userId = this.localAuthService.getUserId();
     if (userId != null) {
       return new Promise<void>((resolve) => {
@@ -128,6 +135,35 @@ export class DaysComponent implements OnInit {
       default:
         return [];
     }
+  }
+
+  deleteBusinessHourById(horaId: number) {
+    const userId = this.localAuthService.getUserId();
+    console.log("Entrando al metodo deleteBusinessHoursById()", horaId);
+    this.dayService.deleteBusinessHourById(horaId, userId!).subscribe(
+      response => {
+        console.log(response);
+       // Después de eliminar la hora, actualiza los datos
+       this.loadBusinessHours().then(() => {
+        // El retraso asegura que las horas se carguen antes de continuar
+        // Esto asegura que las horasDomingo se actualicen correctamente
+        // y la plantilla HTML se renderice correctamente
+        console.log("horasDomingo después de eliminar:", this.horasDomingo);
+        this.zone.run(() => {
+          this.cdr.detectChanges();
+          this.reinicializarFlowBite();
+        });
+      });
+        this.mostrarToastSuccess = true;
+        this.mensajeToast = response.message;
+
+      },
+      error => {
+        console.error(error);
+        this.mostrarToastSuccess = true;
+        this.mensajeToast = error.error.message;
+      }
+    )
   }
 
   private reinicializarFlowBite() {

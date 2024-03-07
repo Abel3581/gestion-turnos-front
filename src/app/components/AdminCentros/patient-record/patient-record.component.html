@@ -15,25 +15,31 @@
         </button>
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
       <div class="flex items-center  ">
-        <div class="items-center ms-3 mr-3">
-          <div class="">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
+        <div class="flex items-center ms-3 mr-3">
+          <div>
             <button type="button"
-              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <div
-                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
                   </path>
                 </svg>
               </div>
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
+              </div>
+
             </button>
           </div>
           <div
@@ -56,12 +62,7 @@
               <li>
                 <a href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Apagar</a>
+                  role="menuitem"><i class="fa-solid fa-power-off fa-sm"></i> Apagar sistema</a>
               </li>
             </ul>
           </div>
@@ -70,8 +71,6 @@
     </div>
   </div>
 </nav>
-
-<!-- Body -->
 <!-- Dashboard -->
 <aside id="logo-sidebar"
   class="fixed top-0 left-0 z-40 w-60 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
@@ -92,7 +91,7 @@
 <div class="p-4 sm:ml-60 h-screen">
   <div class="p-4 border-gray-200 shadow-md rounded-lg dark:border-gray-700 mt-14 h-auto">
     <div class="flex items-center mb-1">
-      <!-- Todo Aca se habre un modal y se cargan los datos de la historia clinica -->
+      <!-- Aca se habre un modal y se cargan los datos de la historia clinica -->
       <button type="button" data-modal-target="popup-modal" data-modal-toggle="popup-modal"
         class="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80 font-medium rounded-lg text-xs px-3 py-2.5 text-center ">
         <i class="fa-solid fa-plus fa-lg"></i> Agregar historia clínica
@@ -228,7 +227,7 @@
                     {{ clinic.centerName.toUpperCase() }}
                   </div>
                   <div *ngIf="patient" class="text-sm text-green-200">
-                  <i class="fa-solid fa-hospital-user"></i> {{ patient.name }} {{ patient.surname }}
+                    <i class="fa-solid fa-hospital-user"></i> {{ patient.name }} {{ patient.surname }}
                   </div>
                 </div>
                 <div class="col-span-1 text-end">
@@ -237,7 +236,8 @@
                     class="mr-2 text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded text-xs px-2 py-2 text-center ">
                     <i class="fa-regular fa-pen-to-square "></i>
                   </button>
-                  <div id="tooltip-editar" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                  <div id="tooltip-editar" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Editar
                     <div class="tooltip-arrow" data-popper-arrow></div>
                   </div>
@@ -245,7 +245,8 @@
                     class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800  rounded text-xs px-2 py-2 text-center">
                     <i class="fa-regular fa-trash-can "></i>
                   </button>
-                  <div id="tooltip-eliminar" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                  <div id="tooltip-eliminar" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Eliminar
                     <div class="tooltip-arrow" data-popper-arrow></div>
                   </div>
@@ -259,12 +260,13 @@
                   </h6>
                 </div>
                 <div class="col-span-2">
-                  <p class=" font-normal text-sm text-center text-gray-700 dark:text-cyan-300">
+                  <p class="font-normal text-sm text-center text-gray-700 dark:text-cyan-300">
                     {{ clinic.reasonForConsultation }}
                   </p>
                 </div>
               </div>
               <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-500">
+
               <div class="grid grid-cols-3 gap-4 items-center my-2">
                 <div class="">
                   <h6 class="font-normal text-sm tracking-tight text-gray-50 uppercase">
@@ -272,25 +274,27 @@
                   </h6>
                 </div>
                 <div class="col-span-2">
-                  <p class="text-center font-normal text-sm text-gray-700 dark:text-cyan-300">
+                  <p class="font-normal text-sm text-center text-gray-700 dark:text-cyan-300">
                     {{ clinic.background }}
                   </p>
                 </div>
               </div>
               <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-500">
+
               <div class="grid grid-cols-3 gap-4 items-center my-2">
                 <div class="">
                   <h6 class="font-normal text-sm tracking-tight text-gray-50 uppercase">
-                    Examen fisico
+                    Examen físico
                   </h6>
                 </div>
                 <div class="col-span-2">
-                  <p class="text-center font-normal tex-sm text-gray-700 dark:text-cyan-300">
+                  <p class="font-normal text-sm text-center text-gray-700 dark:text-cyan-300">
                     {{ clinic.physicalExam }}
                   </p>
                 </div>
               </div>
               <hr class="h-px my-5 bg-gray-200 border-0 dark:bg-gray-500">
+
               <div class="grid grid-cols-3 gap-4 items-center my-2">
                 <div class="">
                   <h6 class="font-normal text-sm tracking-tight text-gray-50 uppercase">
@@ -298,27 +302,26 @@
                   </h6>
                 </div>
                 <div class="col-span-2">
-                  <p class="text-center font-normal text-sm text-gray-700 dark:text-cyan-300">
+                  <p class="font-normal text-sm text-center text-gray-700 dark:text-cyan-300">
                     {{ clinic.observations }}
                   </p>
                 </div>
               </div>
 
             </div>
-
           </div>
         </ng-container>
-
       </div>
-
     </div>
     <div class="" *ngIf="clinics.length === 0">
       <div class="text-center flex justify-center mt-8">
-        <svg class="w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v13m0-13c-2.8-.8-4.7-1-8-1a1 1 0 0 0-1 1v11c0 .6.5 1 1 1 3.2 0 5 .2 8 1m0-13c2.8-.8 4.7-1 8-1 .6 0 1 .5 1 1v11c0 .6-.5 1-1 1-3.2 0-5 .2-8 1"/>
+        <svg class="w-10 h-10 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 6v13m0-13c-2.8-.8-4.7-1-8-1a1 1 0 0 0-1 1v11c0 .6.5 1 1 1 3.2 0 5 .2 8 1m0-13c2.8-.8 4.7-1 8-1 .6 0 1 .5 1 1v11c0 .6-.5 1-1 1-3.2 0-5 .2-8 1" />
         </svg>
       </div>
-      <h2 class="text-center pt-5 pb-6">Actualmente no has creado ninguna historia clínica.</h2>
+      <h2 class="text-center font-serif pt-5 pb-6">Actualmente no has creado ninguna historia clínica.</h2>
     </div>
   </div>
 </div>
