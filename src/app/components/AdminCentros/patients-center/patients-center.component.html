@@ -4,25 +4,31 @@
       <div class="flex items-center justify-start rtl:justify-end">
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
       <div class="flex items-center  ">
-        <div class="items-center ms-3 mr-3">
-          <div class="">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
+        <div class="flex items-center ms-3 mr-3">
+          <div>
             <button type="button"
-              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <div
-                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
                   </path>
                 </svg>
               </div>
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
+              </div>
+
             </button>
           </div>
           <div
@@ -45,12 +51,7 @@
               <li>
                 <a href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Settings</a>
-              </li>
-              <li>
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem">Apagar</a>
+                  role="menuitem"><i class="fa-solid fa-power-off fa-sm"></i> Apagar sistema</a>
               </li>
             </ul>
           </div>
@@ -74,18 +75,15 @@
     <app-botones [centerName]="centerName"></app-botones>
   </div>
   <div class="flex max-h-full w-full justify-center overflow-y-scroll">
-    <div class=" p-6 mt-16 w-full bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg">
-
+    <div class=" p-6 mt-20 w-full bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg">
       <!-- Tabla -->
       <div class="relative shadow-md  sm:rounded-lg altura-tabla">
         <div
           class="flex rounded items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 p-4 bg-white dark:bg-gray-900">
           <div class="font-bold p-2 border-2 rounded border-cyan-400">
             {{ centerName }}
-
           </div>
           <div class="text-slate-500 font-semibold" *ngIf="patientsPage">
-
             <button type="button"
               class="inline-flex items-center px-4 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Pacientes
@@ -147,10 +145,10 @@
             <tbody class="">
               <ng-container *ngIf="patientsPage.content.length === 0">
                 <tr>
-                  <td colspan="15" class="px-6 font-bold text-cyan-600 pt-32 pb-36 text-center">
+                  <td colspan="15" class="px-6 font-bold font-serif text-cyan-600 pt-32 pb-32 text-center">
                     No hay pacientes
                     <br>
-                    <span class="font-normal text-cyan-700">
+                    <span class="font-semibold font-serif text-cyan-700">
                       Aquí aparecerán los pacientes que tuvieron cita en este centro...
                     </span>
                   </td>
@@ -490,11 +488,9 @@
           <span class="text-sm mt-2 text-gray-700 dark:text-gray-400">
             Página <span class="font-semibold text-gray-900 dark:text-white">{{ patientsPage.number + 1 }}</span>
             <!-- de tamaño<span class="font-semibold text-gray-900 dark:text-white">{{ patientsPage.size }}</span> -->
-
           </span>
           <!-- Buttons -->
           <div class="inline-flex mt-2 xs:mt-0">
-
             <button (click)="onPageChange(page - 1)" [disabled]="page === 0"
               class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-blue-600 dark:hover:text-white">
               <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -515,7 +511,6 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -48,4 +48,10 @@ export class DaysService {
     });
   }
 
+  deleteBusinessHourById(horaId: number, userId: number): Observable<MessageResponse> {
+    const url = `${this.urlDays}/${horaId}/user/${userId}`;
+    return this.http.delete<MessageResponse>(url);
+  }
+
+
 }

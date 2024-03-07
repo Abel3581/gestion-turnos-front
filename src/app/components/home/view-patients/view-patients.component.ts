@@ -13,6 +13,8 @@ import { GetTotalGendersResponse } from "src/app/models/response/get-total-gende
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { PatientRequest } from "src/app/models/request/patient-request";
 import { TurnService } from "src/app/services/turn.service";
+import { ImageResponse } from "src/app/models/response/image-response";
+import { ImageService } from "src/app/services/image.service";
 
 
 @Component({
@@ -40,6 +42,9 @@ export class ViewPatientsComponent implements OnInit {
   patientId!: number;
   formUpdatePatient!: FormGroup;
   patient!: PatientPageResponse;
+  image!: ImageResponse;
+  imageUrl: string | undefined;
+  selectedFile: File | null = null;
 
 
 
@@ -49,7 +54,8 @@ export class ViewPatientsComponent implements OnInit {
     private toastService: ToastService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
-    private turnService: TurnService
+    private turnService: TurnService,
+    private imageService: ImageService
   ) {
     this.formUpdatePatient = fb.group({
       name: ['', Validators.required],
@@ -109,7 +115,7 @@ export class ViewPatientsComponent implements OnInit {
         this.createGrafic();
       }
     }, 1000);
-
+    this.getImage();
     this.reinicializarFlowBite();
   }
 
@@ -388,6 +394,47 @@ export class ViewPatientsComponent implements OnInit {
       initFlowbite();
       this.cdr.detectChanges(); // Detecta cambios después de reinicializar FlowBite
     });
+  }
+
+  getImage(): void {
+    console.log("Entrando al metodo getImage()")
+    const userId = this.local.getUserId();
+    this.imageService.getImageByUserId(userId!).subscribe(
+      response => {
+        this.image = response; // Asigna los datos de la imagen
+        console.log("Respuesta getImage(): ", response);
+
+        // Aquí asumimos que tienes acceso a los datos de la imagen
+        const imageDataBase64 = response.imageData;
+
+        // Decodificar los datos base64 en un ArrayBuffer
+        const arrayBuffer = this.base64ToArrayBuffer(imageDataBase64);
+
+        // Crear un blob a partir del ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: response.imageType });
+
+        // Crear una URL de objeto para el blob
+        this.imageUrl = URL.createObjectURL(blob);
+
+
+      },
+      error => {
+        console.error('Failed to get image:', error);
+      }
+    );
+  }
+
+  // Función para convertir una cadena base64 en un ArrayBuffer
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes.buffer;
   }
 
 }

@@ -4,9 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { ProfileRequest } from 'src/app/models/request/profile-request';
+import { ImageResponse } from 'src/app/models/response/image-response';
 import { ProfileResponse } from 'src/app/models/response/profile-response';
 import { TotalCentrosService } from 'src/app/services/compartidos/total-centros.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
+import { ImageService } from 'src/app/services/image.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -34,17 +36,21 @@ export class UserProfileComponent implements OnInit {
   totalCentros: number = 0;
   totalAgendas: number = 0;
   totalPatients: number = 0;
+  image!: ImageResponse;
+  imageUrl: string | undefined;
+  selectedFile: File | null = null;
 
   constructor(private fb: FormBuilder,
-              private profileService: ProfileService,
-              private local: LocalAuthService,
-              private userService: UserService,
-              private http: HttpClient,
-              private router: Router,
-              private cdr: ChangeDetectorRef,
-              private totalCentrosService: TotalCentrosService,
-              private patientService: PatientService,
-              private centerService: HealthCenterService
+    private profileService: ProfileService,
+    private local: LocalAuthService,
+    private userService: UserService,
+    private http: HttpClient,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private totalCentrosService: TotalCentrosService,
+    private patientService: PatientService,
+    private centerService: HealthCenterService,
+    private imageService: ImageService
   ) {
     this.updateForm = fb.group({
       title: ['', Validators.required],
@@ -94,6 +100,7 @@ export class UserProfileComponent implements OnInit {
         this.totalAgendas = total;
       }
     )
+    this.getImage();
     this.reinicializarFlowBite();
   }
 
@@ -167,6 +174,73 @@ export class UserProfileComponent implements OnInit {
 
 
     })
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  uploadImage(): void {
+    const userId = this.local.getUserId();
+    if (this.selectedFile) {
+      this.imageService.uploadImage(1, this.selectedFile).subscribe(
+        response => {
+          console.log(response);
+          this.getImage();
+          this.selectedFile = null;
+        },
+        error => {
+          console.error(error);
+          // Aquí puedes manejar el error
+        }
+      );
+
+    }
+
+  }
+
+  getImage(): void {
+
+
+
+    console.log("Entrando al metodo getImage()")
+    const userId = this.local.getUserId();
+    this.imageService.getImageByUserId(userId!).subscribe(
+      response => {
+        this.image = response; // Asigna los datos de la imagen
+        console.log("Respuesta getImage(): ", response);
+
+        // Aquí asumimos que tienes acceso a los datos de la imagen
+        const imageDataBase64 = response.imageData;
+
+        // Decodificar los datos base64 en un ArrayBuffer
+        const arrayBuffer = this.base64ToArrayBuffer(imageDataBase64);
+
+        // Crear un blob a partir del ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: response.imageType });
+
+        // Crear una URL de objeto para el blob
+        this.imageUrl = URL.createObjectURL(blob);
+
+
+      },
+      error => {
+        console.error('Failed to get image:', error);
+      }
+    );
+  }
+
+  // Función para convertir una cadena base64 en un ArrayBuffer
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes.buffer;
   }
 
   private reinicializarFlowBite() {

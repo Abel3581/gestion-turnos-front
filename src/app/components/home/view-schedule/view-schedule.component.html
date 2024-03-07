@@ -15,29 +15,30 @@
         </button>
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
       <div class="flex items-center  ">
-        <div class="items-center ms-3 mr-3">
-          <div class="">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
+        <div class="flex items-center ms-3 mr-3">
+          <div>
             <button type="button"
-              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <!-- <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="user photo"> -->
-
-              <div
-                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
                   </path>
                 </svg>
               </div>
-
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
+              </div>
             </button>
           </div>
           <div
@@ -54,12 +55,12 @@
             <ul class="py-1" role="none">
               <li>
                 <a routerLink="/home/user-profile"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
                   role="menuitem"><i class="fa-solid fa-user-doctor fa-sm"></i> Mi Perfil</a>
               </li>
               <li>
                 <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
                   role="menuitem"><i class="fa-solid fa-power-off fa-sm"></i> Apagar sistema</a>
               </li>
             </ul>
@@ -148,6 +149,10 @@
     <div class="grid grid-cols-3 gap-4 mb-4">
       <ng-container *ngIf="selectedCenter && selectedCenter.name != null; else noCenterSelected">
         <div class="flex items-center justify-center h-20 rounded bg-gray-50">
+          <!-- <span class="relative flex   h-3 w-3 bottom-5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+          </span> -->
           <button
             class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
             {{ selectedCenter.name }}
@@ -155,7 +160,12 @@
         </div>
       </ng-container>
       <ng-template #noCenterSelected>
+
         <div class="flex items-center justify-center h-20 rounded bg-gray-50">
+          <!-- <span class="relative flex bottom-3  h-3 w-3 ">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+          </span> -->
           <div class="me-2">
             <i class="fa-regular fa-clock fa-lg text-blue-600"></i>
           </div>

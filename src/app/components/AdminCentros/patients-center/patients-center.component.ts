@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { PatientRequest } from 'src/app/models/request/patient-request';
+import { ImageResponse } from 'src/app/models/response/image-response';
 import { Page } from 'src/app/models/response/page';
 import { PatientPageResponse } from 'src/app/models/response/patient-page-response';
 import { PatientResponse } from 'src/app/models/response/patient-response';
 import { ToastService } from 'src/app/services/compartidos/toast.service';
 import { HealthCenterService } from 'src/app/services/health-center.service';
+import { ImageService } from 'src/app/services/image.service';
 import { LocalAuthService } from 'src/app/services/local-auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -34,6 +36,8 @@ export class PatientsCenterComponent implements OnInit {
   searching: boolean = false;
   searchTerm: string = '';
   patients: PatientPageResponse[] = [];
+  image!: ImageResponse;
+  imageUrl: string | undefined;
 
   constructor(private local: LocalAuthService,
     private route: ActivatedRoute,
@@ -41,7 +45,8 @@ export class PatientsCenterComponent implements OnInit {
     private patientService: PatientService,
     private fb: FormBuilder,
     private toastService: ToastService,
-    private centerService: HealthCenterService
+    private centerService: HealthCenterService,
+    private imageService: ImageService
   ) {
     this.formUpdatePatient = fb.group({
       name: ['', Validators.required],
@@ -90,6 +95,7 @@ export class PatientsCenterComponent implements OnInit {
     this.toastService.cerrarToast$.subscribe(() => {
       this.mostrarToastDander = false;
     });
+    this.getImage();
 
   }
 
@@ -345,6 +351,47 @@ export class PatientsCenterComponent implements OnInit {
         this.mensajeToast = error.error.message;
       }
     )
+  }
+
+  getImage(): void {
+    console.log("Entrando al metodo getImage()")
+    const userId = this.local.getUserId();
+    this.imageService.getImageByUserId(userId!).subscribe(
+      response => {
+        this.image = response; // Asigna los datos de la imagen
+        console.log("Respuesta getImage(): ", response);
+
+        // Aquí asumimos que tienes acceso a los datos de la imagen
+        const imageDataBase64 = response.imageData;
+
+        // Decodificar los datos base64 en un ArrayBuffer
+        const arrayBuffer = this.base64ToArrayBuffer(imageDataBase64);
+
+        // Crear un blob a partir del ArrayBuffer
+        const blob = new Blob([arrayBuffer], { type: response.imageType });
+
+        // Crear una URL de objeto para el blob
+        this.imageUrl = URL.createObjectURL(blob);
+
+
+      },
+      error => {
+        console.error('Failed to get image:', error);
+      }
+    );
+  }
+
+  // Función para convertir una cadena base64 en un ArrayBuffer
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes.buffer;
   }
 
 

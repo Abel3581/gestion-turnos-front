@@ -16,24 +16,31 @@
         </button>
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
       <div class="flex items-center">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
         <div class="flex items-center ms-3 mr-3">
           <div>
             <button type="button"
-              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <div
-                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
                   </path>
                 </svg>
+              </div>
+
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
               </div>
 
             </button>
@@ -143,7 +150,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <select name="title" formControlName="title" autocomplete="title"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6">
                   <option value="">-</option>
                   <option value="Dr.">Dr.</option>
                   <option value="Dra.">Dra.</option>
@@ -159,7 +166,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="name" type="text" name="nombre" autocomplete="Ingrese el nombre"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="lastname" class="inline-block text-sm font-semibold leading-6 text-white">Apellido<span
@@ -170,7 +177,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="lastname" type="text" name="lastname" autocomplete="Ingrese el apellido"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="domicile" class="inline-block text-sm font-semibold leading-6 text-white">Domicilio<span
@@ -181,7 +188,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="domicile" type="text" name="domicile"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="province" class="inline-block text-sm font-semibold leading-6 text-white">Provincia<span
@@ -192,7 +199,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="province" type="text" name="province"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="phone" class="inline-block text-sm font-semibold leading-6 text-white">Teléfono<span
@@ -203,7 +210,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="phone" type="text" name="phone"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="city" class="inline-block text-sm font-semibold leading-6 text-white">Ciudad<span
@@ -214,7 +221,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="city" type="text" name="city"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="country" class="inline-block text-sm font-semibold leading-6 text-white">Pais<span
@@ -225,7 +232,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <select formControlName="country" name="country"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6">
                   <option value="" selected>-</option>
                   <option *ngFor="let country of countries" [value]="country.label">
                     {{country.label}}
@@ -241,7 +248,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="whatsapp" type="text" name="whatsapp"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="specialty" class="inline-block text-sm font-semibold leading-6 text-white">Especialidad<span
@@ -252,7 +259,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <select formControlName="specialty" name="specialty"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6">
                   <option value="" selected>-</option>
                   <option *ngFor="let specialty of specialties" [value]="specialty.label">
                     {{specialty.label}}
@@ -268,7 +275,7 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="mat_nac" type="text" id="mat_nac" name="mat_nac"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
               <div class="md:col-span-1 sm:col-span-3">
                 <label for="mat_prov" class="inline-block text-sm font-semibold leading-6 text-white">Mat.Prov<span
@@ -279,9 +286,9 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <input formControlName="mat_prov" type="text" id="mat_prov" name="mat_prov"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  class="block w-full  hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6">
               </div>
-              <div class="col-span-3  ">
+              <div class="col-span-3 ">
                 <label for="presentation"
                   class="inline-block text-sm font-semibold leading-6 text-white">Presentación<span
                     class="ml-2 font-bold text-red-600">*</span></label>
@@ -291,8 +298,8 @@
                   <p class="text-red-500 text-xs italic ml-1">Es requerido.</p>
                 </div>
                 <textarea formControlName="presentation" name="presentation"
-                  class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        </textarea>
+                  class="block w-full hover:border-cyan-300 rounded-md border-2 px-3.5 py-2 text-gray-500 shadow-sm  placeholder:text-gray-400 sm:text-sm sm:leading-6">
+                </textarea>
               </div>
               <div class="col-span-3 flex justify-end">
                 <button type="button" (click)="updateProfileComponent()"
@@ -307,7 +314,7 @@
             <div class="py-2">
               <h1 class="text-slate-400 font-bold"> Acceso al Sistema</h1>
             </div>
-            <div class="mx-2 border-2 border-violet-400 rounded mt-2">
+            <div class="mx-2 border-2 border-violet-400 rounded py-4">
               <div class="flex justify-center my-2 mx-2 text-xs text-gray-500">
                 <p>Usuario</p>
               </div>
@@ -321,34 +328,35 @@
                 alt="">
             </div> -->
             <div class="col-span-full">
-              <!-- <label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Photo</label> -->
               <div class="mt-4 flex justify-center">
-                <svg class="h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-                </svg>
-                <!-- <button type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Change</button> -->
+                <img *ngIf="imageUrl"
+                  class="h-14 w-14 transition-transform transform hover:scale-110 border-solid border-4 border-green-300  rounded-full "
+                  [src]="imageUrl" alt="User Image">
               </div>
             </div>
             <div class="mt-3">
               <div class="col-span-full">
                 <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900"></label>
-                <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                <div class="mt-2 mx-4 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-6">
                   <div class="text-center">
-                    <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <!-- <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
-                    </svg>
-                    <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                      <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                        <span>Cargar una imagen</span>
-                        <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                    </svg> -->
+                    <div class=" flex text-sm leading-6 text-gray-600">
+                      <label for="file-upload"
+                        class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 hover:text-indigo-500">
+                        <span *ngIf="image && selectedFile == null">Cargar una imagen</span>
+                        <span *ngIf="selectedFile">{{ selectedFile.name.slice(0, 6) }} {{ selectedFile.type }}</span>
+                        <input id="file-upload" (change)="onFileSelected($event)" name="file-upload" type="file"
+                          class="sr-only">
                       </label>
                       <!-- <p class="pl-1">o arrastrar y soltar</p> -->
                     </div>
-                    <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                    <p class="text-xs leading-5 text-gray-600">PNG, JPG, max size 4MB</p>
                   </div>
                 </div>
               </div>
-              <button type="button"
+              <button type="button" (click)="uploadImage()"
                 class="bg-blue-500 text-white hover:bg-blue-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 px-2 mt-5 text-sm rounded py-1">CAMBIAR</button>
             </div>
           </div>

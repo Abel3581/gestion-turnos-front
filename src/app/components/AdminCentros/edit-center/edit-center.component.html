@@ -4,25 +4,31 @@
       <div class="flex items-center justify-start rtl:justify-end">
         <div class="ml-3">
           <a class="flex ms-2 md:me-24 ">
-            <img src="../../../../assets/img/logo-nav.png" class="h-8 w-8 " alt="FlowBite Logo" />
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
           </a>
         </div>
       </div>
       <div class="flex items-center  ">
-        <div class="items-center ms-3 mr-3">
-          <div class="">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
+        <div class="flex items-center ms-3 mr-3">
+          <div>
             <button type="button"
-              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
               aria-expanded="false" data-dropdown-toggle="dropdown-user">
               <span class="sr-only">Open user menu</span>
-              <div
-                class="relative w-8 h-8 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
                   </path>
                 </svg>
               </div>
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
+              </div>
+
             </button>
           </div>
           <div
@@ -60,23 +66,24 @@
     <app-botones [centerName]="centerName"></app-botones>
   </div>
   <div class="flex h-screen w-full justify-center">
-    <div class=" p-6 mt-16 w-full bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg">
+    <div class=" p-6 mt-20 w-full bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg">
       <!-- <h3 class=" ml-1 py-2 text-lg rounded-md font-semibold hover:bg-blue-500 text-white mb-4 text-center">Días y
         horarios de atención, "{{ centerName }}"</h3> -->
-        <div class="flex justify-center ">
-          <a
+      <div class="flex justify-center ">
+        <a
           class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-2xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
           <img class="object-cover w-full rounded-t-lg md:h-full md:w-56 md:rounded-none md:rounded-s-lg "
             src="/assets/img/centro-medico.jpg" alt="">
           <div class="flex flex-col justify-between p-4 leading-normal">
             <h5 class="mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
-               {{ centerName }}
+              {{ centerName }}
             </h5>
             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-              Por favor, elija un día de atención para poder eliminar un horario de atención.</p>
+              Por favor, seleccione un día de atención para eliminar un horario de atención.
+              Los turnos seguirán estando disponibles si decide volver a asignar un día y horario en ese mismo día.</p>
           </div>
-          </a>
-        </div>
+        </a>
+      </div>
 
       <app-days></app-days>
     </div>
