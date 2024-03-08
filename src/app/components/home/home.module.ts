@@ -20,6 +20,7 @@ import { MiConsultorioComponent } from './mi-consultorio/mi-consultorio.componen
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 import { ViewPatientsComponent } from './view-patients/view-patients.component';
+import { SearchForAppointmentComponent } from './search-for-appointment/search-for-appointment.component';
 
 
 // Registra los datos de localización para español
@@ -36,7 +37,8 @@ registerLocaleData(localeEs);
     CreatePatientsComponent,
     ModalAltaTurnComponent,
     MiConsultorioComponent,
-    ViewPatientsComponent
+    ViewPatientsComponent,
+    SearchForAppointmentComponent
 
 
   ],

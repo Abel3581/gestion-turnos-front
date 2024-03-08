@@ -48,6 +48,7 @@ export class ViewPatientsComponent implements OnInit {
 
 
 
+
   constructor(private patientService: PatientService,
     private centers: HealthCenterService,
     private local: LocalAuthService,
@@ -134,6 +135,7 @@ export class ViewPatientsComponent implements OnInit {
 
   public createGrafic() {
     // Datos de ejemplo para el gráfico (número de pacientes por género)
+
     const genderData = {
       labels: ['Hombre', 'Mujer', 'Transgénero'],
       datasets: [{
@@ -170,6 +172,7 @@ export class ViewPatientsComponent implements OnInit {
       data: genderData,
       options: genderChartOptions
     });
+
   }
 
   public getAlCentersByUserId() {
@@ -306,6 +309,10 @@ export class ViewPatientsComponent implements OnInit {
         this.mostrarToastSuccess = true;
         this.mensajeToast = response.message;
         this.searchPatientsByCenterNameAndUser();
+        this.getTotalGenders();
+        setTimeout(() => {
+          this.createGrafic();
+        },100)
         this.reinicializarFlowBite();
       },
       error => {
