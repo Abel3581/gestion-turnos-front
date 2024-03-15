@@ -79,4 +79,24 @@ export class TurnService {
     return this.http.delete<MessageResponse>(url, { params: params });
   }
 
+  public searchTurnsByDateAndDni(date: string, dni: string, userId: number): Observable<TurnResponse[]>{
+    const url = `${this.urlTurn}/search-turns`;
+    let params = new HttpParams();
+    params = params.append('date', date);
+    params = params.append('dni', dni);
+    params = params.append('userId', userId);
+    return this.http.get<TurnResponse[]>(url, { params : params });
+  }
+
+  public searchTurnsByDateAndDniFilters(date: string, term: string, userId: number): Observable<TurnResponse[]>{
+    const url = `${this.urlTurn}/filters`;
+    let params = new HttpParams();
+    params = params.append('date', date);
+    params = params.append('term', term);
+    params = params.append('userId', userId);
+    return this.http.get<TurnResponse[]>(url, { params : params });
+  }
+
+
+
 }

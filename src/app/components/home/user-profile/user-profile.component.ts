@@ -183,7 +183,7 @@ export class UserProfileComponent implements OnInit {
   uploadImage(): void {
     const userId = this.local.getUserId();
     if (this.selectedFile) {
-      this.imageService.uploadImage(1, this.selectedFile).subscribe(
+      this.imageService.uploadImage(userId!, this.selectedFile).subscribe(
         response => {
           console.log(response);
           this.getImage();
@@ -200,11 +200,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   getImage(): void {
-
-
-
-    console.log("Entrando al metodo getImage()")
+    console.log("Entrando al metodo getImage()");
     const userId = this.local.getUserId();
+    console.log("UserId del getImage(): " + userId);
     this.imageService.getImageByUserId(userId!).subscribe(
       response => {
         this.image = response; // Asigna los datos de la imagen

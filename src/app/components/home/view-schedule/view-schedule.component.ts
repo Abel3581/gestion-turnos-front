@@ -52,6 +52,7 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   image!: ImageResponse;
   imageUrl: string | undefined;
   selectedFile: File | null = null;
+  loadingHoy: boolean = false;
 
   constructor(private http: HttpClient,
     private centers: HealthCenterService,
@@ -122,7 +123,6 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   calcularFechasSemana(fecha: Date) {
-
     // Obtener el primer día de la semana (lunes)
     const primerDiaSemana = fecha.getDate() - fecha.getDay();
     // Crear una nueva fecha con el primer día de la semana (clonando la fecha original)
@@ -139,27 +139,44 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   retrocederSemana() {
     this.loadingRet = true;
-    // Resto de tu lógica aquí
+    this.fechaActual.setDate(this.fechaActual.getDate() - 7); // Retrocede 7 días
+
     setTimeout(() => {
       this.loadingRet = false;
-    }, 100)
+    }, 100);
     setTimeout(() => {
-      this.actualizarFechaSemana(-7);
-    })
-
+      this.calcularFechasSemana(this.fechaActual);
+    });
+    this.reinicializarFlowBite();
   }
 
   avanzarSemana() {
     this.loadingAva = true;
-    // Resto de tu lógica aquí
+    this.fechaActual.setDate(this.fechaActual.getDate() + 7); // Avanza 7 días
+
     setTimeout(() => {
       this.loadingAva = false;
-    }, 100)
+    }, 100);
     setTimeout(() => {
-      this.actualizarFechaSemana(+7);
-    })
+      this.calcularFechasSemana(this.fechaActual);
+    });
+    this.reinicializarFlowBite();
 
   }
+
+  irAHoy() {
+    this.loadingHoy = true;
+    const fechaHoy = new Date(); // Obtiene la fecha actual
+    setTimeout(() => {
+      this.loadingHoy = false;
+    }, 100);
+    setTimeout(() => {
+      this.calcularFechasSemana(fechaHoy); // Actualiza las fechas de la semana con la fecha actual
+      this.fechaActual = fechaHoy;
+    });
+    this.reinicializarFlowBite();
+  }
+
 
   private actualizarFechaSemana(dias: number) {
     this.fechaActual.setDate(this.fechaActual.getDate() + dias);

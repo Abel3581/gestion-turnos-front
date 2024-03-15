@@ -1,0 +1,390 @@
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+          </svg>
+        </button>
+        <div class="ml-3">
+          <a class="flex ms-2 md:me-24 ">
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center  ">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
+        <div class="flex items-center ms-3 mr-3">
+          <div>
+            <button type="button"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
+              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <span class="sr-only">Open user menu</span>
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
+                </svg>
+              </div>
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
+              </div>
+
+            </button>
+          </div>
+          <div
+            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                {{ name }} {{ surname }}
+              </p>
+              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                {{ emailUser }}
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a routerLink="/home/user-profile"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-solid fa-user-doctor fa-sm"></i> Mi Perfil</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-solid fa-power-off fa-sm"></i> Apagar sistema</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- Dashboard -->
+<aside id="logo-sidebar"
+  class="fixed top-0 left-0 z-40 w-60 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+  aria-label="Sidebar">
+  <div class="h-full px-3 pb-4 bg-white dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+      <li>
+        <a routerLink="/home/view-schedule" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-calendar-days fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Agendas</span>
+          <!-- <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium  rounded-full active">{{
+            totalAgendas }}</span> -->
+          <span
+            class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            {{ totalAgendas }}
+          </span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/view-patients" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-hospital-user fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Pacientes</span>
+          <!-- <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium  rounded-full active">{{
+            totalPatiens }}</span> -->
+          <span
+            class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            {{ totalPatiens }}
+          </span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/search-turn" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-regular fa-calendar-check fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Buscar Turnos</span>
+          <!-- <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"></span> -->
+        </a>
+      </li>
+      <li>
+        <a routerLink="/home/mi-consultorio" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-calendar-day fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Resumen del día</span>
+          <!-- <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalAgendas }}</span> -->
+        </a>
+
+      </li>
+      <!-- <li>
+        <a href="#"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-power-off fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Apaga sistema</span>
+        </a>
+      </li> -->
+    </ul>
+  </div>
+</aside>
+<div>
+  <app-toast-success *ngIf="mostrarToast" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-success>
+</div>
+<div>
+  <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
+    style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-danger>
+</div>
+<div>
+  <div>
+    <app-toast-info *ngIf="mostrarToastInfo" [message]="mensajeToast"
+      style="position: absolute; top: 10px; right: 10px; z-index: 1000;">
+    </app-toast-info>
+  </div>
+
+</div>
+<!--  Cuerpo -->
+<div class="p-4 sm:ml-60">
+  <div class="p-4 border-gray-200 rounded-lg dark:border-gray-700 mt-14 overflow-y-scroll">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div
+        class="flex flex-column dark:bg-gray-900 pt-4 px-2 dark:text-gray-400 sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+        <div>
+          <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio"
+            class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            type="button">
+            <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+            </svg>
+            Filtros
+            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+          <!-- Dropdown menu -->
+          <div id="dropdownRadio"
+            class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+            data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top"
+            style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+              <li>
+                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <input id="filter-radio-example-0" type="radio" value="Todos" name="filter-radio-example-0"
+                    [(ngModel)]="fecha"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="filter-radio-example-0"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Todos los
+                    días</label>
+                </div>
+              </li>
+              <li>
+                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <input id="filter-radio-example-1" type="radio" value="Hoy" name="filter-radio-example-1"
+                    [(ngModel)]="fecha"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="filter-radio-example-1"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Hoy</label>
+                </div>
+              </li>
+
+              <li>
+                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <input checked="" id="filter-radio-example-2" type="radio" value="Próximos 7 días"
+                    name="filter-radio-example-2" [(ngModel)]="fecha"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="filter-radio-example-2"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                    Próximos 7 días</label>
+                </div>
+              </li>
+              <li>
+                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <input id="filter-radio-example-3" type="radio" value="Los Próximos 15 días"
+                    name="filter-radio-example-3" [(ngModel)]="fecha"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="filter-radio-example-3"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                    Los Próximos 15 días</label>
+                </div>
+              </li>
+              <li>
+                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <input id="filter-radio-example-4" type="radio" value="El Próximo mes" name="filter-radio-example-4"
+                    [(ngModel)]="fecha"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="filter-radio-example-4"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                    El Próximo mes
+                  </label>
+                </div>
+              </li>
+              <li>
+                <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                  <input id="filter-radio-example-5" type="radio" value="El próximo año" name="filter-radio-example-5"
+                    [(ngModel)]="fecha"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="filter-radio-example-5"
+                    class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                    El Próximo año</label>
+                </div>
+              </li>
+            </ul>
+            <!-- <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+              <li>
+                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                      <input id="filter-radio-example-1" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="filter-radio-example-1" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last day</label>
+                  </div>
+              </li>
+              <li>
+                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                      <input checked="" id="filter-radio-example-2" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="filter-radio-example-2" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last 7 days</label>
+                  </div>
+              </li>
+              <li>
+                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                      <input id="filter-radio-example-3" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="filter-radio-example-3" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last 30 days</label>
+                  </div>
+              </li>
+              <li>
+                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                      <input id="filter-radio-example-4" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="filter-radio-example-4" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last month</label>
+                  </div>
+              </li>
+              <li>
+                  <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                      <input id="filter-radio-example-5" type="radio" value="" name="filter-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="filter-radio-example-5" class="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">Last year</label>
+                  </div>
+              </li>
+            </ul> -->
+          </div>
+        </div>
+        <div class="relative">
+          <form [formGroup]="searchFormTurn" class="flex items-center max-w-sm mx-auto">
+            <label for="dni" class="sr-only">Search</label>
+            <div class="relative w-full">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <!-- Spinner -->
+                <div *ngIf="searching" class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3">
+                  <svg class="animate-spin w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 12a9 9 0 0 1 9 9m0-18a9 9 0 0 1 9 9m-9-9a9 9 0 0 0-9 9m9 0a9 9 0 0 1-9 9M12 6v.01"></path>
+                  </svg>
+                </div>
+                <div *ngIf="!searching" class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+              </div>
+              <input type="text" id="dni" formControlName="dni"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ingresa el dni del paciente" />
+            </div>
+            <!-- <button type="button"
+              class="p-2 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+              <span class="sr-only">Search</span>
+            </button> -->
+          </form>
+        </div>
+      </div>
+      <div class="min-h-96 overflow-y-auto">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="p-4">
+                <div class="flex items-center">
+                  <input id="checkbox-all-search" type="checkbox"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                  <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                </div>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Nombre
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Centro
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Fecha
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Hora
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Dni
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="turns && turns.length > 0">
+              <tr *ngFor="let turn of turns"
+                class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="w-4 p-4">
+                  <div class="flex items-center">
+                    <input id="checkbox-table-search-1" type="checkbox"
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                  </div>
+                </td>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {{ turn.patientResponse.name }} {{ turn.patientResponse.surname }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ turn.centerName }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ turn.date }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ turn.hour }}
+                </td>
+                <td class="px-6 py-4">
+                  {{ turn.patientDni }}
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="turns.length === 0">
+              <tr class="">
+                <td colspan="6" class="text-gray-800 text-center py-20">
+                  <!-- <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-12 w-12 mx-auto mb-4 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm-4.47-5.28a7 7 0 1111.55 0l-1.44 1.44a5.5 5.5 0 10-8.66 0l-1.45-1.44zM11 7a1 1 0 11-2 0 1 1 0 012 0z"
+                      clip-rule="evenodd" />
+                  </svg> -->
+                  <div class="flex justify-center mb-4">
+                      <img class="h-24 w-24  " src="../../../../assets/img/turns.png" alt="imagen  turnos">
+                  </div>
+
+                  Escoge un filtro y realiza una búsqueda por DNI para encontrar los turnos de un paciente.
+                </td>
+              </tr>
+
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

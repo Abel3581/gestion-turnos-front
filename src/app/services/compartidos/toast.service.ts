@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class ToastService {
 
+
   private cerrarToastSubject = new Subject<void>();
 
   cerrarToast$ = this.cerrarToastSubject.asObservable();
@@ -14,6 +15,9 @@ export class ToastService {
     this.cerrarToastSubject.next();
   }
   cerrarToastDanger() {
+    this.cerrarToastSubject.next();
+  }
+  cerrarToastInfo() {
     this.cerrarToastSubject.next();
   }
   constructor() { }
