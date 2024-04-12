@@ -1,0 +1,16 @@
+.active {
+  background-color: #3182CE;
+  color: #ffffff;
+
+
+}
+.active:hover {
+  background-color: #1877c4;
+  color: #ffffff;
+
+}
+
+.max-h-plan {
+  max-height: 500px;
+
+}

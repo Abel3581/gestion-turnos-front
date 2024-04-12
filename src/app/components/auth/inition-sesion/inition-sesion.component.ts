@@ -63,6 +63,7 @@ export class InitionSesionComponent implements OnInit {
           this.localAuth.setName(response.name);
           this.localAuth.setSurname(response.lastname);
           this.localAuth.setEmail(response.userName);
+          this.localAuth.setRole(response.role);
 
           this.mostrarToast = true;
           this.mensajeToast = response.message;

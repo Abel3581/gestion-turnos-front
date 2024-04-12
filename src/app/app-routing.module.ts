@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'edit',
     loadChildren: () => import('./components/AdminCentros/admin-centros.module').then( m => m.AdminCentrosModule )
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin.module').then( m => m.AdminModule )
+  },
   {path: '',  redirectTo: 'auth',pathMatch: 'full'}
 ];
 

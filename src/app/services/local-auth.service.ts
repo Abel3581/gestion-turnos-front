@@ -23,6 +23,12 @@ export class LocalAuthService {
   public getToken(): string | null {
     return localStorage.getItem(this.TOKEN_LOGIN);
   }
+  public setRole(rol: string): void{
+    localStorage.setItem(this.ROL_USER, rol);
+  }
+  public getRole(): string | null {
+    return localStorage.getItem(this.ROL_USER);
+  }
   public setEmail(email: string): void {
     localStorage.setItem(this.EMAILUSER, email);
   }

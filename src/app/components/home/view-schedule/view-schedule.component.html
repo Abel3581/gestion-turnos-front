@@ -59,9 +59,14 @@
                   role="menuitem"><i class="fa-solid fa-user-doctor fa-sm"></i> Mi Perfil</a>
               </li>
               <li>
+                <a routerLink="/home/improve-plan"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-regular fa-circle-up fa-sm text-green-500"></i> Mejorar plan</a>
+              </li>
+              <li>
                 <a href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
-                  role="menuitem"><i class="fa-solid fa-power-off fa-sm"></i> Apagar sistema</a>
+                  role="menuitem"><i class="fa-solid fa-power-off fa-sm text-red-500"></i> Apagar sistema</a>
               </li>
             </ul>
           </div>
@@ -123,6 +128,16 @@
         </a>
 
       </li>
+      <li *ngIf="role === '[ADMIN]'">
+        <a routerLink="/admin/create-payment" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <i class="fa-solid fa-unlock fa-lg"></i>
+          <span class="flex-1 ms-3 whitespace-nowrap">Administración</span>
+          <!-- <span
+            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ totalAgendas }}</span> -->
+        </a>
+
+      </li>
       <!-- <li>
         <a href="#"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -142,6 +157,9 @@
   <app-toast-danger *ngIf="mostrarToastDander" [mensaje]="mensajeToast"
     style="position: absolute; top: 10px; right: 10px; z-index: 1000;"></app-toast-danger>
 </div>
+<div class="toast-container" *ngIf="mostrarToasCenters">
+  <app-toast-centers></app-toast-centers>
+</div>
 <!--  Cuerpo -->
 <div class="p-4 sm:ml-60">
   <div class="p-4 border-gray-200 rounded-lg dark:border-gray-700 mt-14 overflow-y-scroll">
@@ -160,7 +178,6 @@
         </div>
       </ng-container>
       <ng-template #noCenterSelected>
-
         <div class="flex items-center justify-center h-20 rounded bg-gray-50">
           <!-- <span class="relative flex bottom-3  h-3 w-3 ">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
@@ -194,7 +211,7 @@
                 <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-blue-600">
                   <div class="flex items-center h-5">
                     <input id="helper-radio-{{i}}" name="helper-radio-group" type="radio"
-                      [checked]="selectedCenter === center" (change)="selectCenter(center)"
+                      [checked]="selectedCenter === center" (change)="selectCenter(center); toggleDropdown()"
                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                   </div>
                   <div class="ms-2 text-sm ">
@@ -298,7 +315,6 @@
         </nav>
       </div>
     </div>
-
     <!-- segunda fila -->
     <div class="flex items-start justify-center h-screen mb-4 rounded bg-gray-100">
       <div class="relative flex w-full">
@@ -341,16 +357,13 @@
                   <div class='h-4 w-4 bg-cyan-500 rounded-full animate-bounce'></div>
                 </div>
               </div>
-
               <ng-container *ngFor="let hora of hours; let i = index">
                 <tr class="w-16 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" class="px-6 py-4 w-16 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <th scope="row" class="px-6 py-4 w-16 font-medium text-gray-900 whitespace-nowrap dark:text-white bg-slate-900">
                     <span>{{ hora }}</span>
                   </th>
-
                   <ng-container *ngFor="let fecha of fechasSemana; let j = index">
                     <td class="w-20 justify-center">
-
                       <ng-container *ngIf="isCellEnabled(diasSemana[j], hora)">
                         <ng-container *ngIf="hasAssignedTurn(hora, fecha)">
                           <button [id]="getDropdownButtonId(i, j)"
@@ -434,6 +447,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

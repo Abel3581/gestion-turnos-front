@@ -5,7 +5,6 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { CommonModule } from '@angular/common';
 
 
-
 const routes: Routes = [
   {
     path: '',

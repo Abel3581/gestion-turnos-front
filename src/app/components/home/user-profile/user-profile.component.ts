@@ -143,6 +143,8 @@ export class UserProfileComponent implements OnInit {
       this.profileService.update(profileId, userId, request).subscribe(
         response => {
           console.log(response.message);
+          this.local.setName(request.name);
+          this.local.setSurname(request.lastname);
           // this.toastr.success(response.message + " " + response.status.toString());
         }, err => {
           console.log(err);
