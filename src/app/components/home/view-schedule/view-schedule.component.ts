@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { format } from 'date-fns';
 import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
@@ -27,6 +28,11 @@ import { TurnUpdateService } from 'src/app/shared/services/turn-update.service';
   styleUrl: './view-schedule.component.css'
 })
 export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
+  toggleDropdown() {
+    const dropdown = document.getElementById('dropdownRadioHelper');
+    dropdown!.classList.toggle('hidden');
+  }
+
   // En tu componente, define un nuevo array para almacenar la información de cada celda
   filas: { hora: string; fecha: Date; isCellEnabled: boolean; hasAssignedTurn: boolean; turnInfo?: TurnResponse }[] = [];
   selectedCenter!: HealthCenterNamesResponse;
@@ -49,10 +55,12 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   mostrarToast: boolean = false;
   mensajeToast: string = ''; // Variable para almacenar el mensaje del toast
   mostrarToastDander: boolean = false;
+  mostrarToasCenters: boolean = false;
   image!: ImageResponse;
   imageUrl: string | undefined;
   selectedFile: File | null = null;
   loadingHoy: boolean = false;
+  role: string | null = "";
 
   constructor(private http: HttpClient,
     private centers: HealthCenterService,
@@ -65,11 +73,13 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     private turnUpdateService: TurnUpdateService,
     private patientService: PatientService,
     private toastService: ToastService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
+    this.role = this.local.getRole();
     this.name = this.local.getName();
     this.surname = this.local.getSurname();
     this.emailUser = this.local.getEmail();
@@ -101,6 +111,9 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
     this.toastService.cerrarToast$.subscribe(() => {
       this.mostrarToastDander = false;
     });
+    this.toastService.cerrarToast$.subscribe(() => {
+      this.mostrarToasCenters = false;
+    });
 
     this.getImage();
     //console.log("Fecha actual: ", this.fechaActual);
@@ -109,6 +122,7 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+
     this.reinicializarFlowBite();
 
   }
@@ -217,14 +231,18 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
 
   selectCenter(center: any): void {
     this.selectedCenter = center;
+
     console.log("Centro seleccionado:", this.selectedCenter.name)
+
     //this.getAllBusinessHours(); // <-- Activar método para obtener las horas de atención
     this.getAllBusinessHoursByCenterAndUserId();
     //this.getAllTurnsByCenterName();
     this.getAllTurnsByCenterNameAndUserId();
 
     this.reinicializarFlowBite();
+
   }
+
 
   getAllBusinessHours() {
     console.log("Entrando al metodo getAllBusinessHours()")
@@ -349,6 +367,12 @@ export class ViewScheduleComponent implements OnInit, AfterViewInit, OnDestroy {
         response => {
           console.log("Dia y hora de atencione: ", response);
           this.attentionDays = response;
+          // --------
+          if(response.length >= 1){
+            this.mostrarToasCenters = false;
+          }else{
+            this.mostrarToasCenters = true;
+          }
           this.reinicializarFlowBite();
         },
         error => {

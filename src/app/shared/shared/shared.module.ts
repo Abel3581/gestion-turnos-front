@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ToastDangerComponent } from '../components/toast-danger/toast-danger.component';
 import { ToastSuccessComponent } from '../componets/toast-success/toast-success.component';
 import { ToastInfoComponent } from '../components/toast-info/toast-info.component';
+import { ToastCentersComponent } from '../components/toast-centers/toast-centers.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -10,7 +12,9 @@ import { ToastInfoComponent } from '../components/toast-info/toast-info.componen
   declarations: [
     ToastDangerComponent,
     ToastSuccessComponent,
-    ToastInfoComponent
+    ToastInfoComponent,
+    ToastCentersComponent,
+
   ],
   imports: [
     CommonModule
@@ -18,7 +22,8 @@ import { ToastInfoComponent } from '../components/toast-info/toast-info.componen
   exports: [
     ToastDangerComponent,
     ToastSuccessComponent,
-    ToastInfoComponent
+    ToastInfoComponent,
+    ToastCentersComponent
   ]
 })
 export class SharedModule { }

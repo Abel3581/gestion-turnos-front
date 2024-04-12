@@ -9,6 +9,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CreatePatientsComponent } from './create-patients/create-patients.component';
 import { MiConsultorioComponent } from './mi-consultorio/mi-consultorio.component';
 import { SearchForAppointmentComponent } from './search-for-appointment/search-for-appointment.component';
+import { ImprovePlanComponent } from './improve-plan/improve-plan.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 
 const routes: Routes = [
@@ -24,7 +26,9 @@ const routes: Routes = [
       { path: 'create-patients', component: CreatePatientsComponent },
       { path: 'mi-consultorio', component: MiConsultorioComponent },
       { path: 'view-patients', component: ViewPatientsComponent },
-      { path: 'search-turn', component: SearchForAppointmentComponent }
+      { path: 'search-turn', component: SearchForAppointmentComponent },
+      { path: 'improve-plan', component: ImprovePlanComponent },
+      { path: 'payments', component: PaymentsComponent}
     ]
   }
 ];

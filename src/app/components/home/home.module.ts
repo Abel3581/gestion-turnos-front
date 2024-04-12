@@ -21,7 +21,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 import { ViewPatientsComponent } from './view-patients/view-patients.component';
 import { SearchForAppointmentComponent } from './search-for-appointment/search-for-appointment.component';
-
+import { ImprovePlanComponent } from './improve-plan/improve-plan.component';
+import { PaymentsComponent } from './payments/payments.component';
 
 // Registra los datos de localización para español
 registerLocaleData(localeEs);
@@ -38,8 +39,9 @@ registerLocaleData(localeEs);
     ModalAltaTurnComponent,
     MiConsultorioComponent,
     ViewPatientsComponent,
-    SearchForAppointmentComponent
-
+    SearchForAppointmentComponent,
+    ImprovePlanComponent,
+    PaymentsComponent
 
   ],
 

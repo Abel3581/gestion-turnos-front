@@ -14,6 +14,9 @@ export class ToastService {
   cerrarToast() {
     this.cerrarToastSubject.next();
   }
+  cerrarToastCenters() {
+    this.cerrarToastSubject.next();
+  }
   cerrarToastDanger() {
     this.cerrarToastSubject.next();
   }

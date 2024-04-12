@@ -37,6 +37,9 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
   image!: ImageResponse;
   imageUrl: string | undefined;
   selectedFile: File | null = null;
+  status : string = "";
+  showModal: boolean = false;
+  showModalPro: boolean = false;
 
   constructor(private fb: FormBuilder,
     private centerService: HealthCenterService,
@@ -82,9 +85,23 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
     this.toastService.cerrarToast$.subscribe(() => {
       this.mostrarToastDander = false;
     });
+    this.verifyStatusUser();
     this.getImage();
     this.reinicializarFlowBite();
 
+  }
+
+  verifyStatusUser() {
+    const userId = this.local.getUserId();
+    this.userService.verifyStatusUser(userId!).subscribe(
+      response => {
+        console.log(response);
+        this.status = response.message;
+      },
+      error => {
+        console.error(error);
+      }
+    )
   }
 
   ngAfterViewInit(): void {
@@ -99,12 +116,32 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public showDialog() {
-    this.visible = true;
+  showDialog() {
+    this.showModal = true;
+    // const user = this.local.getUserId();
+    // this.userService.verifyStatusUser(user!).subscribe(
+    //   response => {
+    //     console.log(response);
+    //     this.status = response.message;
+    //     console.log("Info showDialog(): status => " + this.status + " cantCentros => " + this.totalAgendas);
+    //     if (this.status === "DESACTIVADO" && this.totalAgendas === 1) {
+    //       this.showModal = true; // Mostrar el primer modal si está desactivado y ya ha creado un centro
+    //     } else {
+    //       this.showModalPro = true; // Mostrar el segundo modal si está activado o si ya ha creado más de un centro
+    //     }
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
-  public modalClose() {
-    this.visible = false;
+  closeModal() {
+    this.showModal = false; // Cerrar el segundo modal
+  }
+
+  closeModalPro() {
+    this.showModalPro = false; // Cerrar el primer modal
   }
 
   public seleccionarLi(li: string): void {
@@ -123,7 +160,7 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
           this.mensajeToast = response.message;
           this.formGroup.reset();
           setTimeout(() => {
-            this.modalClose();
+            this.closeModalPro();
           },1000)
           // Después de crear el centro, actualiza la lista de centros
           this.zone.run(() => {
@@ -229,6 +266,5 @@ export class HealthCenterComponent implements OnInit, AfterViewInit {
 
     return bytes.buffer;
   }
-
 
 }

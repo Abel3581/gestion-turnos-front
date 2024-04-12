@@ -1,0 +1,312 @@
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+  <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center justify-start rtl:justify-end">
+        <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+          type="button"
+          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+          <span class="sr-only">Open sidebar</span>
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd"
+              d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+            </path>
+          </svg>
+        </button>
+        <div class="ml-3">
+          <a class="flex ms-2 md:me-24 ">
+            <img src="../../../../assets/img/logo-nav.png" class="h-9 w-8 " alt="FlowBite Logo" />
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center  ">
+        <p class="text-slate-50 text-sm ">{{ name }} {{ surname?.slice(0, 4) }}...</p>
+        <div class="flex items-center ms-3 mr-3">
+          <div>
+            <button type="button"
+              class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 "
+              aria-expanded="false" data-dropdown-toggle="dropdown-user">
+              <span class="sr-only">Open user menu</span>
+              <div *ngIf="!image"
+                class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+                  </path>
+                </svg>
+              </div>
+              <div *ngIf="imageUrl"
+                class="relative w-10 h-10 overflow-hidden  rounded-full  flex items-center justify-center">
+                <img class="w-10 h-10 rounded-full" [src]="imageUrl" alt="User Image">
+              </div>
+            </button>
+          </div>
+          <div
+            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+            id="dropdown-user">
+            <div class="px-4 py-3" role="none">
+              <p class="text-sm text-gray-900 dark:text-white" role="none">
+                {{ name }} {{ surname }}
+              </p>
+              <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                {{ emailUser }}
+              </p>
+            </div>
+            <ul class="py-1" role="none">
+              <li>
+                <a routerLink="/home/user-profile"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-solid fa-user-doctor fa-sm"></i> Mi Perfil</a>
+              </li>
+              <li>
+                <a routerLink="/home/improve-plan"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-regular fa-circle-up fa-sm text-green-500"></i> Mejorar plan</a>
+              </li>
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-blue-600 dark:hover:text-white"
+                  role="menuitem"><i class="fa-solid fa-power-off fa-sm text-red-500"></i> Apagar sistema</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="md:flex mt-20 container mx-auto ">
+  <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500 dark:text-gray-400 md:me-4 mb-4 md:mb-0">
+    <li>
+      <a routerLink="/home/improve-plan" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full dark:bg-blue-600"
+        aria-current="page">
+        <svg class="w-4 h-4 me-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          viewBox="0 0 20 20">
+          <path
+            d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+        </svg>
+        Planes
+      </a>
+    </li>
+    <li>
+      <a routerLink="/home/payments" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
+        <i class="fa-solid fa-credit-card fa-lg mr-1"></i>
+        Pagos
+      </a>
+    </li>
+    <li>
+      <a
+        class="inline-flex items-center px-4 py-3 text-gray-400 rounded-lg cursor-not-allowed bg-gray-50 w-full dark:bg-gray-800 dark:text-gray-500">
+        <svg class="w-4 h-4 me-2 text-gray-400 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor" viewBox="0 0 20 20">
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z" />
+        </svg>
+        Disabled</a>
+    </li>
+  </ul>
+  <div class="max-h-plan overflow-y-auto w-full">
+    <div class="p-6 bg-gray-50 text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-200 shadow-md rounded-lg w-full">
+
+      <!-- Planes -->
+        <div class="flex justify-center">
+          <div
+            class="w-full mr-4 max-w-sm p-4 bg-white border-4 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-600 hover:border-green-500 ">
+            <h5 class="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400 text-center">Totalmente gratis</h5>
+            <div class="flex items-baseline text-gray-900 dark:text-white">
+              <span class="text-3xl font-semibold">$</span>
+              <span class="text-5xl font-extrabold tracking-tight">0</span>
+              <span class="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">/mes</span>
+            </div>
+            <ul role="list" class="space-y-5 my-7">
+              <li class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                Un centro médico </span>
+              </li>
+              <li class="flex">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                  Alta y baja de turnos
+                </span>
+              </li>
+              <li class="flex">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                  Búsquedas de turnos en calendario o buscador
+                </span>
+              </li>
+              <li class="flex">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                  Alta y modificación de pacientes
+                </span>
+              </li>
+              <li class="flex line-through decoration-gray-500">
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 ms-3">
+                  Alta Historia clínica
+                </span>
+              </li>
+              <li class="flex line-through decoration-gray-500">
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 ms-3">
+                  Centros adicionales
+                </span>
+              </li>
+              <li class="flex line-through decoration-gray-500">
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 ms-3">Complete documentation</span>
+              </li>
+              <li class="flex line-through decoration-gray-500">
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 ms-3">24×7 phone & email support</span>
+              </li>
+            </ul>
+            <button *ngIf="messageResponse && messageResponse.message === 'ACTIVADO'" type="button" disabled
+              class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">
+              Plan Gratís
+            </button>
+            <button *ngIf="messageResponse && messageResponse.message === 'DESACTIVADO'" type="button" disabled
+              class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">
+              Plan actual
+            </button>
+          </div>
+          <!-- segunda columna -->
+          <div
+            class="w-full max-w-sm p-4 bg-white border-4 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-600 hover:border-green-500  ">
+            <h5 class="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400 text-center">Plan pago</h5>
+            <div class="flex items-baseline text-gray-900 dark:text-white">
+              <span class="text-3xl font-semibold">$</span>
+              <span class="text-5xl font-extrabold tracking-tight">5000</span>
+              <span class="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">/mes</span>
+            </div>
+            <ul role="list" class="space-y-5 my-7">
+              <li class="flex items-center">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                  Toda la funcionalidad del plan gratis
+                </span>
+              </li>
+              <li class="flex">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                  Centros adicionales
+                </span>
+              </li>
+              <li class="flex">
+                <svg class="flex-shrink-0 w-4 h-4 text-blue-700 dark:text-blue-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
+                  Alta Historia clínica
+                </span>
+              </li>
+
+              <li class="flex line-through decoration-gray-500">
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 ms-3">Complete documentation</span>
+              </li>
+              <li class="flex line-through decoration-gray-500">
+                <svg class="flex-shrink-0 w-4 h-4 text-gray-400 dark:text-gray-500" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+                <span class="text-base font-normal leading-tight text-gray-500 ms-3">24×7 phone & email support</span>
+              </li>
+            </ul>
+            <button *ngIf="messageResponse && messageResponse.message === 'ACTIVADO'" type="button" disabled
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">
+              Plan actual
+            </button>
+            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"  *ngIf="messageResponse && messageResponse.message === 'DESACTIVADO'" type="button"
+
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">
+              Contratar
+            </button>
+              <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                  <div class="relative p-4 w-full max-w-md max-h-full">
+                      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                          <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                              </svg>
+                              <span class="sr-only">Close modal</span>
+                          </button>
+                          <div class="p-4 md:p-5 text-center">
+                              <!-- <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                              </svg> -->
+                              <i class="fa-solid fa-circle-info fa-2xl mb-2 text-blue-500"></i>
+                              <h3 *ngIf="descuentoString != 'Sin descuento'" class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">El precio mensual es de {{ precioBase }}, con un descuento del {{ descuentoString }} debido al día del mes.
+                               <span class="text-blue-500">Abonas:  ${{ totalConDescuento }}</span></h3>
+                               <h3 *ngIf="descuentoString === 'Sin descuento'" class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                El precio mensual es de {{ totalConDescuento }}
+                               </h3>
+                              <button (click)="createPayment()" data-modal-hide="popup-modal" type="button" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                  Si, contratar
+                              </button>
+                              <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700">
+                                No, cancelar
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
